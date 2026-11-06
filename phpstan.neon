@@ -1,0 +1,15 @@
+# PHPStan — niveau 6.
+# Analyse complète : définir PS_ROOT_DIR vers une instance PrestaShop (8.2 ou 9.x), ex.
+#   PS_ROOT_DIR=/var/www/prestashop vendor/bin/phpstan analyse
+# Sans PS_ROOT_DIR, seules les couches pures (Domain, Calculator) sont analysées.
+includes:
+    - phpstan-ps.php
+
+parameters:
+    level: 6
+    paths:
+        - src/Domain
+        - src/Calculator
+    excludePaths:
+        - vendor
+    treatPhpDocTypesAsCertain: false

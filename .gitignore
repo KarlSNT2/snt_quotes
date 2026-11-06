@@ -1,0 +1,9 @@
+/vendor/
+/.php-cs-fixer.cache
+/.phpunit.cache/
+/.phpunit.result.cache
+/var/
+/build/
+*.zip
+.idea/
+.vscode/
