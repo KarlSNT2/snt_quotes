@@ -1,0 +1,1559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="snt_quotes" source-language="en-US" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="ffca5768df98e6393a81e0f36f14c85a">
+        <source>%count% lines added.</source>
+        <target>%count% lignes ajoutées.</target>
+      </trans-unit>
+      <trans-unit id="6773ee7d319dc2701b05a586e452ed5d">
+        <source>%count% lines imported from the cart.</source>
+        <target>%count% lignes reprises du panier.</target>
+      </trans-unit>
+      <trans-unit id="462673f1e3bb301ac8a9267b2117d24d">
+        <source>%days% days left</source>
+        <target>plus que %days% jours</target>
+      </trans-unit>
+      <trans-unit id="01a7cbb4ae02fd2308e9860c366dfd17">
+        <source>0 = no approval. Beyond this threshold, the quote waits for a manager before it can be sent.</source>
+        <target>0 = pas de validation. Au-delà de ce seuil, le devis attend la validation d’un responsable avant de pouvoir être envoyé.</target>
+      </trans-unit>
+      <trans-unit id="b2494a9ab54db94f29fad818606bad5e">
+        <source>0 = no automatic reminder. Requires the cron URL to be called by n8n.</source>
+        <target>0 = pas de relance automatique. Nécessite que n8n appelle l’URL cron.</target>
+      </trans-unit>
+      <trans-unit id="e9905b226d029644ed7437fc80a9fe85">
+        <source>A customer already uses this e-mail address: search for it instead.</source>
+        <target>Un client utilise déjà cette adresse e-mail : recherchez-le plutôt.</target>
+      </trans-unit>
+      <trans-unit id="af04265474f037efb1412b914ac344e4">
+        <source>A percentage discount cannot exceed 100%.</source>
+        <target>Une remise en pourcentage ne peut pas dépasser 100 %.</target>
+      </trans-unit>
+      <trans-unit id="87abe91dd71a2293d92de0430a40127b">
+        <source>A quote cannot contain more than %max% lines.</source>
+        <target>Un devis ne peut pas contenir plus de %max% lignes.</target>
+      </trans-unit>
+      <trans-unit id="4493e1055289f887132e5e098523e57a">
+        <source>A quote with status « %status% » cannot be sent. Create a new version instead.</source>
+        <target>Un devis au statut « %status% » ne peut pas être envoyé. Créez plutôt une nouvelle version.</target>
+      </trans-unit>
+      <trans-unit id="dc33763cf28e6802da8ac85b90ec3048">
+        <source>A reminder has been sent to the customer.</source>
+        <target>Une relance a été envoyée au client.</target>
+      </trans-unit>
+      <trans-unit id="382ab522931673c11e398ead1b7b1678">
+        <source>Accepted</source>
+        <target>Accepté</target>
+      </trans-unit>
+      <trans-unit id="47b84fd1609df93c987377c912e3baf1">
+        <source>Access key</source>
+        <target>Clé d’accès</target>
+      </trans-unit>
+      <trans-unit id="06df33001c1d7187fdd81ea1f5b277aa">
+        <source>Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="c3edcf2cedbd4ce230fd6d4ea8915718">
+        <source>Add a comment</source>
+        <target>Ajouter un commentaire</target>
+      </trans-unit>
+      <trans-unit id="9a392b7894f25be594cffe049cfbdf77">
+        <source>Add a free line</source>
+        <target>Ajouter une ligne libre</target>
+      </trans-unit>
+      <trans-unit id="4b6c6cda10a23d1bdc920f2e47e5f46f">
+        <source>Add a product</source>
+        <target>Ajouter un produit</target>
+      </trans-unit>
+      <trans-unit id="f4bc9e79c59b046bee42cdb274a081c0">
+        <source>Add a title</source>
+        <target>Ajouter un titre</target>
+      </trans-unit>
+      <trans-unit id="e0c980a81462ef766b58a407b9292449">
+        <source>Add at least one product or free line before sending the quote.</source>
+        <target>Ajoutez au moins un produit ou une ligne libre avant d’envoyer le devis.</target>
+      </trans-unit>
+      <trans-unit id="aa7c66299eb2f65d3fa081c0cfa2d125">
+        <source>Add at least one product or free line before sending.</source>
+        <target>Ajoutez au moins un produit ou une ligne libre avant l’envoi.</target>
+      </trans-unit>
+      <trans-unit id="d705576a88ab51e82702696f6cdc826e">
+        <source>Add the lines</source>
+        <target>Ajouter les lignes</target>
+      </trans-unit>
+      <trans-unit id="aa566cb83e869321fb8d92e2f476738d">
+        <source>Add the voucher</source>
+        <target>Ajouter le bon</target>
+      </trans-unit>
+      <trans-unit id="ea7e6bb6c3b657761e71cafa3ab0b4fb">
+        <source>Additional attachments</source>
+        <target>Pièces jointes supplémentaires</target>
+      </trans-unit>
+      <trans-unit id="dd7bf230fde8d4836917806aff6a6b27">
+        <source>Address</source>
+        <target>Adresse</target>
+      </trans-unit>
+      <trans-unit id="7b0ee6297f2c9d39e77a064a15a6b4c5">
+        <source>Address (continued)</source>
+        <target>Complément d’adresse</target>
+      </trans-unit>
+      <trans-unit id="dffcf6e288022014ee7042c903573917">
+        <source>Address created.</source>
+        <target>Adresse créée.</target>
+      </trans-unit>
+      <trans-unit id="104bb53c0d13b2f20fc100e071d8bf33">
+        <source>After this date, the customer can no longer accept the quote.</source>
+        <target>Après cette date, le client ne peut plus accepter le devis.</target>
+      </trans-unit>
+      <trans-unit id="b1c94ca2fbc3e78fc30069c8d0f01680">
+        <source>All</source>
+        <target>Tous</target>
+      </trans-unit>
+      <trans-unit id="83f015bc3e4284883edb944909367d03">
+        <source>All quotes, their history and their links will be deleted. Continue?</source>
+        <target>Tous les devis, leur historique et leurs liens seront supprimés. Continuer ?</target>
+      </trans-unit>
+      <trans-unit id="649f860464c68b2b00f83bc210ae82a7">
+        <source>Allow customers to request a quote from their cart</source>
+        <target>Permettre aux clients de demander un devis depuis leur panier</target>
+      </trans-unit>
+      <trans-unit id="24412dee332796b8024bcf5d52205916">
+        <source>Amount incl. tax</source>
+        <target>Montant TTC</target>
+      </trans-unit>
+      <trans-unit id="d3968fe61a2b33f02e9cd8606b029a57">
+        <source>Amounts</source>
+        <target>Montants</target>
+      </trans-unit>
+      <trans-unit id="25005c0c0ba6429e576d9483a6d203fe">
+        <source>An unexpected error occurred. Try again; if the problem persists, contact support (details in the logs).</source>
+        <target>Une erreur inattendue s’est produite. Réessayez ; si le problème persiste, contactez le support (détails dans les journaux).</target>
+      </trans-unit>
+      <trans-unit id="69a6281693076a0b33ff5dd618dd4de2">
+        <source>Announced response time (working days)</source>
+        <target>Délai de réponse annoncé (jours ouvrés)</target>
+      </trans-unit>
+      <trans-unit id="2448cccdbf3c6ca3e168a87d5d068513">
+        <source>Apply an existing voucher</source>
+        <target>Appliquer un bon de réduction existant</target>
+      </trans-unit>
+      <trans-unit id="f5cfae46110982ab6934552bff43abbf">
+        <source>Automatic reminder (days before expiry)</source>
+        <target>Relance automatique (jours avant expiration)</target>
+      </trans-unit>
+      <trans-unit id="718953299a54908a04f4bd0285901163">
+        <source>Available with the next update of the module (milestone 2).</source>
+        <target>Disponible avec la prochaine mise à jour du module (jalon 2).</target>
+      </trans-unit>
+      <trans-unit id="f22596f1c7676e01a88b1c3e625b6efa">
+        <source>Awaiting customer</source>
+        <target>En attente client</target>
+      </trans-unit>
+      <trans-unit id="5467754439034da57a68b900d625df6b">
+        <source>Awaiting internal approval</source>
+        <target>En attente de validation interne</target>
+      </trans-unit>
+      <trans-unit id="ebb8d514f56157d7bd513eefdd9adb63">
+        <source>Awaiting payment</source>
+        <target>En attente de paiement</target>
+      </trans-unit>
+      <trans-unit id="5eb058ed92183a053175cfa15bec3cdb">
+        <source>Back to quotes</source>
+        <target>Retour aux devis</target>
+      </trans-unit>
+      <trans-unit id="431647a0a8b2cd589c9fda9535f90d6d">
+        <source>Bank transfer</source>
+        <target>Virement</target>
+      </trans-unit>
+      <trans-unit id="80c8c67326f498c6a763588f47d6a2bb">
+        <source>Below purchase price</source>
+        <target>Sous le prix d’achat</target>
+      </trans-unit>
+      <trans-unit id="30edf70db68aa84f05d3e72326807b0c">
+        <source>Bucket</source>
+        <target>Bucket</target>
+      </trans-unit>
+      <trans-unit id="82a636a43d29f55f934b1364307f6f14">
+        <source>Bulk add</source>
+        <target>Ajout en masse</target>
+      </trans-unit>
+      <trans-unit id="76b5a1f45a256f426e49c055a5b33ec2">
+        <source>Bulk add (paste or CSV)</source>
+        <target>Ajout en masse (coller ou CSV)</target>
+      </trans-unit>
+      <trans-unit id="622f3c75de9f3481ffc58c1f292c1c2b">
+        <source>CMS page</source>
+        <target>Page CMS</target>
+      </trans-unit>
+      <trans-unit id="1ef060ac32db45d2095d17a7a4c5f964">
+        <source>Calculated rate applied: %price%</source>
+        <target>Tarif calculé appliqué : %price%</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19">
+        <source>Cancel</source>
+        <target>Annuler</target>
+      </trans-unit>
+      <trans-unit id="914419aa32f04011357d3b604a86d7eb">
+        <source>Carrier</source>
+        <target>Transporteur</target>
+      </trans-unit>
+      <trans-unit id="15fb4bc3f784847cb4c2064554539115">
+        <source>Cart of %date% — %count% products</source>
+        <target>Panier du %date% — %count% articles</target>
+      </trans-unit>
+      <trans-unit id="8c78270ccff92e6eaeaf88aaaba851c4">
+        <source>Catalogue: %price%</source>
+        <target>Catalogue : %price%</target>
+      </trans-unit>
+      <trans-unit id="f4ec5f57bd4d31b803312d873be40da9">
+        <source>Change</source>
+        <target>Changer</target>
+      </trans-unit>
+      <trans-unit id="425822de5ae50ccbbcb92fcd7cc4088a">
+        <source>Change requested</source>
+        <target>Modification demandée</target>
+      </trans-unit>
+      <trans-unit id="251311d544fdb174bd4cfa38c2024ec6">
+        <source>Change requested, awaiting approval, or accepted but not yet ordered</source>
+        <target>Modification demandée, en attente de validation, ou accepté mais pas encore commandé</target>
+      </trans-unit>
+      <trans-unit id="3cba11aa87d6e30a0679e15d75670605">
+        <source>Check the PDF</source>
+        <target>Vérifier le PDF</target>
+      </trans-unit>
+      <trans-unit id="c66d43cba3adde62c9e1a4697f058515">
+        <source>Check the address: %error%</source>
+        <target>Vérifiez l’adresse : %error%</target>
+      </trans-unit>
+      <trans-unit id="5e4e4b48008c9107ce2cd12077eb799e">
+        <source>Choose a carrier (or « Pickup ») before sending the quote.</source>
+        <target>Choisissez un transporteur (ou « Retrait ») avant d’envoyer le devis.</target>
+      </trans-unit>
+      <trans-unit id="8a347a592b2b0c30096a295cf35f4e7d">
+        <source>Choose a carrier first.</source>
+        <target>Choisissez d’abord un transporteur.</target>
+      </trans-unit>
+      <trans-unit id="1d5c44e96de0cd0428ff0b75fa951753">
+        <source>Choose a combination</source>
+        <target>Choisir une déclinaison</target>
+      </trans-unit>
+      <trans-unit id="b670ddc11c09f6233187df2421316e43">
+        <source>Choose a customer and an address to see the carriers.</source>
+        <target>Choisissez un client et une adresse pour voir les transporteurs.</target>
+      </trans-unit>
+      <trans-unit id="68ab0be7608661c909ef1d1c4e03fba3">
+        <source>Choose a customer before sending the quote.</source>
+        <target>Choisissez un client avant d’envoyer le devis.</target>
+      </trans-unit>
+      <trans-unit id="030c8d7f6b9ba26fd260b26b044c5950">
+        <source>Choose a customer first.</source>
+        <target>Choisissez d’abord un client.</target>
+      </trans-unit>
+      <trans-unit id="0c1a90393fd1fa9f852d48aae6ff24be">
+        <source>Choose a customer for this quote.</source>
+        <target>Choisissez un client pour ce devis.</target>
+      </trans-unit>
+      <trans-unit id="48e9b65a6a3cfb8af897457c59e7cde3">
+        <source>Choose a delivery address first.</source>
+        <target>Choisissez d’abord une adresse de livraison.</target>
+      </trans-unit>
+      <trans-unit id="8ef9dda4a472c3a51d823daf2f4481b7">
+        <source>Choose a pickup point for this carrier.</source>
+        <target>Choisissez un point relais pour ce transporteur.</target>
+      </trans-unit>
+      <trans-unit id="57d056ed0984166336b7879c2af3657f">
+        <source>City</source>
+        <target>Ville</target>
+      </trans-unit>
+      <trans-unit id="82c5684ed9568779d980d6d3c4c1daf4">
+        <source>Comment for this line (visible to the customer)</source>
+        <target>Commentaire de la ligne (visible par le client)</target>
+      </trans-unit>
+      <trans-unit id="b4ec5b94d02af812d9eb0d2b9bd5fded">
+        <source>Comment shown to the customer</source>
+        <target>Commentaire affiché au client</target>
+      </trans-unit>
+      <trans-unit id="9d4df1a314d7f0f5a779407c42a79855">
+        <source>Commercial discount</source>
+        <target>Remise commerciale</target>
+      </trans-unit>
+      <trans-unit id="1c76cbfe21c6f44c1d1e59d54f3e4420">
+        <source>Company</source>
+        <target>Société</target>
+      </trans-unit>
+      <trans-unit id="f9260907f67a58271a8cb6dea378ac3f">
+        <source>Company, name, e-mail</source>
+        <target>Société, nom, e-mail</target>
+      </trans-unit>
+      <trans-unit id="6f738781bb2af9c5bf3482f69a6880a0">
+        <source>Confirm that the customer accepted this quote (e.g. by phone or signed PDF)?</source>
+        <target>Confirmer que le client a accepté ce devis (par téléphone ou PDF signé, par exemple) ?</target>
+      </trans-unit>
+      <trans-unit id="cb8cf9021815dd1a4b36836297561a57">
+        <source>Connection OK: a test file was written and read back.</source>
+        <target>Connexion OK : un fichier de test a été écrit puis relu.</target>
+      </trans-unit>
+      <trans-unit id="20d5c36b135366375e213cc3a36c593b">
+        <source>Convert to order</source>
+        <target>Convertir en commande</target>
+      </trans-unit>
+      <trans-unit id="28da5a2b48e42565ff7d9b7607659617">
+        <source>Copy (hidden)</source>
+        <target>Copie cachée</target>
+      </trans-unit>
+      <trans-unit id="59716c97497eb9694541f7c3d37b1a4d">
+        <source>Country</source>
+        <target>Pays</target>
+      </trans-unit>
+      <trans-unit id="2041c227092f93cd579dc1cf5efab8e6">
+        <source>Create a customer</source>
+        <target>Créer un client</target>
+      </trans-unit>
+      <trans-unit id="4e89e6c7e8e5fd8d6b5397b8519f8a7f">
+        <source>Create a new draft quote from this one?</source>
+        <target>Créer un nouveau brouillon à partir de ce devis ?</target>
+      </trans-unit>
+      <trans-unit id="731ca28b9f65abf9c1b89ab85539f101">
+        <source>Create a voucher dedicated to this customer</source>
+        <target>Créer un bon dédié à ce client</target>
+      </trans-unit>
+      <trans-unit id="c1c5ee9b24e475daef296f854d004a6d">
+        <source>Create the address</source>
+        <target>Créer l’adresse</target>
+      </trans-unit>
+      <trans-unit id="113720718c5ce98e63da7e4f060e6448">
+        <source>Create the customer</source>
+        <target>Créer le client</target>
+      </trans-unit>
+      <trans-unit id="63fa75be0206509ff72bd9e9164272c6">
+        <source>Create version %v% of this quote? The current version will be replaced when the new one is sent.</source>
+        <target>Créer la version %v% de ce devis ? La version actuelle sera remplacée à l’envoi de la nouvelle.</target>
+      </trans-unit>
+      <trans-unit id="f6b9dffce172226c1f7d611a91db76d2">
+        <source>Created from quote</source>
+        <target>Issue du devis</target>
+      </trans-unit>
+      <trans-unit id="e7f9e382dc50889098cbe56f2554c77b">
+        <source>Credit card</source>
+        <target>Carte bancaire</target>
+      </trans-unit>
+      <trans-unit id="3afaba4b9c876cf655396f98b03882b2">
+        <source>Credit card (online)</source>
+        <target>Carte bancaire (en ligne)</target>
+      </trans-unit>
+      <trans-unit id="99abdda34cff5f50ea0040d1af7ac1e8">
+        <source>Cron URL (to call from n8n)</source>
+        <target>URL cron (à appeler depuis n8n)</target>
+      </trans-unit>
+      <trans-unit id="ce26601dac0dea138b7295f02b7620a7">
+        <source>Customer</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="891b3002bc87577bdb34ccbcca380ef7">
+        <source>Customer and delivery</source>
+        <target>Client et livraison</target>
+      </trans-unit>
+      <trans-unit id="9af27ec38afd6e3e667b0e40fb41ad8b">
+        <source>Customer created.</source>
+        <target>Client créé.</target>
+      </trans-unit>
+      <trans-unit id="44749712dbec183e983dcd78a7736c41">
+        <source>Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="616b5940be86c327aaa5090f50c061f5">
+        <source>Declined</source>
+        <target>Refusé</target>
+      </trans-unit>
+      <trans-unit id="9b3cc660f9c017c3007c16d3002fa76b">
+        <source>Dedicated voucher</source>
+        <target>Bon dédié</target>
+      </trans-unit>
+      <trans-unit id="4bc7c73e4cd14c5663fe6de57e804d83">
+        <source>Default validity (days)</source>
+        <target>Validité par défaut (jours)</target>
+      </trans-unit>
+      <trans-unit id="f3c4b54f9e1b1fca841ab9fce1b8c01d">
+        <source>Deferred payment (B2B)</source>
+        <target>Paiement différé (B2B)</target>
+      </trans-unit>
+      <trans-unit id="f2a6c498fb90ee345d997f888fce3b18">
+        <source>Delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="065ab3a28ca4f16f55f103adc7d0226f">
+        <source>Delivery</source>
+        <target>Livraison</target>
+      </trans-unit>
+      <trans-unit id="af0f5bdc5be121b9307687aeeae38c17">
+        <source>Delivery address</source>
+        <target>Adresse de livraison</target>
+      </trans-unit>
+      <trans-unit id="04c78ac7d0c7676de8696dab3efadd46">
+        <source>Delivery label shown to the customer</source>
+        <target>Libellé de livraison affiché au client</target>
+      </trans-unit>
+      <trans-unit id="6310f29293c902c64db619c29179d99a">
+        <source>Delivery method</source>
+        <target>Mode de livraison</target>
+      </trans-unit>
+      <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39">
+        <source>Description</source>
+        <target>Désignation</target>
+      </trans-unit>
+      <trans-unit id="104d9898c04874d0fbac36e125fa1369">
+        <source>Discount</source>
+        <target>Remise</target>
+      </trans-unit>
+      <trans-unit id="70f9101e493983d335890b840f860bdd">
+        <source>Discount threshold requiring approval (%)</source>
+        <target>Seuil de remise soumis à validation (%)</target>
+      </trans-unit>
+      <trans-unit id="2fd49744efeb4627195552e157117f2a">
+        <source>Discount type</source>
+        <target>Type de remise</target>
+      </trans-unit>
+      <trans-unit id="9d5bf15117441a1b52eb1f0808e4aad3">
+        <source>Discounts</source>
+        <target>Remises</target>
+      </trans-unit>
+      <trans-unit id="5048d1a506fc2d8002dc7ba347e0ad4d">
+        <source>Download the PDF</source>
+        <target>Télécharger le PDF</target>
+      </trans-unit>
+      <trans-unit id="f03ab16cd58372c77ba45a3d9a5a1cb9">
+        <source>Draft</source>
+        <target>Brouillon</target>
+      </trans-unit>
+      <trans-unit id="5d8c03fd0a3abcddd4ce99ca4081702b">
+        <source>Draft %ref% created from the quote. You can now edit it.</source>
+        <target>Brouillon %ref% créé à partir du devis. Vous pouvez maintenant le modifier.</target>
+      </trans-unit>
+      <trans-unit id="0bf6d02bdbd0e68ce8cce276de070bd4">
+        <source>Draft %ref% deleted.</source>
+        <target>Brouillon %ref% supprimé.</target>
+      </trans-unit>
+      <trans-unit id="3a06a00dfceadb95c133500d3986ed39">
+        <source>Draft %ref% saved.</source>
+        <target>Brouillon %ref% enregistré.</target>
+      </trans-unit>
+      <trans-unit id="ae09f9ab8db40eae15b0533f0eced670">
+        <source>Drag to reorder</source>
+        <target>Glisser pour réordonner</target>
+      </trans-unit>
+      <trans-unit id="ed75712b0eb1913c28a3872731ffd48d">
+        <source>Duplicate</source>
+        <target>Dupliquer</target>
+      </trans-unit>
+      <trans-unit id="1e884e3078d9978e216a027ecd57fb34">
+        <source>E-mail</source>
+        <target>E-mail</target>
+      </trans-unit>
+      <trans-unit id="a22d1a5c0c44ab251e8af620eb9a82c7">
+        <source>E-mail preview</source>
+        <target>Aperçu de l’e-mail</target>
+      </trans-unit>
+      <trans-unit id="8fe896d776f716ddf91b0590c0911c97">
+        <source>E-mail sender</source>
+        <target>Expéditeur des e-mails</target>
+      </trans-unit>
+      <trans-unit id="6e96998ce833f63031ef6f66a7693586">
+        <source>E-mail sent</source>
+        <target>E-mail envoyé</target>
+      </trans-unit>
+      <trans-unit id="d96f886a86e317987b0802a6a1ba6ba0">
+        <source>E-mails always leave from the shop address (deliverability); with « sales rep », the customer replies directly to the rep.</source>
+        <target>Les e-mails partent toujours de l’adresse de la boutique (délivrabilité) ; avec « commercial », le client répond directement au commercial.</target>
+      </trans-unit>
+      <trans-unit id="0d4a6c5a99d8ec1a8a28c0fe6c8103b7">
+        <source>E-mails enabled</source>
+        <target>E-mails activés</target>
+      </trans-unit>
+      <trans-unit id="7dce122004969d56ae2e0245cb754d35">
+        <source>Edit</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="77e06dbb4768b3f5b03be40fbb5f30b4">
+        <source>Edit quote %ref%</source>
+        <target>Modifier le devis %ref%</target>
+      </trans-unit>
+      <trans-unit id="2d87deb58e4005bcf78e951a480f5fff">
+        <source>Enter a postcode to search for pickup points.</source>
+        <target>Saisissez un code postal pour chercher des points relais.</target>
+      </trans-unit>
+      <trans-unit id="2b3e9729e125a5173fe20e1dc37d4271">
+        <source>Enter a valid e-mail address.</source>
+        <target>Saisissez une adresse e-mail valide.</target>
+      </trans-unit>
+      <trans-unit id="9dff31c0004862b67cd4d4b9b041f356">
+        <source>Enter at least one valid recipient e-mail address.</source>
+        <target>Saisissez au moins une adresse e-mail de destinataire valide.</target>
+      </trans-unit>
+      <trans-unit id="a6668f30b847cd7e3b738ea6305ff550">
+        <source>Enter the amount or percentage of the dedicated voucher.</source>
+        <target>Saisissez le montant ou le pourcentage du bon dédié.</target>
+      </trans-unit>
+      <trans-unit id="92b5e9afe697ebbfc06ae4ec77c8da42">
+        <source>Enter the first and last name (letters only).</source>
+        <target>Saisissez le prénom et le nom (lettres uniquement).</target>
+      </trans-unit>
+      <trans-unit id="623b30b37a00a9d6e68ea696fe2afe20">
+        <source>Enter the value of the voucher.</source>
+        <target>Saisissez la valeur du bon.</target>
+      </trans-unit>
+      <trans-unit id="3a9bd7c183dc42e1b9ad96f34a3bf64e">
+        <source>Events sent: quote.sent, quote.accepted, quote.declined, quote.ordered, quote.paid, quote.expired — signed with the X-Snt-Signature header (HMAC SHA-256). Active from milestone 3.</source>
+        <target>Événements envoyés : quote.sent, quote.accepted, quote.declined, quote.ordered, quote.paid, quote.expired — signés avec l’en-tête X-Snt-Signature (HMAC SHA-256). Actif à partir du jalon 3.</target>
+      </trans-unit>
+      <trans-unit id="4a4998a3b2da0d8aa25b4067aba9d501">
+        <source>Expire</source>
+        <target>Expirer</target>
+      </trans-unit>
+      <trans-unit id="24fe48030f7d3097d5882535b04c3fa8">
+        <source>Expired</source>
+        <target>Expiré</target>
+      </trans-unit>
+      <trans-unit id="0350696c758848b4574f9cadb0f4c0f4">
+        <source>Fill in the bucket, access key and secret key, save, then test again.</source>
+        <target>Renseignez le bucket, la clé d’accès et la clé secrète, enregistrez, puis testez à nouveau.</target>
+      </trans-unit>
+      <trans-unit id="cab867c17f596a6061acb3d48ace9019">
+        <source>Find a customer</source>
+        <target>Rechercher un client</target>
+      </trans-unit>
+      <trans-unit id="20db0bfeecd8fe60533206a2b5e9891a">
+        <source>First name</source>
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit id="e3cdee1baf12b06f2c2fc78ea1b8201b">
+        <source>Fixed quotes converted into orders without the checkout funnel.</source>
+        <target>Devis figés, convertis en commande sans passer par le tunnel.</target>
+      </trans-unit>
+      <trans-unit id="b24ce0cd392a5b0b8dedc66c25213594">
+        <source>Free</source>
+        <target>Offert</target>
+      </trans-unit>
+      <trans-unit id="98f048661d4c0ac7f779f6151b6889c5">
+        <source>Free line</source>
+        <target>Ligne libre</target>
+      </trans-unit>
+      <trans-unit id="29aa46cc3d2677c7e0f216910df600ff">
+        <source>Free shipping</source>
+        <target>Port offert</target>
+      </trans-unit>
+      <trans-unit id="0db377921f4ce762c62526131097968f">
+        <source>General</source>
+        <target>Général</target>
+      </trans-unit>
+      <trans-unit id="16d2b386b2034b9488996466aaae0b57">
+        <source>History</source>
+        <target>Historique</target>
+      </trans-unit>
+      <trans-unit id="e90719b646c70b4f234907b63575471f">
+        <source>Import limited to 300 lines.</source>
+        <target>Import limité à 300 lignes.</target>
+      </trans-unit>
+      <trans-unit id="08643daceac5930a01274e8e41de11b3">
+        <source>Internal note</source>
+        <target>Note interne</target>
+      </trans-unit>
+      <trans-unit id="a3c5ebefc29bfcd99d33ead395b2d826">
+        <source>Intra-EU B2B customer with VAT number %vat%: VAT is not charged (reverse charge).</source>
+        <target>Client B2B UE avec n° de TVA %vat% : TVA non facturée (autoliquidation).</target>
+      </trans-unit>
+      <trans-unit id="2bac2dc3042d72e7e8f7d56e76b1ffa9">
+        <source>Intra-EU VAT number</source>
+        <target>N° de TVA intracommunautaire</target>
+      </trans-unit>
+      <trans-unit id="601d8c4b9f72fc1862013c19b677a499">
+        <source>Invoice address</source>
+        <target>Adresse de facturation</target>
+      </trans-unit>
+      <trans-unit id="b021df6aac4654c454f46c77646e745f">
+        <source>Label</source>
+        <target>Libellé</target>
+      </trans-unit>
+      <trans-unit id="937f546606da673e8b19483bab8a65f7">
+        <source>Label (service, installation, fees…)</source>
+        <target>Libellé (prestation, installation, frais…)</target>
+      </trans-unit>
+      <trans-unit id="8d3f5eff9c40ee315d452392bed5309b">
+        <source>Last name</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="8b70f63dd1febae1cbf09dca83429b74">
+        <source>Leave empty to keep the current key.</source>
+        <target>Laisser vide pour conserver la clé actuelle.</target>
+      </trans-unit>
+      <trans-unit id="2b3bc222946d6f742d021d4486d591e2">
+        <source>Leave empty to keep the current secret.</source>
+        <target>Laisser vide pour conserver le secret actuel.</target>
+      </trans-unit>
+      <trans-unit id="823d0a9f26da1709909f89ebe82340b3">
+        <source>Legal notices (PDF footer)</source>
+        <target>Mentions légales (pied de page du PDF)</target>
+      </trans-unit>
+      <trans-unit id="652bc7b6601cfe3c7c0c29d5684ee3b6">
+        <source>Line %n%: a discount cannot exceed 100%.</source>
+        <target>Ligne %n% : une remise ne peut pas dépasser 100 %.</target>
+      </trans-unit>
+      <trans-unit id="8c0a00761a06f762b5fdb70cf20144ab">
+        <source>Line %n%: a title or comment line cannot be empty.</source>
+        <target>Ligne %n% : une ligne de titre ou de commentaire ne peut pas être vide.</target>
+      </trans-unit>
+      <trans-unit id="558ff3b176e45ea612e873bb6b86c572">
+        <source>Line %n%: choose a combination (size, colour…) for « %name% ».</source>
+        <target>Ligne %n% : choisissez une déclinaison (taille, couleur…) pour « %name% ».</target>
+      </trans-unit>
+      <trans-unit id="3d90ee5b894a85edc28ae8cf643aef7d">
+        <source>Line %n%: choose a valid VAT rate.</source>
+        <target>Ligne %n% : choisissez un taux de TVA valide.</target>
+      </trans-unit>
+      <trans-unit id="a3fecd8ee549ea40dd705376fd3bb6eb">
+        <source>Line %n%: choose a valid combination.</source>
+        <target>Ligne %n% : choisissez une déclinaison valide.</target>
+      </trans-unit>
+      <trans-unit id="26e2cf1888cdb78eee39fda3935fac92">
+        <source>Line %n%: enter a label for the free line.</source>
+        <target>Ligne %n% : saisissez un libellé pour la ligne libre.</target>
+      </trans-unit>
+      <trans-unit id="d71a50e77eadabbbd61b6cae63a4c7b8">
+        <source>Line %n%: net price below the purchase price.</source>
+        <target>Ligne %n% : prix net inférieur au prix d’achat.</target>
+      </trans-unit>
+      <trans-unit id="cdd19d48323004452ffc42478163b512">
+        <source>Line %n%: no product with reference « %ref% ».</source>
+        <target>Ligne %n% : aucun produit avec la référence « %ref% ».</target>
+      </trans-unit>
+      <trans-unit id="a87257f2fc0c7730142bbe6d59f07f6b">
+        <source>Line %n%: only %stock% in stock (the quote can still be sent).</source>
+        <target>Ligne %n% : seulement %stock% en stock (le devis peut quand même être envoyé).</target>
+      </trans-unit>
+      <trans-unit id="41f24112456202d2a0dcac5bb32ff89a">
+        <source>Line %n%: reference or quantity missing.</source>
+        <target>Ligne %n% : référence ou quantité manquante.</target>
+      </trans-unit>
+      <trans-unit id="ab8fc32e5d7da4d2619c87d2fc7e1d8e">
+        <source>Line %n%: the quantity must be at least 1.</source>
+        <target>Ligne %n% : la quantité doit être d’au moins 1.</target>
+      </trans-unit>
+      <trans-unit id="5d6d88b0a40e007e03cab086ddb822ce">
+        <source>Line %n%: this product no longer exists. Remove the line or replace it.</source>
+        <target>Ligne %n% : ce produit n’existe plus. Supprimez ou remplacez la ligne.</target>
+      </trans-unit>
+      <trans-unit id="2a9c7c069e91954f4ad5963dbec24ff4">
+        <source>Main colour</source>
+        <target>Couleur principale</target>
+      </trans-unit>
+      <trans-unit id="98369609669478919c74c916440e9978">
+        <source>Margin</source>
+        <target>Marge</target>
+      </trans-unit>
+      <trans-unit id="73e11f012ba1f7ea10b9b23c31d7c3e6">
+        <source>Margin: %amount% (%rate%)</source>
+        <target>Marge : %amount% (%rate%)</target>
+      </trans-unit>
+      <trans-unit id="bd2a040be81b1e0b271c62df1125b432">
+        <source>Mark as accepted</source>
+        <target>Marquer comme accepté</target>
+      </trans-unit>
+      <trans-unit id="8d3f57125194f17cdf9a799579bf29ba">
+        <source>Mark as declined</source>
+        <target>Marquer comme refusé</target>
+      </trans-unit>
+      <trans-unit id="39b78036dbb0eba7b2522d762ea72dea">
+        <source>Mark as expired</source>
+        <target>Marquer comme expiré</target>
+      </trans-unit>
+      <trans-unit id="6e19c95bf6995547d9742d4589ddfeb8">
+        <source>Mark this quote as declined by the customer?</source>
+        <target>Marquer ce devis comme refusé par le client ?</target>
+      </trans-unit>
+      <trans-unit id="0aec7a80df070d47d792312973fc6b71">
+        <source>Message to the customer</source>
+        <target>Message au client</target>
+      </trans-unit>
+      <trans-unit id="9f6e99bdd4184b83dc478d0ab1b4cbf7">
+        <source>Minimum amount</source>
+        <target>Montant minimum</target>
+      </trans-unit>
+      <trans-unit id="9ac2c1b42dea1e7c5b61822c2d0fa11e">
+        <source>Module used for the payment link. Its own credentials are used: nothing to enter here.</source>
+        <target>Module utilisé pour le lien de paiement. Ses propres identifiants sont utilisés : rien à saisir ici.</target>
+      </trans-unit>
+      <trans-unit id="dd9f0c7e1bb3b749bd423e3544b4a8e3">
+        <source>Move down</source>
+        <target>Descendre</target>
+      </trans-unit>
+      <trans-unit id="f77af7695f71323808f9b6e2795cde86">
+        <source>Move up</source>
+        <target>Monter</target>
+      </trans-unit>
+      <trans-unit id="2804b15012d1d12a8435ab7005b05a8d">
+        <source>Name of the address</source>
+        <target>Nom de l’adresse</target>
+      </trans-unit>
+      <trans-unit id="aad6cce37277b9e82cf25aadd47b52c1">
+        <source>Name, e-mail, company or SIRET</source>
+        <target>Nom, e-mail, société ou SIRET</target>
+      </trans-unit>
+      <trans-unit id="ca39f9d3391854806de6a968ce530e76">
+        <source>Name, reference or EAN — the line is added directly</source>
+        <target>Nom, référence ou EAN — la ligne est ajoutée directement</target>
+      </trans-unit>
+      <trans-unit id="ba1b04ae942d119257e971298cf061d4">
+        <source>Net excl. tax</source>
+        <target>Net HT</target>
+      </trans-unit>
+      <trans-unit id="5a104e7ff45588f160e31bb0354adca7">
+        <source>Never visible to the customer.</source>
+        <target>Jamais visible par le client.</target>
+      </trans-unit>
+      <trans-unit id="393d8c6bc7a04264bd9523dc8c92b818">
+        <source>New address</source>
+        <target>Nouvelle adresse</target>
+      </trans-unit>
+      <trans-unit id="18ddd427aa7da1a6ba8e30e723ffabf0">
+        <source>New quote</source>
+        <target>Nouveau devis</target>
+      </trans-unit>
+      <trans-unit id="1904762cf9fed3283603d26f9d99874d">
+        <source>New quote for this customer</source>
+        <target>Nouveau devis pour ce client</target>
+      </trans-unit>
+      <trans-unit id="275e590cc57b619e7c4d9a82d3278394">
+        <source>New version</source>
+        <target>Nouvelle version</target>
+      </trans-unit>
+      <trans-unit id="b702e69a0a725a65b97bebafd020c97a">
+        <source>No PDF sent yet. Each PDF sent to the customer is archived here, unchanged.</source>
+        <target>Aucun PDF envoyé pour l’instant. Chaque PDF envoyé au client est archivé ici, à l’identique.</target>
+      </trans-unit>
+      <trans-unit id="cf8a55ce66984b20e19f1086da8711fe">
+        <source>No address — create one</source>
+        <target>Aucune adresse — créez-en une</target>
+      </trans-unit>
+      <trans-unit id="ab587f6f56bf54ffa9ce333964b776a2">
+        <source>No calculated rate: this carrier does not normally deliver this address or weight. Enter the shipping cost manually.</source>
+        <target>Pas de tarif calculé : ce transporteur ne livre normalement pas cette adresse ou ce poids. Saisissez le port manuellement.</target>
+      </trans-unit>
+      <trans-unit id="d29df80cbba23d977324d1297f9817a3">
+        <source>No events yet.</source>
+        <target>Aucun événement pour l’instant.</target>
+      </trans-unit>
+      <trans-unit id="6150841a3351688ef14d33fdf7c85850">
+        <source>No lines yet: search for a product above, or add a free line.</source>
+        <target>Aucune ligne pour l’instant : recherchez un produit ci-dessus ou ajoutez une ligne libre.</target>
+      </trans-unit>
+      <trans-unit id="3385cacc9de82b049a7cd6a9a4a1a4f9">
+        <source>No quotes for this customer yet.</source>
+        <target>Aucun devis pour ce client.</target>
+      </trans-unit>
+      <trans-unit id="908f8d9f34f375a55dd5b6a86489d364">
+        <source>No result</source>
+        <target>Aucun résultat</target>
+      </trans-unit>
+      <trans-unit id="6adf97f83acf6453d4a6a4b1070f3754">
+        <source>None</source>
+        <target>Aucun</target>
+      </trans-unit>
+      <trans-unit id="1f8be26320173567a11fab3f80bc6198">
+        <source>Not usable (expired, used up or inactive)</source>
+        <target>Inutilisable (expiré, épuisé ou inactif)</target>
+      </trans-unit>
+      <trans-unit id="3b0649c72650c313a357338dcdfb64ec">
+        <source>Note</source>
+        <target>Note</target>
+      </trans-unit>
+      <trans-unit id="87743a339e17866802ea62efc6501172">
+        <source>Nothing to process: all quotes are up to date.</source>
+        <target>Rien à traiter : tous les devis sont à jour.</target>
+      </trans-unit>
+      <trans-unit id="09a2e0bedbd6c1df042b073d2bace918">
+        <source>Object storage endpoint</source>
+        <target>Point d’accès Object Storage</target>
+      </trans-unit>
+      <trans-unit id="260e3c7d58464d77d4abbbb95438d3c8">
+        <source>One line per product: reference ; quantity</source>
+        <target>Une ligne par produit : référence ; quantité</target>
+      </trans-unit>
+      <trans-unit id="e50c7a9e4f8d4c31ada09973c94c59b3">
+        <source>Online payment module</source>
+        <target>Module de paiement en ligne</target>
+      </trans-unit>
+      <trans-unit id="f6a52f6bf60f518ee8be119637a5b5dd">
+        <source>Only drafts that have never been sent can be deleted. Expire the quote instead.</source>
+        <target>Seuls les brouillons jamais envoyés peuvent être supprimés. Expirez plutôt le devis.</target>
+      </trans-unit>
+      <trans-unit id="6487a6b8024f3b5d283747e6a7fd4ecc">
+        <source>Only sent quotes awaiting the customer can be reminded.</source>
+        <target>Seuls les devis envoyés en attente du client peuvent être relancés.</target>
+      </trans-unit>
+      <trans-unit id="5414eedd728b18d0d8bfc8dd6a2dd53b">
+        <source>Or import a CSV file (reference;quantity)</source>
+        <target>Ou importez un fichier CSV (référence;quantité)</target>
+      </trans-unit>
+      <trans-unit id="a240fa27925a635b08dc28c9e4f9216d">
+        <source>Order</source>
+        <target>Commande</target>
+      </trans-unit>
+      <trans-unit id="26e09a1ee1517389c7b07f42df65561a">
+        <source>Ordered</source>
+        <target>Commandé</target>
+      </trans-unit>
+      <trans-unit id="cf51246a9f3c968b850c4014a9253e03">
+        <source>Overall discount</source>
+        <target>Remise globale</target>
+      </trans-unit>
+      <trans-unit id="90bb8cdee563334874ad87a20e6c4cc9">
+        <source>Overall discount on products</source>
+        <target>Remise globale sur les produits</target>
+      </trans-unit>
+      <trans-unit id="e039f83acda3d96062d95763b03088ab">
+        <source>PDF and e-mails</source>
+        <target>PDF et e-mails</target>
+      </trans-unit>
+      <trans-unit id="3f9c8db824ce43f20794232c126eb8f3">
+        <source>PDF archived</source>
+        <target>PDF archivé</target>
+      </trans-unit>
+      <trans-unit id="60517802967f7cb7cc888427715ef186">
+        <source>PDF sent</source>
+        <target>PDF envoyés</target>
+      </trans-unit>
+      <trans-unit id="10fd9d7d574d6e35d703e4acb7185f5e">
+        <source>PDF storage</source>
+        <target>Stockage des PDF</target>
+      </trans-unit>
+      <trans-unit id="cf2cc2d8ccc6b7c8ea5a3e0f179d6493">
+        <source>PDFs are archived in « bucket/site-code/Devis-REF-vN.pdf ». Without a bucket, they are kept in the shop’s var/modules folder (development only).</source>
+        <target>Les PDF sont archivés dans « bucket/code-site/Devis-REF-vN.pdf ». Sans bucket, ils sont conservés dans le dossier var/modules de la boutique (développement uniquement).</target>
+      </trans-unit>
+      <trans-unit id="e0010a0a1a3259ab5c06a19bad532851">
+        <source>Paid</source>
+        <target>Payé</target>
+      </trans-unit>
+      <trans-unit id="c453a4b8e8d98e82f35b67f433e3b4da">
+        <source>Payment</source>
+        <target>Paiement</target>
+      </trans-unit>
+      <trans-unit id="f9c43173e5db74a01dd11ce73fbbb237">
+        <source>Payment link</source>
+        <target>Lien de paiement</target>
+      </trans-unit>
+      <trans-unit id="82e9d934dce4c4971cedf7d6ad5b8521">
+        <source>Payment link validity (days)</source>
+        <target>Validité du lien de paiement (jours)</target>
+      </trans-unit>
+      <trans-unit id="42d16f3d24a67c76e04c26db8625887c">
+        <source>Payment links will be available with the next update of the module.</source>
+        <target>Les liens de paiement seront disponibles avec la prochaine mise à jour du module.</target>
+      </trans-unit>
+      <trans-unit id="71c3cdf97afedd63429323be9e532d88">
+        <source>Payment methods allowed</source>
+        <target>Moyens de paiement autorisés</target>
+      </trans-unit>
+      <trans-unit id="4cfa0b240ee16a2ed4d767716bdc4f54">
+        <source>Payment methods proposed by default</source>
+        <target>Moyens de paiement proposés par défaut</target>
+      </trans-unit>
+      <trans-unit id="ccbe2525fc2910d02d485b08347f0243">
+        <source>Payment terms (printed on the PDF)</source>
+        <target>Conditions de règlement (imprimées sur le PDF)</target>
+      </trans-unit>
+      <trans-unit id="f707be4edeb75a14967b4a22667fd0f3">
+        <source>Permanently delete the draft %ref%?</source>
+        <target>Supprimer définitivement le brouillon %ref% ?</target>
+      </trans-unit>
+      <trans-unit id="17e9ad88d15b05a2a0dcb0d5f9ba0d7e">
+        <source>Personal message</source>
+        <target>Message personnalisé</target>
+      </trans-unit>
+      <trans-unit id="bcc254b55c4a1babdf1dcb82c207506b">
+        <source>Phone</source>
+        <target>Téléphone</target>
+      </trans-unit>
+      <trans-unit id="96fd07f8244c1d8b9a38930ea4bdec97">
+        <source>Pickup</source>
+        <target>Retrait</target>
+      </trans-unit>
+      <trans-unit id="ee5c5839980b47f1893220655a3de0fb">
+        <source>Pickup point</source>
+        <target>Point relais</target>
+      </trans-unit>
+      <trans-unit id="8bcdc441379cbf584638b0589a3f9adb">
+        <source>Postcode</source>
+        <target>Code postal</target>
+      </trans-unit>
+      <trans-unit id="d7b54aa3b8b07af82eae36a7055799aa">
+        <source>Preview the PDF</source>
+        <target>Aperçu du PDF</target>
+      </trans-unit>
+      <trans-unit id="7694b06488062cea74eae5f1922c53bc">
+        <source>Printed on the PDF and shown to the customer.</source>
+        <target>Imprimé sur le PDF et affiché au client.</target>
+      </trans-unit>
+      <trans-unit id="f78c2c5b7fb779e8e6a1d2fb58950e08">
+        <source>Printed on the PDF when bank transfer is allowed.</source>
+        <target>Imprimé sur le PDF quand le virement est autorisé.</target>
+      </trans-unit>
+      <trans-unit id="068f80c7519d0528fb08e82137a72131">
+        <source>Products</source>
+        <target>Produits</target>
+      </trans-unit>
+      <trans-unit id="2091eecdb8d7db4e0d42e23386ccf9f4">
+        <source>Products excl. tax</source>
+        <target>Produits HT</target>
+      </trans-unit>
+      <trans-unit id="5bfb437f556663043f4c993870068065">
+        <source>Profiles allowed to approve large discounts</source>
+        <target>Profils autorisés à valider les fortes remises</target>
+      </trans-unit>
+      <trans-unit id="1c2119e3711b9e763dd6eb763945a865">
+        <source>Profiles allowed to convert a quote into an order</source>
+        <target>Profils autorisés à convertir un devis en commande</target>
+      </trans-unit>
+      <trans-unit id="dcb9fbb8419612a58aa175f07d9a9efd">
+        <source>Profiles allowed to see purchase prices and margins</source>
+        <target>Profils autorisés à voir les prix d’achat et les marges</target>
+      </trans-unit>
+      <trans-unit id="7adea0d9c77aabccd8bb67ae0a832d59">
+        <source>Project name</source>
+        <target>Nom du projet</target>
+      </trans-unit>
+      <trans-unit id="f2e272bdca5107811a16f0df2fb62d4d">
+        <source>Purchase: %price%</source>
+        <target>Achat : %price%</target>
+      </trans-unit>
+      <trans-unit id="03ab340b3f99e03cff9e84314ead38c0">
+        <source>Qty</source>
+        <target>Qté</target>
+      </trans-unit>
+      <trans-unit id="89d24daf0bdce656690f084b5f0af54e">
+        <source>Quick filters</source>
+        <target>Filtres rapides</target>
+      </trans-unit>
+      <trans-unit id="67276ea930b4e804c3a8d2c8e2b4c2ed">
+        <source>Quote %ref%</source>
+        <target>Devis %ref%</target>
+      </trans-unit>
+      <trans-unit id="69e6b42229b2d21cde6c506556fd38e6">
+        <source>Quote content</source>
+        <target>Contenu du devis</target>
+      </trans-unit>
+      <trans-unit id="ad7ac09dde6d89927e592ac82b6fb689">
+        <source>Quote created</source>
+        <target>Devis créé</target>
+      </trans-unit>
+      <trans-unit id="726bcdb516857196844bab6c27dafc48">
+        <source>Quote from one of their carts</source>
+        <target>Devis depuis un de ses paniers</target>
+      </trans-unit>
+      <trans-unit id="f190baa73d7b608edf97947a3b8eb070">
+        <source>Quote modified</source>
+        <target>Devis modifié</target>
+      </trans-unit>
+      <trans-unit id="6a64f457d1d0cdf51ef1bc711de5d5ad">
+        <source>Quote sent</source>
+        <target>Devis envoyé</target>
+      </trans-unit>
+      <trans-unit id="5153cd154fb7f08fb8a664b8fc7407ab">
+        <source>Quote — awaiting payment</source>
+        <target>Devis — en attente de paiement</target>
+      </trans-unit>
+      <trans-unit id="c9a28e7f0dbc3ed20a161351c4f29a7b">
+        <source>Quotes</source>
+        <target>Devis</target>
+      </trans-unit>
+      <trans-unit id="952f23f0c9b23eaa1fad35c9f814332e">
+        <source>Quotes marked as expired: %count%.</source>
+        <target>Devis marqués comme expirés : %count%.</target>
+      </trans-unit>
+      <trans-unit id="5ee4a517df4617ad74c4b6daa694ab02">
+        <source>Quotes — settings</source>
+        <target>Devis — configuration</target>
+      </trans-unit>
+      <trans-unit id="63d5049791d9d79d86e9a108b0a999ca">
+        <source>Reference</source>
+        <target>Référence</target>
+      </trans-unit>
+      <trans-unit id="07608c7e24f9ebe49546dea4bdf5ba1e">
+        <source>Reference pattern</source>
+        <target>Format de référence</target>
+      </trans-unit>
+      <trans-unit id="f447ac856e7e72435904956e3b15f433">
+        <source>Region</source>
+        <target>Région</target>
+      </trans-unit>
+      <trans-unit id="c97f8e5846e31f292c5e904f7dd577c9">
+        <source>Reminder before expiry</source>
+        <target>Relance avant expiration</target>
+      </trans-unit>
+      <trans-unit id="7cfa7a09e3ea8a113118e7291086c9ec">
+        <source>Reminders sent: %count%.</source>
+        <target>Relances envoyées : %count%.</target>
+      </trans-unit>
+      <trans-unit id="1063e38cb53d94d386f21227fcd84717">
+        <source>Remove</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="c9fda9a8bc794b45005e486e45091edb">
+        <source>Reopen as draft</source>
+        <target>Rouvrir en brouillon</target>
+      </trans-unit>
+      <trans-unit id="b3f23170be598de0771ac94684114f94">
+        <source>Replaced</source>
+        <target>Remplacé</target>
+      </trans-unit>
+      <trans-unit id="4fd8160e586976d268e9f39718b13971">
+        <source>Reserve stock when a quote is accepted</source>
+        <target>Réserver le stock à l’acceptation d’un devis</target>
+      </trans-unit>
+      <trans-unit id="72670177480da92f72dc55e4aaff219b">
+        <source>Rights</source>
+        <target>Droits</target>
+      </trans-unit>
+      <trans-unit id="0bdf6f4484d8489156d3acc19c51c498">
+        <source>SIRET, VAT number, share capital, RCS… Leave empty to use the shop details.</source>
+        <target>SIRET, n° de TVA, capital, RCS… Laisser vide pour reprendre les coordonnées de la boutique.</target>
+      </trans-unit>
+      <trans-unit id="ad7aca2554d1d86d52f4cb9af3b62814">
+        <source>SNT Quotes</source>
+        <target>SNT Devis</target>
+      </trans-unit>
+      <trans-unit id="e9894e312e2f5b68aead6b3dfb321074">
+        <source>Sales rep</source>
+        <target>Commercial</target>
+      </trans-unit>
+      <trans-unit id="0418db0b7495c9e50b1934ed8348035d">
+        <source>Sales rep:</source>
+        <target>Commercial :</target>
+      </trans-unit>
+      <trans-unit id="4cc42eedea604755413a6b875183579b">
+        <source>Same as delivery</source>
+        <target>Identique à la livraison</target>
+      </trans-unit>
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354">
+        <source>Save</source>
+        <target>Enregistrer</target>
+      </trans-unit>
+      <trans-unit id="48ca50ce77bf12c9e86c6b4a98973ec9">
+        <source>Save draft</source>
+        <target>Enregistrer le brouillon</target>
+      </trans-unit>
+      <trans-unit id="a710637a587bb852edb77dcfc6f58c0b">
+        <source>Saved at %time%</source>
+        <target>Enregistré à %time%</target>
+      </trans-unit>
+      <trans-unit id="eedf6b8bfc83284c3294ec4b38188e8a">
+        <source>Saving…</source>
+        <target>Enregistrement…</target>
+      </trans-unit>
+      <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3">
+        <source>Search</source>
+        <target>Rechercher</target>
+      </trans-unit>
+      <trans-unit id="952bf87c967660b7bbd4e1eb08cefc92">
+        <source>Secret key</source>
+        <target>Clé secrète</target>
+      </trans-unit>
+      <trans-unit id="7b058d2a2bc435374b0243f59844e3b1">
+        <source>Section title</source>
+        <target>Titre de section</target>
+      </trans-unit>
+      <trans-unit id="5e4f430912a6fc37219da35732b5032a">
+        <source>Select a shop in the multistore menu: settings are saved shop by shop.</source>
+        <target>Sélectionnez une boutique dans le menu multiboutique : la configuration est enregistrée boutique par boutique.</target>
+      </trans-unit>
+      <trans-unit id="94966d90747b97d1f0f206c98a8b1ac3">
+        <source>Send</source>
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="79c6187c8216ad1bc3d348ba161524b2">
+        <source>Send a copy to the sales rep</source>
+        <target>Envoyer une copie au commercial</target>
+      </trans-unit>
+      <trans-unit id="38b36a07042eb64bbb052f21409d298c">
+        <source>Send a reminder</source>
+        <target>Relancer</target>
+      </trans-unit>
+      <trans-unit id="50ab1d847e175723e3f782f780d72b16">
+        <source>Send again</source>
+        <target>Renvoyer</target>
+      </trans-unit>
+      <trans-unit id="cea716639bb091a9b57d4462b2fca646">
+        <source>Send me a copy</source>
+        <target>M’envoyer une copie</target>
+      </trans-unit>
+      <trans-unit id="65ffcf5f8fe1b1016b5686daa9941598">
+        <source>Send the quote to the customer</source>
+        <target>Envoyer le devis au client</target>
+      </trans-unit>
+      <trans-unit id="704ffe0b00405daa5c669f4963a5224b">
+        <source>Send to customer</source>
+        <target>Envoyer au client</target>
+      </trans-unit>
+      <trans-unit id="a57ef5abaa2102119e62317c3e066c23">
+        <source>Sends reminders and expires quotes past their validity date. Call it once a day.</source>
+        <target>Envoie les relances et expire les devis dont la validité est dépassée. À appeler une fois par jour.</target>
+      </trans-unit>
+      <trans-unit id="7f8c0283f16925caed8e632086b81b9c">
+        <source>Sent</source>
+        <target>Envoyé</target>
+      </trans-unit>
+      <trans-unit id="e756c795be8aeb1e0024abcc7050943a">
+        <source>Sent or viewed, no answer yet</source>
+        <target>Envoyés ou vus, sans réponse</target>
+      </trans-unit>
+      <trans-unit id="ac2dbf54c53b2aa925d0a4fdc5196d56">
+        <source>Separate several addresses with a comma.</source>
+        <target>Séparez plusieurs adresses par une virgule.</target>
+      </trans-unit>
+      <trans-unit id="f4f70727dc34561dfde1a3c529b6205c">
+        <source>Settings</source>
+        <target>Configuration</target>
+      </trans-unit>
+      <trans-unit id="446c5a90b75d829d417fae324a6f3a76">
+        <source>Settings of the shop « %shop% ».</source>
+        <target>Configuration de la boutique « %shop% ».</target>
+      </trans-unit>
+      <trans-unit id="dc3edcffe21781e807f283cb9675dbed">
+        <source>Settings saved for the shop « %shop% ».</source>
+        <target>Configuration enregistrée pour la boutique « %shop% ».</target>
+      </trans-unit>
+      <trans-unit id="296b4b1ed5416c983276ad148737180e">
+        <source>Shipping cost excl. tax</source>
+        <target>Frais de port HT</target>
+      </trans-unit>
+      <trans-unit id="057949c56d3a9dc90d12efc95e75b1ab">
+        <source>Shipping discount excl. tax</source>
+        <target>Remise sur le port HT</target>
+      </trans-unit>
+      <trans-unit id="968427932a8ac5b07731f1532162143b">
+        <source>Shipping excl. tax</source>
+        <target>Port HT</target>
+      </trans-unit>
+      <trans-unit id="0c235fe409ee478ac892a3e5ba368625">
+        <source>Show « Request a quote » on product pages</source>
+        <target>Afficher « Demander un devis » sur les fiches produit</target>
+      </trans-unit>
+      <trans-unit id="2e7329e8e4878bfad8ec5ed7fac08659">
+        <source>Signing secret (HMAC)</source>
+        <target>Secret de signature (HMAC)</target>
+      </trans-unit>
+      <trans-unit id="1a47947c7f4efe361fe3b52cd542e1cd">
+        <source>Site code</source>
+        <target>Code site</target>
+      </trans-unit>
+      <trans-unit id="8e2b3df0434ecfb5c2c6fe395b95e986">
+        <source>Some fields are invalid: check the highlighted fields.</source>
+        <target>Certains champs sont invalides : vérifiez les champs signalés.</target>
+      </trans-unit>
+      <trans-unit id="72291580b34f86e7b2e462fd8316ee95">
+        <source>Special delivery</source>
+        <target>Livraison spéciale</target>
+      </trans-unit>
+      <trans-unit id="e04b1da54b17e757981af7b0cc591b37">
+        <source>Start from one of the customer’s carts</source>
+        <target>Partir d’un panier du client</target>
+      </trans-unit>
+      <trans-unit id="ec53a8c4f07baed5d8825072c89799be">
+        <source>Status</source>
+        <target>Statut</target>
+      </trans-unit>
+      <trans-unit id="8cca047ead8a588b3a3a5a2b8a64ec2d">
+        <source>Status: %from% → %to%</source>
+        <target>Statut : %from% → %to%</target>
+      </trans-unit>
+      <trans-unit id="0956e30e3f5c6c2ddbf86407d09e7894">
+        <source>Stock: %qty%</source>
+        <target>Stock : %qty%</target>
+      </trans-unit>
+      <trans-unit id="c7892ebbb139886662c6f2fc8c450710">
+        <source>Subject</source>
+        <target>Objet</target>
+      </trans-unit>
+      <trans-unit id="290612199861c31d1036b185b4e69b75">
+        <source>Summary</source>
+        <target>Récapitulatif</target>
+      </trans-unit>
+      <trans-unit id="a45da96d0bf6575970f2d27af22be28a">
+        <source>System</source>
+        <target>Système</target>
+      </trans-unit>
+      <trans-unit id="6f1bf85c9ebb3c7fa26251e1e335e032">
+        <source>Terms</source>
+        <target>Conditions</target>
+      </trans-unit>
+      <trans-unit id="5f80cff6124306698940b4a42c013eb9">
+        <source>Terms and conditions (CMS page)</source>
+        <target>CGV (page CMS)</target>
+      </trans-unit>
+      <trans-unit id="10b0effeb463282d009633fbbe6662b5">
+        <source>Terms and conditions (text)</source>
+        <target>CGV (texte)</target>
+      </trans-unit>
+      <trans-unit id="c46aaf7e2cc570fc8bf942402db92d8f">
+        <source>Terms and conditions appended to the PDF</source>
+        <target>CGV ajoutées au PDF</target>
+      </trans-unit>
+      <trans-unit id="660fc9e01f52fb7f8a715e51167c4f8d">
+        <source>Test the connection</source>
+        <target>Tester la connexion</target>
+      </trans-unit>
+      <trans-unit id="327e9e1531f9513e3b50efb195c4148c">
+        <source>Text below</source>
+        <target>Texte ci-dessous</target>
+      </trans-unit>
+      <trans-unit id="b4caefa4a4f0eb07fc24309cc3df3423">
+        <source>The address could not be created.</source>
+        <target>L’adresse n’a pas pu être créée.</target>
+      </trans-unit>
+      <trans-unit id="99b292b18fed4177f3397f6507d556b5">
+        <source>The amount entered here is applied as is to the order, even if the carrier rules would give another price.</source>
+        <target>Le montant saisi ici est appliqué tel quel à la commande, même si les règles du transporteur donneraient un autre prix.</target>
+      </trans-unit>
+      <trans-unit id="f195b0ef945f1eee3c34c5ac27d1701b">
+        <source>The assigned sales rep (reply to the rep)</source>
+        <target>Le commercial assigné (réponse au commercial)</target>
+      </trans-unit>
+      <trans-unit id="2025e64181b54af16924311916b08e7e">
+        <source>The attachment « %name% » is larger than 8 MB.</source>
+        <target>La pièce jointe « %name% » dépasse 8 Mo.</target>
+      </trans-unit>
+      <trans-unit id="160559db32aa21ed939cf7f4aa0e56e0">
+        <source>The customer could not be created. Check the information entered.</source>
+        <target>Le client n’a pas pu être créé. Vérifiez les informations saisies.</target>
+      </trans-unit>
+      <trans-unit id="1b5a453f26ff78a9bd1a3cad8f0675dd">
+        <source>The customer will no longer be able to accept this quote. Continue?</source>
+        <target>Le client ne pourra plus accepter ce devis. Continuer ?</target>
+      </trans-unit>
+      <trans-unit id="c1724d3d8d66f06710ce5b19beeaa87c">
+        <source>The customer will set their password with « Forgot your password? » to access their account.</source>
+        <target>Le client définira son mot de passe avec « Mot de passe oublié ? » pour accéder à son compte.</target>
+      </trans-unit>
+      <trans-unit id="c4beee92d58f313b1c6324394409d596">
+        <source>The discount exceeds the authorised threshold. Sending will put the quote on hold until a manager approves it.</source>
+        <target>La remise dépasse le seuil autorisé. L’envoi mettra le devis en attente jusqu’à sa validation par un responsable.</target>
+      </trans-unit>
+      <trans-unit id="17b35088f7ea2650b7d67afc14ab62ea">
+        <source>The discount exceeds the authorised threshold: the quote is awaiting approval by a manager before it can be sent.</source>
+        <target>La remise dépasse le seuil autorisé : le devis attend la validation d’un responsable avant de pouvoir être envoyé.</target>
+      </trans-unit>
+      <trans-unit id="508558f0a5d8c3547a1348a54694037d">
+        <source>The discount exceeds the authorised threshold: the quote will need a manager’s approval before it is sent.</source>
+        <target>La remise dépasse le seuil autorisé : le devis devra être validé par un responsable avant l’envoi.</target>
+      </trans-unit>
+      <trans-unit id="cc8d1725c06614586c64ac10c90a8c7d">
+        <source>The e-mail could not be sent. Check the shop e-mail settings, then try again.</source>
+        <target>L’e-mail n’a pas pu être envoyé. Vérifiez la configuration e-mail de la boutique, puis réessayez.</target>
+      </trans-unit>
+      <trans-unit id="2242fc296c7b7429ade372d3a8603ae1">
+        <source>The file is larger than 2 MB.</source>
+        <target>Le fichier dépasse 2 Mo.</target>
+      </trans-unit>
+      <trans-unit id="a084bfec0311eec4a5a2342eae1fb106">
+        <source>The file was written but could not be read back. Check the key permissions.</source>
+        <target>Le fichier a été écrit mais n’a pas pu être relu. Vérifiez les droits de la clé.</target>
+      </trans-unit>
+      <trans-unit id="d2b2cff9c17d2d9630ad68f3e30dd8b9">
+        <source>The parcel exceeds the maximum weight of this carrier</source>
+        <target>Le colis dépasse le poids maximum de ce transporteur</target>
+      </trans-unit>
+      <trans-unit id="cb69948afd53cdeb8b9648812cb0a79b">
+        <source>The postcode is not valid for this country.</source>
+        <target>Le code postal n’est pas valide pour ce pays.</target>
+      </trans-unit>
+      <trans-unit id="3021799aa6d097662f8239e9a7d2eba4">
+        <source>The quote %ref% has been sent to %to%.</source>
+        <target>Le devis %ref% a été envoyé à %to%.</target>
+      </trans-unit>
+      <trans-unit id="3d7051b64c26793dd5ca9cd537686f95">
+        <source>The quote PDF is attached automatically. Add technical sheets or terms if needed (8 MB max per file).</source>
+        <target>Le PDF du devis est joint automatiquement. Ajoutez des fiches techniques ou des CGV si besoin (8 Mo max par fichier).</target>
+      </trans-unit>
+      <trans-unit id="f87e42e165687ac8a5dc35f991ffb16d">
+        <source>The quote is now « %status% ».</source>
+        <target>Le devis est maintenant « %status% ».</target>
+      </trans-unit>
+      <trans-unit id="610608a19fa17d12e6380a3554e0fc92">
+        <source>The selected address does not belong to this customer.</source>
+        <target>L’adresse choisie n’appartient pas à ce client.</target>
+      </trans-unit>
+      <trans-unit id="e856acc12fcd091a9b0de2bdc58c42dc">
+        <source>The selected carrier no longer exists. Choose another one.</source>
+        <target>Le transporteur choisi n’existe plus. Choisissez-en un autre.</target>
+      </trans-unit>
+      <trans-unit id="a3e24f38fdbb0367866ef8a6c0f76953">
+        <source>The selected currency is not available.</source>
+        <target>La devise choisie n’est pas disponible.</target>
+      </trans-unit>
+      <trans-unit id="a6ababdc24fab528e47aaa0391550959">
+        <source>The selected quotes will be marked as expired. Customers will no longer be able to accept them.</source>
+        <target>Les devis sélectionnés seront marqués comme expirés. Les clients ne pourront plus les accepter.</target>
+      </trans-unit>
+      <trans-unit id="034988e89585833f47c2e7913405b39c">
+        <source>The selected sales representative does not exist.</source>
+        <target>Le commercial choisi n’existe pas.</target>
+      </trans-unit>
+      <trans-unit id="fecfb526afce69f2b4ce564aa34a5fc3">
+        <source>The server did not respond. Check your connection and try again.</source>
+        <target>Le serveur n’a pas répondu. Vérifiez votre connexion et réessayez.</target>
+      </trans-unit>
+      <trans-unit id="e1d00061f2f7c3f54c4b3cccea335c68">
+        <source>The shop</source>
+        <target>La boutique</target>
+      </trans-unit>
+      <trans-unit id="379184ae2516421980834f639c36680e">
+        <source>The validity date has passed. Change it in « Terms » before sending.</source>
+        <target>La date de validité est dépassée. Modifiez-la dans « Conditions » avant l’envoi.</target>
+      </trans-unit>
+      <trans-unit id="9db87219103e354a1d72811d524d1759">
+        <source>The voucher is created for this customer only when the quote is converted into an order.</source>
+        <target>Le bon est créé pour ce client uniquement au moment de la conversion du devis en commande.</target>
+      </trans-unit>
+      <trans-unit id="b604b33ac63dcb80123a151476ecba51">
+        <source>The voucher « %code% » has already been fully used.</source>
+        <target>Le bon « %code% » a déjà été entièrement utilisé.</target>
+      </trans-unit>
+      <trans-unit id="6dce992e07edd5c182cc0d13730f326b">
+        <source>The voucher « %code% » has expired.</source>
+        <target>Le bon « %code% » a expiré.</target>
+      </trans-unit>
+      <trans-unit id="022706b48be032cc2b3e3581c625fc05">
+        <source>The voucher « %code% » is not active.</source>
+        <target>Le bon « %code% » n’est pas actif.</target>
+      </trans-unit>
+      <trans-unit id="1b521270ddba2b9c5b051b5c8696745f">
+        <source>The voucher « %code% » is reserved for another customer.</source>
+        <target>Le bon « %code% » est réservé à un autre client.</target>
+      </trans-unit>
+      <trans-unit id="c736c29c2d1dfcf87c05009f46d3a3ec">
+        <source>This action is not allowed.</source>
+        <target>Cette action n’est pas autorisée.</target>
+      </trans-unit>
+      <trans-unit id="804827e15825224ee5b3337f2662e05d">
+        <source>This action is not possible: the quote is "%from%" and cannot become "%to%".</source>
+        <target>Action impossible : le devis est « %from% » et ne peut pas passer à « %to% ».</target>
+      </trans-unit>
+      <trans-unit id="da3ced0079fa289c11fb79951351a089">
+        <source>This carrier does not normally accept this order amount</source>
+        <target>Ce transporteur n’accepte normalement pas ce montant de commande</target>
+      </trans-unit>
+      <trans-unit id="a18ae62d3754486161dd3e01eabea22f">
+        <source>This carrier does not normally accept this weight</source>
+        <target>Ce transporteur n’accepte normalement pas ce poids</target>
+      </trans-unit>
+      <trans-unit id="c70ff13201412ad3a38a85b65a434089">
+        <source>This carrier does not normally deliver this zone</source>
+        <target>Ce transporteur ne livre normalement pas cette zone</target>
+      </trans-unit>
+      <trans-unit id="75d744dc51222101c439e757b88437b4">
+        <source>This carrier is not normally available for this customer group</source>
+        <target>Ce transporteur n’est normalement pas proposé à ce groupe de clients</target>
+      </trans-unit>
+      <trans-unit id="1461a7ee336597f49a6ac4b7ae6314b9">
+        <source>This cart does not belong to the selected customer.</source>
+        <target>Ce panier n’appartient pas au client choisi.</target>
+      </trans-unit>
+      <trans-unit id="c7728449f8969a1936d7ec8fba1418d0">
+        <source>This cart has already been ordered.</source>
+        <target>Ce panier a déjà été commandé.</target>
+      </trans-unit>
+      <trans-unit id="638e3e69e028995b3fa7b0e02c11ad55">
+        <source>This cart is empty.</source>
+        <target>Ce panier est vide.</target>
+      </trans-unit>
+      <trans-unit id="ad9b787abefedbcf8b75acbd84fb37a2">
+        <source>This customer no longer exists.</source>
+        <target>Ce client n’existe plus.</target>
+      </trans-unit>
+      <trans-unit id="e4b78f44705bffb96b2fbe0761b37890">
+        <source>This e-mail is disabled in the settings: the quote will be marked as sent and the PDF archived, but no e-mail will leave.</source>
+        <target>Cet e-mail est désactivé dans la configuration : le devis sera marqué comme envoyé et le PDF archivé, mais aucun e-mail ne partira.</target>
+      </trans-unit>
+      <trans-unit id="51c62132855800cd482f9a733c9494fc">
+        <source>This quote belongs to another shop. Switch shop to open it.</source>
+        <target>Ce devis appartient à une autre boutique. Changez de boutique pour l’ouvrir.</target>
+      </trans-unit>
+      <trans-unit id="290ecf26508e293e269a80b06a7544fe">
+        <source>This quote can no longer be modified. Create a new version to change it.</source>
+        <target>Ce devis ne peut plus être modifié. Créez une nouvelle version pour le changer.</target>
+      </trans-unit>
+      <trans-unit id="5b62b89f595183e28a63f2e81f7cef9a">
+        <source>This quote does not exist or has been deleted.</source>
+        <target>Ce devis n’existe pas ou a été supprimé.</target>
+      </trans-unit>
+      <trans-unit id="73b6887e6fb049e24285ffeafc54b461">
+        <source>This quote has already been ordered: duplicate it instead.</source>
+        <target>Ce devis a déjà été commandé : dupliquez-le plutôt.</target>
+      </trans-unit>
+      <trans-unit id="810d396e8e8f9c8a37e9a5d725ed4df1">
+        <source>This quote has been sent: to change it, create a new version.</source>
+        <target>Ce devis a été envoyé : pour le modifier, créez une nouvelle version.</target>
+      </trans-unit>
+      <trans-unit id="863644a1601e20bae37df93574a110b1">
+        <source>This quote is waiting for a manager’s approval (discount above the authorised threshold).</source>
+        <target>Ce devis attend la validation d’un responsable (remise au-delà du seuil autorisé).</target>
+      </trans-unit>
+      <trans-unit id="0836a1a4c60c4fc66321b2546190481d">
+        <source>This quote is waiting for your approval: the discount exceeds the authorised threshold. Check it, then send it to approve it.</source>
+        <target>Ce devis attend votre validation : la remise dépasse le seuil autorisé. Vérifiez-le, puis envoyez-le pour le valider.</target>
+      </trans-unit>
+      <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53">
+        <source>To</source>
+        <target>Destinataire</target>
+      </trans-unit>
+      <trans-unit id="a1f02b0cb29d6962f7785a105fb764c9">
+        <source>To process</source>
+        <target>À traiter</target>
+      </trans-unit>
+      <trans-unit id="80727ce10477a8f9c87fd5f6e5b7b37f">
+        <source>Tokens: {SHOP}, {YEAR}, {YY}, {NUM} (5 digits, restarts every year).</source>
+        <target>Jetons : {SHOP}, {YEAR}, {YY}, {NUM} (5 chiffres, repart à 1 chaque année).</target>
+      </trans-unit>
+      <trans-unit id="25b77b23fda3d051fb72598c952a82d7">
+        <source>Total excl. tax</source>
+        <target>Total HT</target>
+      </trans-unit>
+      <trans-unit id="ba12e59b20a9720f70fb907a55cd2620">
+        <source>Total incl. tax</source>
+        <target>Total TTC</target>
+      </trans-unit>
+      <trans-unit id="f21717e8d8f773e1dbf2ad502c8a24c9">
+        <source>Total margin: %amount%</source>
+        <target>Marge totale : %amount%</target>
+      </trans-unit>
+      <trans-unit id="e0fd4e35546b7f0eeae62dfa604bd973">
+        <source>Unit price excl. tax</source>
+        <target>PU HT</target>
+      </trans-unit>
+      <trans-unit id="c227ad77f168e7fd3e21583b324eddf4">
+        <source>Unsaved changes</source>
+        <target>Modifications non enregistrées</target>
+      </trans-unit>
+      <trans-unit id="22c95e2009ac5463df5ec86eda37f52f">
+        <source>Use the calculated rate</source>
+        <target>Proposer le tarif calculé</target>
+      </trans-unit>
+      <trans-unit id="0aed4e816d2ab18361bbfe990b4fdcde">
+        <source>Use this cart</source>
+        <target>Utiliser ce panier</target>
+      </trans-unit>
+      <trans-unit id="800c7c6208553e26c4ab7d166d08e845">
+        <source>Used in references (DEV-{SHOP}-…) and in the PDF storage folder. Letters and digits only.</source>
+        <target>Utilisé dans les références (DEV-{SHOP}-…) et le dossier de stockage des PDF. Lettres et chiffres uniquement.</target>
+      </trans-unit>
+      <trans-unit id="43183e955e3019bf7f8c942e016b7b13">
+        <source>VAT</source>
+        <target>TVA</target>
+      </trans-unit>
+      <trans-unit id="4fef3f8eec8ef9636dc36a15ec96f0b7">
+        <source>VAT reverse charge (intra-EU B2B) — VAT no. %vat%</source>
+        <target>Autoliquidation de TVA (B2B UE) — n° TVA %vat%</target>
+      </trans-unit>
+      <trans-unit id="b2844b8e17ecaaeae68d018fe9418af0">
+        <source>Valid until</source>
+        <target>Valable jusqu’au</target>
+      </trans-unit>
+      <trans-unit id="014f114c6ce0ccb6f883b8774cde6d3b">
+        <source>Validity date proposed for each new quote.</source>
+        <target>Date de validité proposée pour chaque nouveau devis.</target>
+      </trans-unit>
+      <trans-unit id="689202409e48743b914713f96d93947c">
+        <source>Value</source>
+        <target>Valeur</target>
+      </trans-unit>
+      <trans-unit id="f38b1e63c3bf89a6a50b0c427f2edb7f">
+        <source>Version %v% created. Edit it, then send it: it will replace the previous version.</source>
+        <target>Version %v% créée. Modifiez-la puis envoyez-la : elle remplacera la version précédente.</target>
+      </trans-unit>
+      <trans-unit id="9e69db6d28a0ec32d28e2c9e327fd40a">
+        <source>Versions</source>
+        <target>Versions</target>
+      </trans-unit>
+      <trans-unit id="4351cfebe4b61d8aa5efa1d020710005">
+        <source>View</source>
+        <target>Voir</target>
+      </trans-unit>
+      <trans-unit id="2ffd4534feed494e96f9bb4650146e4a">
+        <source>View the order</source>
+        <target>Voir la commande</target>
+      </trans-unit>
+      <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe">
+        <source>Viewed</source>
+        <target>Vu</target>
+      </trans-unit>
+      <trans-unit id="f7b5b3b94d7467978674be13e1e9736d">
+        <source>Voucher code or name</source>
+        <target>Code ou nom du bon</target>
+      </trans-unit>
+      <trans-unit id="bd3e1d42adc1eae5147cad0ad855ac07">
+        <source>You do not have permission to perform this action. Ask an administrator.</source>
+        <target>Vous n’avez pas le droit d’effectuer cette action. Demandez à un administrateur.</target>
+      </trans-unit>
+      <trans-unit id="7098122bf77b069f4a0e39d0b839e4ce">
+        <source>You have unsaved changes. Leave the page anyway?</source>
+        <target>Vous avez des modifications non enregistrées. Quitter la page quand même ?</target>
+      </trans-unit>
+      <trans-unit id="7e285b7c3a264c7ba48eda458fb9b0dd">
+        <source>Your session has expired. Reload the page and try again.</source>
+        <target>Votre session a expiré. Rechargez la page et réessayez.</target>
+      </trans-unit>
+      <trans-unit id="e1c42b77e182276c6674f9c6c8fded7a">
+        <source>copied to %ref%</source>
+        <target>copié vers %ref%</target>
+      </trans-unit>
+      <trans-unit id="19fd0999686d2b132e69c1b9b512cfa8">
+        <source>dedicated voucher</source>
+        <target>bon dédié</target>
+      </trans-unit>
+      <trans-unit id="7ad5660832fd0efd9976dd945a5ae098">
+        <source>e.g. &gt;1000 or 500-1000</source>
+        <target>ex. &gt;1000 ou 500-1000</target>
+      </trans-unit>
+      <trans-unit id="d134c2a43152143856b9cd5e750f8239">
+        <source>e.g. Delivery and installation by our technicians</source>
+        <target>ex. Livraison et installation par nos techniciens</target>
+      </trans-unit>
+      <trans-unit id="da8ebc2fc88d5ba11556f04aa6422bbe">
+        <source>e.g. Warehouse</source>
+        <target>ex. Entrepôt</target>
+      </trans-unit>
+      <trans-unit id="507ccf1589bde43c940b26a53f67e392">
+        <source>excl. tax</source>
+        <target>HT</target>
+      </trans-unit>
+      <trans-unit id="7e679fa8eb027c0ead56288ec0fdf8c7">
+        <source>from %ref%</source>
+        <target>depuis %ref%</target>
+      </trans-unit>
+      <trans-unit id="956da2d69676fd3d471f940d44cd94db">
+        <source>n8n webhook URL</source>
+        <target>URL du webhook n8n</target>
+      </trans-unit>
+      <trans-unit id="4f52f9a6a8936bbd5595eb76221838d2">
+        <source>n8n webhooks</source>
+        <target>Webhooks n8n</target>
+      </trans-unit>
+      <trans-unit id="d57c24f3fe52d16e7169b912dd647f0d">
+        <source>optional</source>
+        <target>facultatif</target>
+      </trans-unit>
+      <trans-unit id="e2e79605fc9450ec17957cf0e910f5c6">
+        <source>tax incl.</source>
+        <target>TTC</target>
+      </trans-unit>
+      <trans-unit id="26aeabd0c99c77002e55825fbcd435af">
+        <source>—</source>
+        <target>—</target>
+      </trans-unit>
+      <trans-unit id="7af5d1daea567140ed6fcf4a65602d4b">
+        <source>— the quote’s shipping cost will be applied as is.</source>
+        <target>— le port du devis sera appliqué tel quel.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

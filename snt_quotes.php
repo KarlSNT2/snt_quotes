@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SNT Quotes — devis figés, convertis en commande sans passer par le tunnel.
  *
@@ -31,7 +32,9 @@ if (is_file(__DIR__ . '/vendor/autoload.php')) {
     });
 }
 
+use Snt\Quotes\Domain\QuoteStatus;
 use Snt\Quotes\Install\Installer;
+use Snt\Quotes\Presenter\StatusPresenter;
 use Snt\Quotes\Repository\QuoteRepository;
 
 class Snt_Quotes extends PaymentModule
@@ -114,13 +117,20 @@ class Snt_Quotes extends PaymentModule
         }
         $quotes = (new QuoteRepository())->findLatestForCustomer($idCustomer, 5);
         $link = $this->context->link;
+        $statusPresenter = new StatusPresenter();
+        $locale = $this->context->getCurrentLocale();
         foreach ($quotes as &$quote) {
             $quote['view_url'] = $link->getAdminLink(Installer::TAB_CLASS, true, ['route' => 'admin_snt_quotes_view', 'quoteId' => (int) $quote['id_snt_quote']]);
+            $quote['status_html'] = $statusPresenter->badgeHtml(QuoteStatus::tryFrom((string) $quote['status']) ?? QuoteStatus::Draft);
+            $iso = (string) (new Currency((int) $quote['id_currency']))->iso_code;
+            $quote['total_display'] = $locale ? $locale->formatPrice((float) $quote['total_ti'], $iso) : (string) $quote['total_ti'];
+            $quote['date_display'] = Tools::displayDate((string) $quote['date_add'], false);
         }
         unset($quote);
 
         $this->context->smarty->assign([
             'snt_quotes' => $quotes,
+            'snt_quotes_count' => count($quotes),
             'snt_quotes_new_url' => $link->getAdminLink(Installer::TAB_CLASS, true, ['route' => 'admin_snt_quotes_create', 'id_customer' => $idCustomer]),
             'snt_quotes_list_url' => $link->getAdminLink(Installer::TAB_CLASS, true, ['route' => 'admin_snt_quotes_index']),
             'snt_quotes_import_cart_url' => $link->getAdminLink(Installer::TAB_CLASS, true, ['route' => 'admin_snt_quotes_create', 'id_customer' => $idCustomer, 'import' => 'cart']),

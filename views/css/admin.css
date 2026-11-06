@@ -1,0 +1,160 @@
+/* snt_quotes — BO. Contrastes AA, aucune dépendance de thème au-delà du BO PrestaShop (Bootstrap 4). */
+
+.snt-quotes { --snt-accent: #25b9d7; --snt-muted: #6c757d; --snt-border: #dbe6e9; --snt-warn-bg: #fff3cd; --snt-danger: #c62828; }
+
+/* ---- En-têtes de page --------------------------------------------- */
+.snt-pagehead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.snt-title { margin: 4px 0 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.snt-subtitle { margin: 4px 0 0; color: var(--snt-muted); }
+.snt-back { display: inline-flex; align-items: center; gap: 4px; font-size: .875rem; }
+.snt-back .material-icons { font-size: 18px; }
+.snt-btn-main { font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.snt-btn-main .material-icons, .snt-actionbar .material-icons, .snt-line-buttons .material-icons { font-size: 18px; vertical-align: middle; }
+.snt-label { display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; color: var(--snt-muted); }
+.snt-help { color: var(--snt-muted); font-size: .8125rem; margin: 4px 0 0; }
+.snt-empty { color: var(--snt-muted); font-style: italic; }
+
+/* ---- Badges de statut (mêmes couleurs que PDF / e-mails / FO) ------ */
+.snt-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 18px; color: #fff; white-space: nowrap; }
+.snt-badge--strike { text-decoration: line-through; }
+
+/* ---- Onglets rapides de la liste ----------------------------------- */
+.snt-quick-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.snt-quick-tab { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--snt-border); border-radius: 20px; background: #fff; color: #363a41; font-weight: 600; }
+.snt-quick-tab:hover, .snt-quick-tab:focus { text-decoration: none; border-color: var(--snt-accent); }
+.snt-quick-tab.is-active { background: #363a41; border-color: #363a41; color: #fff; }
+.snt-quick-tab__count { display: inline-block; min-width: 22px; padding: 0 6px; border-radius: 11px; background: rgba(0, 0, 0, .08); font-size: 12px; text-align: center; }
+.snt-quick-tab.is-active .snt-quick-tab__count { background: rgba(255, 255, 255, .25); }
+
+/* ---- Éditeur --------------------------------------------------------- */
+.snt-editor__layout, .snt-view__layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
+.snt-editor__summary, .snt-view__side { position: sticky; top: 90px; }
+.snt-section .card-header, .snt-quotes .card-header { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.snt-step { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #363a41; color: #fff; font-size: 13px; }
+
+.snt-autocomplete { position: relative; }
+.snt-autocomplete__list { position: absolute; z-index: 1050; left: 0; right: 0; top: 100%; max-height: 360px; overflow-y: auto; margin: 2px 0 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--snt-border); border-radius: 4px; box-shadow: 0 6px 18px rgba(0, 0, 0, .12); }
+.snt-autocomplete__list li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #f1f3f5; }
+.snt-autocomplete__list li.is-active, .snt-autocomplete__list li:hover { background: #eaf7fb; }
+.snt-autocomplete__empty { color: var(--snt-muted); cursor: default !important; }
+.snt-product-option { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; }
+.snt-product-option img, .snt-product-option__noimg { width: 40px; height: 40px; object-fit: contain; background: #f4f6f8; border-radius: 3px; }
+.snt-product-option__price { font-weight: 600; white-space: nowrap; }
+
+.snt-customer-card { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--snt-border); border-radius: 4px; background: #f8fafb; }
+.snt-carts { margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--snt-accent); background: #f4fbfd; }
+
+.snt-lines { margin-bottom: 0; }
+.snt-lines th { white-space: nowrap; font-size: .8125rem; }
+.snt-lines td { vertical-align: top; }
+.snt-col-handle { width: 28px; padding-left: 0 !important; padding-right: 0 !important; }
+.snt-col-qty { width: 84px; }
+.snt-col-price { width: 120px; }
+.snt-col-discount { width: 130px; }
+.snt-col-amount { width: 105px; white-space: nowrap; }
+.snt-col-tax { width: 64px; white-space: nowrap; }
+.snt-col-actions { width: 132px; }
+.snt-handle { cursor: grab; color: #9aa4ad; display: inline-block; padding-top: 6px; }
+.snt-line.is-dragging { opacity: .4; }
+.snt-line-title { font-weight: 600; }
+.snt-line-sub { display: flex; gap: 6px; margin-top: 4px; }
+.snt-input-ref { max-width: 140px; }
+.snt-line-hints { color: var(--snt-muted); margin-top: 2px; }
+.snt-line--section td { background: #eef1f5; }
+.snt-input-section { font-weight: 600; }
+.snt-line--comment td { background: #fbfbfc; }
+.snt-line.is-below-cost td, tr.is-below-cost td { background: #fdecea; }
+.snt-stock.is-low { color: var(--snt-danger); font-weight: 600; }
+.snt-unit-select { min-width: 54px; }
+.snt-line-actions { display: flex; flex-wrap: nowrap; }
+.snt-line-actions .btn { padding: 2px 4px; }
+.snt-line-actions .material-icons { font-size: 18px; }
+.snt-line-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+.snt-radio-row { display: flex; gap: 18px; flex-wrap: wrap; }
+.snt-radio, .snt-check { display: inline-flex; align-items: center; gap: 6px; margin: 0; font-weight: normal; cursor: pointer; }
+.snt-carriers { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.snt-carrier { display: flex; align-items: center; gap: 10px; padding: 10px; margin: 0; border: 1px solid var(--snt-border); border-radius: 4px; cursor: pointer; font-weight: normal; }
+.snt-carrier:focus-within { outline: 2px solid var(--snt-accent); outline-offset: 1px; }
+.snt-carrier.is-selected { border-color: #363a41; box-shadow: inset 0 0 0 1px #363a41; }
+.snt-carrier.is-out { background: #fffaf0; }
+.snt-carrier__logo { width: 44px; height: 32px; object-fit: contain; flex-shrink: 0; }
+.snt-carrier__logo--none { display: inline-flex; align-items: center; justify-content: center; color: #9aa4ad; }
+.snt-carrier__out { color: #8a4b00; }
+.snt-carrier__out .material-icons { font-size: 14px; vertical-align: -2px; }
+.snt-carrier-warning { border-left: 4px solid #e08600; }
+.snt-relay__search { max-width: 320px; }
+.snt-relay__selected { margin: 8px 0; font-weight: 600; }
+.snt-relay__list { max-height: 220px; overflow-y: auto; }
+.snt-vouchers .snt-voucher { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border: 1px dashed var(--snt-border); border-radius: 4px; margin-bottom: 4px; }
+.snt-voucher span { flex: 1; }
+.snt-dedicated summary { cursor: pointer; color: #1f6fb2; font-weight: 600; }
+.snt-internal label { color: #8a4b00; }
+.snt-internal textarea { background: #fffaf0; }
+.snt-internal .material-icons { font-size: 16px; vertical-align: -3px; }
+
+/* ---- Récapitulatif --------------------------------------------------- */
+.snt-totals { margin: 0; }
+.snt-totals > div { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
+.snt-totals dt { font-weight: normal; color: #4b5563; }
+.snt-totals dd { margin: 0; text-align: right; white-space: nowrap; }
+.snt-totals__sep { border-top: 1px solid var(--snt-border); margin-top: 4px; padding-top: 8px !important; }
+.snt-totals__tax dt, .snt-totals__tax dd { font-size: .8125rem; color: var(--snt-muted); }
+.snt-totals [data-taxes] { display: block; padding: 0 !important; }
+.snt-totals__grand { border-top: 2px solid #363a41; margin-top: 6px; padding-top: 8px !important; }
+.snt-totals__grand dt, .snt-totals__grand dd { font-size: 1.15rem; font-weight: 700; color: #111827; }
+.snt-margin { margin: 8px 0 0; padding: 6px 8px; background: #f4f6f8; border-radius: 4px; font-size: .8125rem; }
+.snt-warnings { list-style: none; padding: 0; margin: 8px 0 0; }
+.snt-warnings li { padding: 6px 8px; margin-bottom: 4px; border-radius: 4px; background: var(--snt-warn-bg); font-size: .8125rem; }
+.snt-warnings li.is-error { background: #fdecea; color: var(--snt-danger); }
+.snt-summary__actions { display: grid; gap: 8px; margin-top: 14px; }
+.snt-summary__actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin: 0; }
+.snt-autosave { margin: 8px 0 0; font-size: .75rem; color: var(--snt-muted); text-align: center; min-height: 1em; }
+
+/* ---- Fiche ----------------------------------------------------------- */
+.snt-head-figures { display: flex; gap: 28px; }
+.snt-head-figures > div { display: flex; flex-direction: column; }
+.snt-amount { font-size: 1.5rem; }
+.snt-actionbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; margin-bottom: 16px; background: #fff; border: 1px solid var(--snt-border); border-radius: 4px; }
+.snt-actionbar .btn { display: inline-flex; align-items: center; gap: 6px; }
+.snt-addresses { display: grid; gap: 12px; }
+.snt-internal-view { padding: 8px; background: #fffaf0; border-left: 3px solid #e08600; }
+.snt-timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--snt-border); }
+.snt-timeline__item { position: relative; padding: 0 0 14px 12px; }
+.snt-timeline__item::before { content: ''; position: absolute; left: -25px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid var(--snt-accent); }
+.snt-timeline__item--status_change::before { background: var(--snt-accent); }
+.snt-timeline__when { font-size: .75rem; color: var(--snt-muted); }
+
+/* ---- Fiche client / commande ----------------------------------------- */
+.snt-customer-quotes .material-icons, .snt-order-quote .material-icons { vertical-align: middle; }
+
+/* ---- Modales natives (<dialog>) --------------------------------------- */
+.snt-dialog { width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 48px); border: 0; border-radius: 6px; padding: 24px; box-shadow: 0 20px 50px rgba(0, 0, 0, .3); }
+.snt-dialog--wide { width: min(1080px, calc(100vw - 32px)); }
+.snt-dialog::backdrop { background: rgba(17, 24, 39, .55); }
+.snt-dialog h3 { margin-top: 0; }
+.snt-dialog__actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.snt-send { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 20px; }
+.snt-send__preview iframe { width: 100%; height: 480px; border: 1px solid var(--snt-border); border-radius: 4px; background: #f3f4f6; }
+
+/* ---- Toasts ----------------------------------------------------------- */
+.snt-toasts { position: fixed; z-index: 2000; right: 20px; bottom: 20px; display: grid; gap: 8px; max-width: 420px; }
+.snt-toast { padding: 12px 16px; border-radius: 4px; color: #fff; box-shadow: 0 6px 18px rgba(0, 0, 0, .2); transition: opacity .4s; font-weight: 600; }
+.snt-toast--success { background: #2e7d32; }
+.snt-toast--error { background: #c62828; }
+.snt-toast--warning { background: #8a4b00; }
+.snt-toast.is-leaving { opacity: 0; }
+
+/* ---- Configuration ----------------------------------------------------- */
+.snt-config__panes { border-top: 0; border-top-left-radius: 0; }
+.snt-config__actions { display: flex; justify-content: flex-end; border-top: 1px solid var(--snt-border); padding-top: 16px; margin-top: 8px; }
+
+/* ---- Responsive -------------------------------------------------------- */
+@media (max-width: 1199px) {
+  .snt-editor__layout, .snt-view__layout { grid-template-columns: minmax(0, 1fr); }
+  .snt-editor__summary, .snt-view__side { position: static; }
+  .snt-send { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .snt-toast { transition: none; }
+}

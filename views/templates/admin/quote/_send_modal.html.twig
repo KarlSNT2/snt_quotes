@@ -1,0 +1,50 @@
+{% trans_default_domain 'Modules.Sntquotes.Admin' %}
+{# Modale « Envoyer au client » : destinataires, objet, message, aperçu de l'e-mail et du PDF, pièces jointes. #}
+<dialog class="snt-dialog snt-dialog--wide" id="snt-dialog-send" aria-labelledby="snt-dlg-send-title">
+  <form method="dialog" data-form="send" enctype="multipart/form-data">
+    <h3 id="snt-dlg-send-title">{{ 'Send the quote to the customer'|trans }}</h3>
+    <div class="alert alert-warning" data-send-approval hidden>
+      {{ 'The discount exceeds the authorised threshold. Sending will put the quote on hold until a manager approves it.'|trans }}
+    </div>
+    <div class="alert alert-info" data-send-disabled hidden>
+      {{ 'This e-mail is disabled in the settings: the quote will be marked as sent and the PDF archived, but no e-mail will leave.'|trans }}
+    </div>
+    <div class="snt-send">
+      <div class="snt-send__form">
+        <div class="form-group">
+          <label class="form-control-label" for="send-to">{{ 'To'|trans }} *</label>
+          <input id="send-to" name="to" class="form-control" required>
+          <p class="snt-help">{{ 'Separate several addresses with a comma.'|trans }}</p>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="send-cc">{{ 'Copy (hidden)'|trans }}</label>
+          <input id="send-cc" name="cc" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="send-subject">{{ 'Subject'|trans }}</label>
+          <input id="send-subject" name="subject" class="form-control" maxlength="200">
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="send-message">{{ 'Personal message'|trans }}</label>
+          <textarea id="send-message" name="message" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="send-attachments">{{ 'Additional attachments'|trans }}</label>
+          <input id="send-attachments" name="attachments[]" type="file" multiple class="form-control-file">
+          <p class="snt-help">{{ 'The quote PDF is attached automatically. Add technical sheets or terms if needed (8 MB max per file).'|trans }}</p>
+        </div>
+        <label class="snt-check"><input type="checkbox" name="copy_employee" value="1" checked> {{ 'Send me a copy'|trans }}</label>
+        <p><a href="#" target="_blank" rel="noopener" data-send-pdf><i class="material-icons" aria-hidden="true">picture_as_pdf</i> {{ 'Check the PDF'|trans }}</a></p>
+      </div>
+      <div class="snt-send__preview">
+        <p class="form-control-label">{{ 'E-mail preview'|trans }}</p>
+        <iframe title="{{ 'E-mail preview'|trans }}" data-send-preview sandbox=""></iframe>
+      </div>
+    </div>
+    <p class="text-danger small" data-dialog-error role="alert"></p>
+    <div class="snt-dialog__actions">
+      <button type="button" class="btn btn-outline-secondary" data-close>{{ 'Cancel'|trans }}</button>
+      <button type="submit" class="btn btn-primary" data-send-submit><i class="material-icons" aria-hidden="true">send</i> {{ 'Send'|trans }}</button>
+    </div>
+  </form>
+</dialog>

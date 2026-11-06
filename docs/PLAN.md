@@ -441,3 +441,27 @@ Le nom du transporteur réel est injecté via `actionEmailSendBefore` (variable 
 
 ### Questions encore ouvertes (non bloquantes pour le jalon 1)
 - Code site par boutique pour le bucket et la référence (`DEV-{SHOP}-…`) : proposition = même code (d'après les sauvegardes `snt_tools` : `ABOT`, `ARS`, `DEF`, `DISTRI`, `EVO`, `EZ`, `TAG`), à confirmer.
+
+---
+
+## 10. Avancement
+
+### Jalon 1 — livré le 2026-11-06 (v0.1.0)
+
+Fait : installation (tables, onglet, configuration par boutique, hook `actionSntQuoteStatusUpdate`), droits, liste Grid avec
+onglets rapides et actions de masse, éditeur une page (client, produits, livraison, remises, conditions, récap AJAX, autosave),
+fiche avec barre d'actions contextuelle et historique, PDF TCPDF surchargeable + archive Scaleway SHA-256, envoi d'e-mail avec
+aperçu, configuration Symfony, catalogue FR.
+
+Écarts au plan, volontaires :
+- contrôleurs basés sur `FrameworkBundleAdminController` (présent en 8.2 et 9.x) avec injection par constructeur, droits
+  vérifiés dans le code : la syntaxe `@AdminSecurity` / `#[AdminSecurity]` diffère entre les deux versions ;
+- modales en `<dialog>` natif et JS sans build ni jQuery ;
+- remise sur le port portée par le devis (`shipping_discount_te`), pas par une règle panier : à la conversion, le transporteur
+  technique renverra directement le port net ;
+- « Convertir en commande » est visible mais désactivé jusqu'au jalon 2.
+
+Vérifié : PHPUnit (30 tests), PHPStan niveau 6 sur tout le module contre les sources PS 8.2.3, php-cs-fixer, analyse
+syntaxique des gabarits Twig avec le Twig de PS 8.
+**Non vérifié** : installation et parcours dans une vraie boutique (8.2.6 et 9.2), à dérouler avec
+`tests/manual/checklist-recette.md`.

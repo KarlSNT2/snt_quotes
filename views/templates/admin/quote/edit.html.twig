@@ -1,0 +1,451 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% trans_default_domain 'Modules.Sntquotes.Admin' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="snt-quotes snt-editor" id="snt-editor">
+  <div class="snt-pagehead">
+    <div>
+      <a href="{{ path('admin_snt_quotes_index') }}" class="snt-back"><i class="material-icons" aria-hidden="true">arrow_back</i> {{ 'Back to quotes'|trans }}</a>
+      <h2 class="snt-title">
+        <span data-ref>{{ bootstrap.reference ?: 'New quote'|trans }}</span>
+        {% if bootstrap.statusBadge %}{% include '@Modules/snt_quotes/views/templates/admin/quote/_badge.html.twig' with {badge: bootstrap.statusBadge} %}{% endif %}
+      </h2>
+    </div>
+  </div>
+
+  <div class="snt-editor__layout">
+    <div class="snt-editor__main">
+
+      {# 1. Client #}
+      <section class="card snt-section" aria-labelledby="snt-s-customer">
+        <h3 class="card-header" id="snt-s-customer"><span class="snt-step">1</span> {{ 'Customer'|trans }}</h3>
+        <div class="card-body">
+          <div data-customer-picker>
+            <label for="snt-customer-search" class="form-control-label">{{ 'Find a customer'|trans }}</label>
+            <div class="snt-autocomplete">
+              <input type="search" id="snt-customer-search" class="form-control" autocomplete="off"
+                     placeholder="{{ 'Name, e-mail, company or SIRET'|trans }}" aria-autocomplete="list" aria-controls="snt-customer-results">
+              <ul class="snt-autocomplete__list" id="snt-customer-results" role="listbox" hidden></ul>
+            </div>
+            <button type="button" class="btn btn-link px-0" data-action="open-quick-customer">
+              <i class="material-icons" aria-hidden="true">person_add</i> {{ 'Create a customer'|trans }}
+            </button>
+          </div>
+
+          <div data-customer-card hidden>
+            <div class="snt-customer-card">
+              <div>
+                <strong data-customer-name></strong>
+                <div class="text-muted small" data-customer-meta></div>
+              </div>
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-action="change-customer">{{ 'Change'|trans }}</button>
+            </div>
+            <div class="form-row mt-3">
+              <div class="col-md-6 form-group">
+                <label for="snt-address-delivery" class="form-control-label">{{ 'Delivery address'|trans }}</label>
+                <select id="snt-address-delivery" class="custom-select" data-field="id_address_delivery"></select>
+              </div>
+              <div class="col-md-6 form-group">
+                <label for="snt-address-invoice" class="form-control-label">{{ 'Invoice address'|trans }}</label>
+                <select id="snt-address-invoice" class="custom-select" data-field="id_address_invoice"></select>
+              </div>
+            </div>
+            <button type="button" class="btn btn-link px-0" data-action="open-quick-address">
+              <i class="material-icons" aria-hidden="true">add_location_alt</i> {{ 'New address'|trans }}
+            </button>
+            <p class="snt-help" data-tax-info hidden></p>
+            <div class="snt-carts" data-carts hidden>
+              <p class="mb-1"><strong>{{ 'Start from one of the customer’s carts'|trans }}</strong></p>
+              <ul class="list-unstyled mb-0" data-carts-list></ul>
+            </div>
+          </div>
+
+          <div class="form-row mt-2">
+            <div class="col-md-6 form-group">
+              <label for="snt-employee" class="form-control-label">{{ 'Sales rep'|trans }}</label>
+              <select id="snt-employee" class="custom-select" data-field="id_employee"></select>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="snt-project" class="form-control-label">{{ 'Project name'|trans }} <span class="text-muted">({{ 'optional'|trans }})</span></label>
+              <input type="text" id="snt-project" class="form-control" maxlength="128" data-field="project_name">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {# 2. Produits #}
+      <section class="card snt-section" aria-labelledby="snt-s-lines">
+        <h3 class="card-header" id="snt-s-lines"><span class="snt-step">2</span> {{ 'Products'|trans }}</h3>
+        <div class="card-body">
+          <label for="snt-product-search" class="form-control-label">{{ 'Add a product'|trans }}</label>
+          <div class="snt-autocomplete">
+            <input type="search" id="snt-product-search" class="form-control" autocomplete="off"
+                   placeholder="{{ 'Name, reference or EAN — the line is added directly'|trans }}" aria-autocomplete="list" aria-controls="snt-product-results">
+            <ul class="snt-autocomplete__list snt-autocomplete__list--products" id="snt-product-results" role="listbox" hidden></ul>
+          </div>
+
+          <div class="table-responsive mt-3">
+            <table class="table snt-lines" aria-describedby="snt-s-lines">
+              <thead>
+                <tr>
+                  <th class="snt-col-handle"><span class="sr-only">{{ 'Order'|trans }}</span></th>
+                  <th>{{ 'Description'|trans }}</th>
+                  <th class="snt-col-qty">{{ 'Qty'|trans }}</th>
+                  <th class="snt-col-price">{{ 'Unit price excl. tax'|trans }}</th>
+                  <th class="snt-col-discount">{{ 'Discount'|trans }}</th>
+                  <th class="snt-col-amount text-right">{{ 'Net excl. tax'|trans }}</th>
+                  <th class="snt-col-tax text-right">{{ 'VAT'|trans }}</th>
+                  <th class="snt-col-amount text-right">{{ 'Total excl. tax'|trans }}</th>
+                  <th class="snt-col-actions"><span class="sr-only">{{ 'Actions'|trans }}</span></th>
+                </tr>
+              </thead>
+              <tbody data-lines></tbody>
+            </table>
+          </div>
+          <p class="snt-empty" data-lines-empty>{{ 'No lines yet: search for a product above, or add a free line.'|trans }}</p>
+
+          <div class="snt-line-buttons">
+            <button type="button" class="btn btn-outline-primary btn-sm" data-action="add-free"><i class="material-icons" aria-hidden="true">post_add</i> {{ 'Add a free line'|trans }}</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-action="add-section"><i class="material-icons" aria-hidden="true">title</i> {{ 'Add a title'|trans }}</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-action="add-comment"><i class="material-icons" aria-hidden="true">notes</i> {{ 'Add a comment'|trans }}</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-action="open-bulk"><i class="material-icons" aria-hidden="true">playlist_add</i> {{ 'Bulk add (paste or CSV)'|trans }}</button>
+          </div>
+        </div>
+      </section>
+
+      {# 3. Livraison #}
+      <section class="card snt-section" aria-labelledby="snt-s-delivery">
+        <h3 class="card-header" id="snt-s-delivery"><span class="snt-step">3</span> {{ 'Delivery'|trans }}</h3>
+        <div class="card-body">
+          <fieldset class="form-group">
+            <legend class="form-control-label">{{ 'Delivery method'|trans }}</legend>
+            <div class="snt-radio-row">
+              <label class="snt-radio"><input type="radio" name="delivery_mode" value="carrier" data-field="delivery_mode"> {{ 'Carrier'|trans }}</label>
+              <label class="snt-radio"><input type="radio" name="delivery_mode" value="pickup" data-field="delivery_mode"> {{ 'Pickup'|trans }}</label>
+              <label class="snt-radio"><input type="radio" name="delivery_mode" value="special" data-field="delivery_mode"> {{ 'Special delivery'|trans }}</label>
+            </div>
+          </fieldset>
+
+          <div data-carrier-block>
+            <div class="snt-carriers" data-carriers role="radiogroup" aria-label="{{ 'Carrier'|trans }}">
+              <p class="text-muted">{{ 'Choose a customer and an address to see the carriers.'|trans }}</p>
+            </div>
+            <div class="alert alert-warning snt-carrier-warning" data-carrier-warning role="status" hidden></div>
+            <div class="snt-relay" data-relay hidden>
+              <label for="snt-relay-postcode" class="form-control-label">{{ 'Pickup point'|trans }}</label>
+              <div class="input-group snt-relay__search">
+                <input type="text" id="snt-relay-postcode" class="form-control" placeholder="{{ 'Postcode'|trans }}" maxlength="10">
+                <div class="input-group-append"><button type="button" class="btn btn-outline-secondary" data-action="search-relays">{{ 'Search'|trans }}</button></div>
+              </div>
+              <div data-relay-selected class="snt-relay__selected" hidden></div>
+              <ul class="list-unstyled snt-relay__list" data-relay-list></ul>
+            </div>
+          </div>
+
+          <div class="form-group" data-special-label hidden>
+            <label for="snt-carrier-label" class="form-control-label">{{ 'Delivery label shown to the customer'|trans }}</label>
+            <input type="text" id="snt-carrier-label" class="form-control" maxlength="128" data-field="carrier_label" placeholder="{{ 'e.g. Delivery and installation by our technicians'|trans }}">
+          </div>
+
+          <div class="form-row" data-shipping-block>
+            <div class="col-md-5 form-group">
+              <label for="snt-shipping" class="form-control-label">{{ 'Shipping cost excl. tax'|trans }}</label>
+              <div class="input-group">
+                <input type="text" inputmode="decimal" id="snt-shipping" class="form-control" data-field="shipping_te" data-money>
+                <div class="input-group-append"><span class="input-group-text" data-currency-sign></span></div>
+              </div>
+              <button type="button" class="btn btn-link btn-sm px-0" data-action="calculated-shipping">
+                <i class="material-icons" aria-hidden="true">calculate</i> {{ 'Use the calculated rate'|trans }}
+              </button>
+              <p class="snt-help">{{ 'The amount entered here is applied as is to the order, even if the carrier rules would give another price.'|trans }}</p>
+            </div>
+            <div class="col-md-4 form-group">
+              <label for="snt-shipping-discount" class="form-control-label">{{ 'Shipping discount excl. tax'|trans }}</label>
+              <input type="text" inputmode="decimal" id="snt-shipping-discount" class="form-control" data-field="shipping_discount_te" data-money>
+            </div>
+            <div class="col-md-3 form-group d-flex align-items-center">
+              <label class="snt-check mt-4"><input type="checkbox" data-field="free_shipping"> {{ 'Free shipping'|trans }}</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {# 4. Remises #}
+      <section class="card snt-section" aria-labelledby="snt-s-discounts">
+        <h3 class="card-header" id="snt-s-discounts"><span class="snt-step">4</span> {{ 'Discounts'|trans }}</h3>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-6 form-group">
+              <label for="snt-global-discount" class="form-control-label">{{ 'Overall discount on products'|trans }}</label>
+              <div class="input-group">
+                <input type="text" inputmode="decimal" id="snt-global-discount" class="form-control" data-field="global_discount_value" data-money>
+                <div class="input-group-append">
+                  <select class="custom-select snt-unit-select" data-field="global_discount_type" aria-label="{{ 'Discount type'|trans }}">
+                    <option value="percent">%</option>
+                    <option value="amount" data-currency-option></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <label for="snt-voucher-search" class="form-control-label">{{ 'Apply an existing voucher'|trans }}</label>
+          <div class="snt-autocomplete">
+            <input type="search" id="snt-voucher-search" class="form-control" autocomplete="off" placeholder="{{ 'Voucher code or name'|trans }}" aria-autocomplete="list" aria-controls="snt-voucher-results">
+            <ul class="snt-autocomplete__list" id="snt-voucher-results" role="listbox" hidden></ul>
+          </div>
+          <ul class="list-unstyled snt-vouchers mt-2" data-vouchers></ul>
+
+          <details class="snt-dedicated mt-2">
+            <summary>{{ 'Create a voucher dedicated to this customer'|trans }}</summary>
+            <div class="form-row mt-2">
+              <div class="col-md-4 form-group">
+                <label for="snt-ded-label" class="form-control-label">{{ 'Label'|trans }}</label>
+                <input type="text" id="snt-ded-label" class="form-control" maxlength="255" placeholder="{{ 'Commercial discount'|trans }}">
+              </div>
+              <div class="col-md-3 form-group">
+                <label for="snt-ded-value" class="form-control-label">{{ 'Value'|trans }}</label>
+                <div class="input-group">
+                  <input type="text" inputmode="decimal" id="snt-ded-value" class="form-control">
+                  <div class="input-group-append">
+                    <select id="snt-ded-type" class="custom-select snt-unit-select" aria-label="{{ 'Discount type'|trans }}">
+                      <option value="amount" data-currency-option></option>
+                      <option value="percent">%</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 form-group">
+                <label for="snt-ded-date" class="form-control-label">{{ 'Valid until'|trans }}</label>
+                <input type="date" id="snt-ded-date" class="form-control">
+              </div>
+              <div class="col-md-3 form-group">
+                <label for="snt-ded-min" class="form-control-label">{{ 'Minimum amount'|trans }}</label>
+                <input type="text" inputmode="decimal" id="snt-ded-min" class="form-control">
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-action="add-dedicated">{{ 'Add the voucher'|trans }}</button>
+            <p class="snt-help">{{ 'The voucher is created for this customer only when the quote is converted into an order.'|trans }}</p>
+          </details>
+        </div>
+      </section>
+
+      {# 5. Conditions #}
+      <section class="card snt-section" aria-labelledby="snt-s-terms">
+        <h3 class="card-header" id="snt-s-terms"><span class="snt-step">5</span> {{ 'Terms'|trans }}</h3>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-md-4 form-group">
+              <label for="snt-valid-until" class="form-control-label">{{ 'Valid until'|trans }}</label>
+              <input type="date" id="snt-valid-until" class="form-control" data-field="valid_until">
+              <p class="snt-help">{{ 'After this date, the customer can no longer accept the quote.'|trans }}</p>
+            </div>
+            <div class="col-md-8 form-group">
+              <fieldset>
+                <legend class="form-control-label">{{ 'Payment methods allowed'|trans }}</legend>
+                <div class="snt-radio-row" data-payment-methods></div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="snt-customer-message" class="form-control-label">{{ 'Message to the customer'|trans }}</label>
+            <textarea id="snt-customer-message" class="form-control" rows="3" data-field="customer_message" maxlength="5000"></textarea>
+            <p class="snt-help">{{ 'Printed on the PDF and shown to the customer.'|trans }}</p>
+          </div>
+          <div class="form-group snt-internal">
+            <label for="snt-internal-note" class="form-control-label"><i class="material-icons" aria-hidden="true">lock</i> {{ 'Internal note'|trans }}</label>
+            <textarea id="snt-internal-note" class="form-control" rows="2" data-field="internal_note" maxlength="5000"></textarea>
+            <p class="snt-help">{{ 'Never visible to the customer.'|trans }}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    {# Récapitulatif collant #}
+    <aside class="snt-editor__summary" aria-labelledby="snt-summary-title">
+      <div class="card snt-summary">
+        <h3 class="card-header" id="snt-summary-title">{{ 'Summary'|trans }}</h3>
+        <div class="card-body">
+          <dl class="snt-totals" data-totals aria-live="polite">
+            <div><dt>{{ 'Products excl. tax'|trans }}</dt><dd data-t="products_te">—</dd></div>
+            <div data-row="discounts" hidden><dt>{{ 'Discounts'|trans }}</dt><dd data-t="discounts_te">—</dd></div>
+            <div><dt>{{ 'Shipping excl. tax'|trans }}</dt><dd data-t="shipping_te">—</dd></div>
+            <div class="snt-totals__sep"><dt>{{ 'Total excl. tax'|trans }}</dt><dd data-t="total_te">—</dd></div>
+            <div data-taxes></div>
+            <div class="snt-totals__grand"><dt>{{ 'Total incl. tax'|trans }}</dt><dd data-t="total_ti">—</dd></div>
+          </dl>
+          <div data-margin class="snt-margin" hidden></div>
+          <ul class="snt-warnings" data-warnings></ul>
+          <div class="alert alert-warning small" data-approval hidden>
+            {{ 'The discount exceeds the authorised threshold: the quote will need a manager’s approval before it is sent.'|trans }}
+          </div>
+          <div class="snt-summary__actions">
+            <button type="button" class="btn btn-primary btn-block snt-btn-main" data-action="send">
+              <i class="material-icons" aria-hidden="true">send</i> {{ 'Send to customer'|trans }}
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-block" data-action="save">
+              <i class="material-icons" aria-hidden="true">save</i> {{ 'Save draft'|trans }}
+            </button>
+            <a href="#" class="btn btn-link btn-block" data-action="pdf" target="_blank" rel="noopener" hidden>
+              <i class="material-icons" aria-hidden="true">picture_as_pdf</i> {{ 'Preview the PDF'|trans }}
+            </a>
+          </div>
+          <p class="snt-autosave" data-autosave aria-live="polite"></p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  {# --- Modales ----------------------------------------------------------- #}
+  <dialog class="snt-dialog" id="snt-dialog-customer" aria-labelledby="snt-dlg-customer-title">
+    <form method="dialog" data-form="quick-customer">
+      <h3 id="snt-dlg-customer-title">{{ 'Create a customer'|trans }}</h3>
+      <div class="form-row">
+        <div class="col-md-6 form-group"><label class="form-control-label" for="qc-firstname">{{ 'First name'|trans }} *</label><input id="qc-firstname" name="firstname" class="form-control" required></div>
+        <div class="col-md-6 form-group"><label class="form-control-label" for="qc-lastname">{{ 'Last name'|trans }} *</label><input id="qc-lastname" name="lastname" class="form-control" required></div>
+      </div>
+      <div class="form-group"><label class="form-control-label" for="qc-email">{{ 'E-mail'|trans }} *</label><input id="qc-email" name="email" type="email" class="form-control" required></div>
+      <div class="form-row">
+        <div class="col-md-7 form-group"><label class="form-control-label" for="qc-company">{{ 'Company'|trans }}</label><input id="qc-company" name="company" class="form-control"></div>
+        <div class="col-md-5 form-group"><label class="form-control-label" for="qc-siret">SIRET</label><input id="qc-siret" name="siret" class="form-control" inputmode="numeric"></div>
+      </div>
+      <p class="snt-help">{{ 'The customer will set their password with « Forgot your password? » to access their account.'|trans }}</p>
+      <p class="text-danger small" data-dialog-error role="alert"></p>
+      <div class="snt-dialog__actions">
+        <button type="button" class="btn btn-outline-secondary" data-close>{{ 'Cancel'|trans }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'Create the customer'|trans }}</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="snt-dialog" id="snt-dialog-address" aria-labelledby="snt-dlg-address-title">
+    <form method="dialog" data-form="quick-address">
+      <h3 id="snt-dlg-address-title">{{ 'New address'|trans }}</h3>
+      <div class="form-row">
+        <div class="col-md-4 form-group"><label class="form-control-label" for="qa-alias">{{ 'Name of the address'|trans }}</label><input id="qa-alias" name="alias" class="form-control" placeholder="{{ 'e.g. Warehouse'|trans }}"></div>
+        <div class="col-md-8 form-group"><label class="form-control-label" for="qa-company">{{ 'Company'|trans }}</label><input id="qa-company" name="company" class="form-control"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 form-group"><label class="form-control-label" for="qa-firstname">{{ 'First name'|trans }}</label><input id="qa-firstname" name="firstname" class="form-control"></div>
+        <div class="col-md-6 form-group"><label class="form-control-label" for="qa-lastname">{{ 'Last name'|trans }}</label><input id="qa-lastname" name="lastname" class="form-control"></div>
+      </div>
+      <div class="form-group"><label class="form-control-label" for="qa-address1">{{ 'Address'|trans }} *</label><input id="qa-address1" name="address1" class="form-control" required></div>
+      <div class="form-group"><label class="form-control-label" for="qa-address2">{{ 'Address (continued)'|trans }}</label><input id="qa-address2" name="address2" class="form-control"></div>
+      <div class="form-row">
+        <div class="col-md-3 form-group"><label class="form-control-label" for="qa-postcode">{{ 'Postcode'|trans }} *</label><input id="qa-postcode" name="postcode" class="form-control" required></div>
+        <div class="col-md-5 form-group"><label class="form-control-label" for="qa-city">{{ 'City'|trans }} *</label><input id="qa-city" name="city" class="form-control" required></div>
+        <div class="col-md-4 form-group">
+          <label class="form-control-label" for="qa-country">{{ 'Country'|trans }}</label>
+          <select id="qa-country" name="id_country" class="custom-select">
+            {% for country in bootstrap.countries|default([]) %}<option value="{{ country.id }}"{% if country.default %} selected{% endif %}>{{ country.name }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 form-group"><label class="form-control-label" for="qa-phone">{{ 'Phone'|trans }}</label><input id="qa-phone" name="phone" class="form-control" type="tel"></div>
+        <div class="col-md-6 form-group"><label class="form-control-label" for="qa-vat">{{ 'Intra-EU VAT number'|trans }}</label><input id="qa-vat" name="vat_number" class="form-control"></div>
+      </div>
+      <p class="text-danger small" data-dialog-error role="alert"></p>
+      <div class="snt-dialog__actions">
+        <button type="button" class="btn btn-outline-secondary" data-close>{{ 'Cancel'|trans }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'Create the address'|trans }}</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="snt-dialog" id="snt-dialog-bulk" aria-labelledby="snt-dlg-bulk-title">
+    <form method="dialog" data-form="bulk">
+      <h3 id="snt-dlg-bulk-title">{{ 'Bulk add'|trans }}</h3>
+      <div class="form-group">
+        <label class="form-control-label" for="bulk-text">{{ 'One line per product: reference ; quantity'|trans }}</label>
+        <textarea id="bulk-text" name="text" class="form-control" rows="8" placeholder="REF-001;2&#10;REF-002;10"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-control-label" for="bulk-file">{{ 'Or import a CSV file (reference;quantity)'|trans }}</label>
+        <input id="bulk-file" name="file" type="file" class="form-control-file" accept=".csv,.txt,text/csv">
+      </div>
+      <div class="small" data-bulk-errors role="alert"></div>
+      <div class="snt-dialog__actions">
+        <button type="button" class="btn btn-outline-secondary" data-close>{{ 'Cancel'|trans }}</button>
+        <button type="submit" class="btn btn-primary">{{ 'Add the lines'|trans }}</button>
+      </div>
+    </form>
+  </dialog>
+
+  {% include '@Modules/snt_quotes/views/templates/admin/quote/_send_modal.html.twig' %}
+
+  <script type="application/json" id="snt-quote-bootstrap">{{ bootstrap|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_AMP'))|raw }}</script>
+  <script type="application/json" id="snt-quote-i18n">{{ {
+    'saved': 'Saved at %time%'|trans,
+    'saving': 'Saving…'|trans,
+    'unsaved': 'Unsaved changes'|trans,
+    'leave': 'You have unsaved changes. Leave the page anyway?'|trans,
+    'noResult': 'No result'|trans,
+    'chooseCombination': 'Choose a combination'|trans,
+    'catalogPrice': 'Catalogue: %price%'|trans,
+    'purchasePrice': 'Purchase: %price%'|trans,
+    'margin': 'Margin: %amount% (%rate%)'|trans,
+    'belowCost': 'Below purchase price'|trans,
+    'stock': 'Stock: %qty%'|trans,
+    'freeLabel': 'Label (service, installation, fees…)'|trans,
+    'reference': 'Reference'|trans,
+    'sectionLabel': 'Section title'|trans,
+    'commentLabel': 'Comment shown to the customer'|trans,
+    'lineComment': 'Comment for this line (visible to the customer)'|trans,
+    'addComment': 'Add a comment'|trans,
+    'moveUp': 'Move up'|trans,
+    'moveDown': 'Move down'|trans,
+    'duplicate': 'Duplicate'|trans,
+    'remove': 'Remove'|trans,
+    'drag': 'Drag to reorder'|trans,
+    'vat': 'VAT'|trans,
+    'free': 'Free'|trans,
+    'warnZone': 'This carrier does not normally deliver this zone'|trans,
+    'warnGroup': 'This carrier is not normally available for this customer group'|trans,
+    'warnWeight': 'This carrier does not normally accept this weight'|trans,
+    'warnPrice': 'This carrier does not normally accept this order amount'|trans,
+    'warnMaxWeight': 'The parcel exceeds the maximum weight of this carrier'|trans,
+    'warnSuffix': '— the quote’s shipping cost will be applied as is.'|trans,
+    'relayRequired': 'Choose a pickup point for this carrier.'|trans,
+    'pickupPoint': 'Pickup point'|trans,
+    'change': 'Change'|trans,
+    'chooseCustomerFirst': 'Choose a customer first.'|trans,
+    'chooseAddressFirst': 'Choose a delivery address first.'|trans,
+    'chooseCarrierFirst': 'Choose a carrier first.'|trans,
+    'calculatedRate': 'Calculated rate applied: %price%'|trans,
+    'voucherInvalid': 'Not usable (expired, used up or inactive)'|trans,
+    'voucherTaxIncl': 'tax incl.'|trans,
+    'dedicated': 'Dedicated voucher'|trans,
+    'dedicatedValue': 'Enter the value of the voucher.'|trans,
+    'cartLine': 'Cart of %date% — %count% products'|trans,
+    'useCart': 'Use this cart'|trans,
+    'cartImported': '%count% lines imported from the cart.'|trans,
+    'bulkImported': '%count% lines added.'|trans,
+    'taxExempt': 'Intra-EU B2B customer with VAT number %vat%: VAT is not charged (reverse charge).'|trans,
+    'priceTe': 'excl. tax'|trans,
+    'customerCreated': 'Customer created.'|trans,
+    'addressCreated': 'Address created.'|trans,
+    'addLinesFirst': 'Add at least one product or free line before sending.'|trans,
+    'noAddress': 'No address — create one'|trans,
+    'sameAsDelivery': 'Same as delivery'|trans,
+    'none': '—'|trans,
+    'payment_card': 'Credit card'|trans,
+    'payment_transfer': 'Bank transfer'|trans,
+    'payment_deferred': 'Deferred payment (B2B)'|trans,
+    'payment_pending': 'Awaiting payment'|trans,
+    'networkError': 'The server did not respond. Check your connection and try again.'|trans
+  }|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_AMP'))|raw }}</script>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/send-modal.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/editor.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+Bonjour {firstname} {lastname},
+
+Suite à nos échanges, voici la nouvelle version de votre devis {quote_reference}. Elle remplace la précédente.
+
+{custom_message_txt}
+
+Devis : {quote_reference}
+Total TTC : {quote_total_ti} ({quote_total_te} HT)
+Valable jusqu’au : {quote_valid_until}
+
+Le PDF est joint à ce message.
+{quote_link_txt}
+
+Cordialement,
+L’équipe {shop_name}
+
+Votre contact : {employee_name} — {employee_email}
+{shop_url}

@@ -1,0 +1,18 @@
+Hello {firstname} {lastname},
+
+Following our discussion, here is the new version of your quote {quote_reference}. It replaces the previous one.
+
+{custom_message_txt}
+
+Quote: {quote_reference}
+Total incl. tax: {quote_total_ti} ({quote_total_te} excl. tax)
+Valid until: {quote_valid_until}
+
+The PDF is attached to this message.
+{quote_link_txt}
+
+Kind regards,
+The {shop_name} team
+
+Your contact: {employee_name} — {employee_email}
+{shop_url}

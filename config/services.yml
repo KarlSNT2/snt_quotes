@@ -1,0 +1,196 @@
+# Services BO de snt_quotes — compatibles PrestaShop 8.2 (Symfony 4.4) et 9.x (Symfony 6.4).
+# Pas de factory « service:methode » ; arguments explicites partout (pas d'autowiring sur nos classes).
+services:
+  _defaults:
+    public: false
+
+  # --- Configuration, adaptateurs PrestaShop
+  Snt\Quotes\Config\ModuleConfig:
+    class: Snt\Quotes\Config\ModuleConfig
+
+  Snt\Quotes\Adapter\TaxResolver:
+    class: Snt\Quotes\Adapter\TaxResolver
+
+  Snt\Quotes\Adapter\CatalogPriceProvider:
+    class: Snt\Quotes\Adapter\CatalogPriceProvider
+
+  Snt\Quotes\Adapter\CarrierService:
+    class: Snt\Quotes\Adapter\CarrierService
+
+  Snt\Quotes\Adapter\CustomerSearch:
+    class: Snt\Quotes\Adapter\CustomerSearch
+
+  Snt\Quotes\Adapter\ProductSearch:
+    class: Snt\Quotes\Adapter\ProductSearch
+    arguments:
+      - '@Snt\Quotes\Adapter\CatalogPriceProvider'
+
+  # --- Métier
+  Snt\Quotes\Repository\QuoteRepository:
+    class: Snt\Quotes\Repository\QuoteRepository
+
+  Snt\Quotes\Service\HistoryLogger:
+    class: Snt\Quotes\Service\HistoryLogger
+
+  Snt\Quotes\Service\QuoteStateMachine:
+    class: Snt\Quotes\Service\QuoteStateMachine
+    arguments:
+      - '@Snt\Quotes\Service\HistoryLogger'
+
+  Snt\Quotes\Service\ReferenceGenerator:
+    class: Snt\Quotes\Service\ReferenceGenerator
+    arguments:
+      - '@Snt\Quotes\Config\ModuleConfig'
+
+  Snt\Quotes\Service\QuoteEditor:
+    class: Snt\Quotes\Service\QuoteEditor
+    arguments:
+      - '@Snt\Quotes\Adapter\TaxResolver'
+      - '@Snt\Quotes\Adapter\CatalogPriceProvider'
+      - '@Snt\Quotes\Config\ModuleConfig'
+      - '@Snt\Quotes\Service\HistoryLogger'
+
+  Snt\Quotes\Service\QuoteFactory:
+    class: Snt\Quotes\Service\QuoteFactory
+    arguments:
+      - '@Snt\Quotes\Service\QuoteEditor'
+      - '@Snt\Quotes\Service\ReferenceGenerator'
+      - '@Snt\Quotes\Presenter\QuotePresenter'
+      - '@Snt\Quotes\Service\HistoryLogger'
+
+  Snt\Quotes\Service\Permission\QuotePermissions:
+    class: Snt\Quotes\Service\Permission\QuotePermissions
+    arguments:
+      - '@Snt\Quotes\Config\ModuleConfig'
+
+  Snt\Quotes\Presenter\StatusPresenter:
+    class: Snt\Quotes\Presenter\StatusPresenter
+
+  Snt\Quotes\Presenter\QuotePresenter:
+    class: Snt\Quotes\Presenter\QuotePresenter
+    arguments:
+      - '@Snt\Quotes\Presenter\StatusPresenter'
+
+  Snt\Quotes\Storage\S3Storage:
+    class: Snt\Quotes\Storage\S3Storage
+    arguments:
+      - '@Snt\Quotes\Config\ModuleConfig'
+
+  Snt\Quotes\Pdf\QuotePdfGenerator:
+    class: Snt\Quotes\Pdf\QuotePdfGenerator
+    arguments:
+      - '@Snt\Quotes\Storage\S3Storage'
+      - '@Snt\Quotes\Service\HistoryLogger'
+      - '@Snt\Quotes\Config\ModuleConfig'
+
+  Snt\Quotes\Mail\QuoteMailer:
+    class: Snt\Quotes\Mail\QuoteMailer
+    arguments:
+      - '@Snt\Quotes\Config\ModuleConfig'
+      - '@Snt\Quotes\Presenter\QuotePresenter'
+      - '@Snt\Quotes\Service\HistoryLogger'
+
+  Snt\Quotes\Service\QuoteSender:
+    class: Snt\Quotes\Service\QuoteSender
+    arguments:
+      - '@Snt\Quotes\Service\QuoteEditor'
+      - '@Snt\Quotes\Service\QuoteStateMachine'
+      - '@Snt\Quotes\Pdf\QuotePdfGenerator'
+      - '@Snt\Quotes\Mail\QuoteMailer'
+      - '@Snt\Quotes\Service\Permission\QuotePermissions'
+      - '@Snt\Quotes\Presenter\QuotePresenter'
+      - '@Snt\Quotes\Config\ModuleConfig'
+
+  # --- Grid
+  Snt\Quotes\Grid\QuoteQueryBuilder:
+    class: Snt\Quotes\Grid\QuoteQueryBuilder
+    arguments:
+      - '@doctrine.dbal.default_connection'
+      - '%database_prefix%'
+      - '@prestashop.core.query.doctrine_search_criteria_applicator'
+
+  Snt\Quotes\Grid\QuoteGridDefinitionFactory:
+    class: Snt\Quotes\Grid\QuoteGridDefinitionFactory
+    arguments:
+      - '@prestashop.core.hook.dispatcher'
+      - '@Snt\Quotes\Presenter\StatusPresenter'
+    calls:
+      - [setTranslator, ['@translator']]
+
+  snt_quotes.grid.doctrine_data_factory:
+    class: PrestaShop\PrestaShop\Core\Grid\Data\Factory\DoctrineGridDataFactory
+    arguments:
+      - '@Snt\Quotes\Grid\QuoteQueryBuilder'
+      - '@prestashop.core.hook.dispatcher'
+      - '@prestashop.core.grid.query.doctrine_query_parser'
+      - 'snt_quote'
+
+  Snt\Quotes\Grid\QuoteGridDataFactory:
+    class: Snt\Quotes\Grid\QuoteGridDataFactory
+    arguments:
+      - '@snt_quotes.grid.doctrine_data_factory'
+      - '@Snt\Quotes\Presenter\StatusPresenter'
+
+  snt_quotes.grid.factory:
+    class: PrestaShop\PrestaShop\Core\Grid\GridFactory
+    public: true
+    arguments:
+      - '@Snt\Quotes\Grid\QuoteGridDefinitionFactory'
+      - '@Snt\Quotes\Grid\QuoteGridDataFactory'
+      - '@prestashop.core.grid.filter.form_factory'
+      - '@prestashop.core.hook.dispatcher'
+
+  # --- Contrôleurs (autowire uniquement pour setContainer() de Symfony)
+  Snt\Quotes\Controller\Admin\QuoteController:
+    class: Snt\Quotes\Controller\Admin\QuoteController
+    public: true
+    autowire: true
+    autoconfigure: true
+    arguments:
+      $translator: '@translator'
+      $permissions: '@Snt\Quotes\Service\Permission\QuotePermissions'
+      $gridFactory: '@snt_quotes.grid.factory'
+      $gridDefinitionFactory: '@Snt\Quotes\Grid\QuoteGridDefinitionFactory'
+      $queryBuilder: '@Snt\Quotes\Grid\QuoteQueryBuilder'
+      $responseBuilder: '@prestashop.bundle.grid.response_builder'
+      $repository: '@Snt\Quotes\Repository\QuoteRepository'
+      $factory: '@Snt\Quotes\Service\QuoteFactory'
+      $presenter: '@Snt\Quotes\Presenter\QuotePresenter'
+      $history: '@Snt\Quotes\Service\HistoryLogger'
+      $stateMachine: '@Snt\Quotes\Service\QuoteStateMachine'
+      $pdfGenerator: '@Snt\Quotes\Pdf\QuotePdfGenerator'
+      $taxResolver: '@Snt\Quotes\Adapter\TaxResolver'
+      $config: '@Snt\Quotes\Config\ModuleConfig'
+      $sender: '@Snt\Quotes\Service\QuoteSender'
+      $mailer: '@Snt\Quotes\Mail\QuoteMailer'
+    tags: ['controller.service_arguments']
+
+  Snt\Quotes\Controller\Admin\QuoteApiController:
+    class: Snt\Quotes\Controller\Admin\QuoteApiController
+    public: true
+    autowire: true
+    autoconfigure: true
+    arguments:
+      $translator: '@translator'
+      $permissions: '@Snt\Quotes\Service\Permission\QuotePermissions'
+      $editor: '@Snt\Quotes\Service\QuoteEditor'
+      $factory: '@Snt\Quotes\Service\QuoteFactory'
+      $repository: '@Snt\Quotes\Repository\QuoteRepository'
+      $customerSearch: '@Snt\Quotes\Adapter\CustomerSearch'
+      $productSearch: '@Snt\Quotes\Adapter\ProductSearch'
+      $carrierService: '@Snt\Quotes\Adapter\CarrierService'
+      $catalog: '@Snt\Quotes\Adapter\CatalogPriceProvider'
+      $taxResolver: '@Snt\Quotes\Adapter\TaxResolver'
+    tags: ['controller.service_arguments']
+
+  Snt\Quotes\Controller\Admin\ConfigurationController:
+    class: Snt\Quotes\Controller\Admin\ConfigurationController
+    public: true
+    autowire: true
+    autoconfigure: true
+    arguments:
+      $translator: '@translator'
+      $permissions: '@Snt\Quotes\Service\Permission\QuotePermissions'
+      $config: '@Snt\Quotes\Config\ModuleConfig'
+      $storage: '@Snt\Quotes\Storage\S3Storage'
+    tags: ['controller.service_arguments']

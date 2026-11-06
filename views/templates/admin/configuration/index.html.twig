@@ -1,0 +1,77 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% trans_default_domain 'Modules.Sntquotes.Admin' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="snt-quotes snt-config">
+  <div class="snt-pagehead">
+    <div>
+      <a href="{{ listUrl }}" class="snt-back"><i class="material-icons" aria-hidden="true">arrow_back</i> {{ 'Back to quotes'|trans }}</a>
+      <h2 class="snt-title">{{ 'Settings'|trans }}</h2>
+      <p class="snt-subtitle">{{ 'Settings of the shop « %shop% ».'|trans({'%shop%': shopName}) }}</p>
+    </div>
+  </div>
+  {% if isAllShopsContext %}
+    <div class="alert alert-warning">{{ 'Select a shop in the multistore menu: settings are saved shop by shop.'|trans }}</div>
+  {% endif %}
+
+  {% set tabs = {
+    'general': {label: 'General'|trans, fields: ['validity_days', 'reminder_days', 'shop_code', 'ref_pattern', 'response_delay_days', 'stock_reservation', 'fo_request_enabled', 'fo_product_button']},
+    'payment': {label: 'Payment'|trans, fields: ['payment_gateway', 'methods_default', 'payment_terms', 'iban', 'bic', 'paylink_ttl_days']},
+    'documents': {label: 'PDF and e-mails'|trans, fields: ['pdf_color', 'pdf_legal', 'pdf_cgv_source', 'pdf_cgv_text', 'pdf_cgv_id_cms', 'mail_from', 'mail_cc_employee', 'mail_enabled']},
+    'storage': {label: 'PDF storage'|trans, fields: ['s3_endpoint', 's3_region', 's3_bucket', 's3_key', 's3_secret']},
+    'rights': {label: 'Rights'|trans, fields: ['discount_threshold', 'profiles_approve', 'profiles_convert', 'profiles_see_margin']},
+    'webhooks': {label: 'n8n webhooks'|trans, fields: ['webhook_url', 'webhook_secret']}
+  } %}
+
+  {{ form_start(form, {attr: {class: 'snt-config__form', novalidate: 'novalidate'}}) }}
+    <input type="hidden" name="active_tab" value="{{ activeTab }}" data-active-tab>
+    <ul class="nav nav-tabs" role="tablist">
+      {% for key, tab in tabs %}
+        <li class="nav-item">
+          <a class="nav-link{% if key == activeTab %} active{% endif %}" id="tab-{{ key }}" href="#pane-{{ key }}" role="tab" aria-controls="pane-{{ key }}" aria-selected="{{ key == activeTab ? 'true' : 'false' }}" data-tab="{{ key }}">{{ tab.label }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="card card-body snt-config__panes">
+      {% for key, tab in tabs %}
+        <div class="snt-config__pane" id="pane-{{ key }}" role="tabpanel" aria-labelledby="tab-{{ key }}"{% if key != activeTab %} hidden{% endif %}>
+          {% for field in tab.fields %}
+            {{ form_row(attribute(form, field)) }}
+          {% endfor %}
+          {% if key == 'general' %}
+            <div class="form-group">
+              <label class="form-control-label" for="snt-cron-url">{{ 'Cron URL (to call from n8n)'|trans }}</label>
+              <input type="text" id="snt-cron-url" class="form-control" value="{{ cronUrl }}" readonly onclick="this.select()">
+              <p class="snt-help">{{ 'Sends reminders and expires quotes past their validity date. Call it once a day.'|trans }}</p>
+            </div>
+          {% endif %}
+          {% if key == 'storage' %}
+            <p class="snt-help">{{ 'PDFs are archived in « bucket/site-code/Devis-REF-vN.pdf ». Without a bucket, they are kept in the shop’s var/modules folder (development only).'|trans }}</p>
+            <button type="button" class="btn btn-outline-secondary" data-s3-test="{{ s3TestUrl }}"><i class="material-icons" aria-hidden="true">cloud_done</i> {{ 'Test the connection'|trans }}</button>
+            <span class="ml-2" data-s3-result role="status"></span>
+          {% endif %}
+          {% if key == 'webhooks' %}
+            <p class="snt-help">{{ 'Events sent: quote.sent, quote.accepted, quote.declined, quote.ordered, quote.paid, quote.expired — signed with the X-Snt-Signature header (HMAC SHA-256). Active from milestone 3.'|trans }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+      {{ form_rest(form) }}
+      <div class="snt-config__actions">
+        <button type="submit" class="btn btn-primary snt-btn-main"><i class="material-icons" aria-hidden="true">save</i> {{ 'Save'|trans }}</button>
+      </div>
+    </div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script>window.SntQuotes = window.SntQuotes || {}; window.SntQuotes.csrf = {{ csrf|json_encode|raw }};</script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/configuration.js') }}"></script>
+{% endblock %}

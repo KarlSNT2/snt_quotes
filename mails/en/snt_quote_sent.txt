@@ -1,0 +1,18 @@
+Hello {firstname} {lastname},
+
+Please find attached our quote {quote_reference} in PDF format.
+
+{custom_message_txt}
+
+Quote: {quote_reference}
+Total incl. tax: {quote_total_ti} ({quote_total_te} excl. tax)
+Valid until: {quote_valid_until}
+
+To accept it, send it back signed with the words “Approved” or get in touch with us.
+{quote_link_txt}
+
+Kind regards,
+The {shop_name} team
+
+Your contact: {employee_name} — {employee_email}
+{shop_url}

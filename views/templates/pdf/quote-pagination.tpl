@@ -1,0 +1,1 @@
+<table style="width: 100%;"><tr><td style="text-align: right; font-size: 7pt; color: #888888;">{$view.full_reference|escape:'html':'UTF-8'} — {l s='Page' d='Modules.Sntquotes.Pdf' pdf='true'} {literal}{:pnp:}{/literal} / {literal}{:ptp:}{/literal}</td></tr></table>

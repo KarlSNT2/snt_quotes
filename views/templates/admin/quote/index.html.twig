@@ -1,0 +1,45 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% trans_default_domain 'Modules.Sntquotes.Admin' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div class="snt-quotes">
+    <div class="snt-pagehead">
+      <nav class="snt-quick-tabs" aria-label="{{ 'Quick filters'|trans }}">
+        {% set tabs = [
+          {key: 'todo', label: 'To process'|trans, count: counts.todo, help: 'Change requested, awaiting approval, or accepted but not yet ordered'|trans},
+          {key: 'waiting', label: 'Awaiting customer'|trans, count: counts.waiting, help: 'Sent or viewed, no answer yet'|trans},
+          {key: 'all', label: 'All'|trans, count: counts.all, help: ''}
+        ] %}
+        {% for tab in tabs %}
+          <a href="{{ path('admin_snt_quotes_index', {tab: tab.key}) }}"
+             class="snt-quick-tab{% if currentTab == tab.key %} is-active{% endif %}"
+             {% if currentTab == tab.key %}aria-current="page"{% endif %}
+             {% if tab.help %}title="{{ tab.help }}"{% endif %}>
+            {{ tab.label }} <span class="snt-quick-tab__count">{{ tab.count }}</span>
+          </a>
+        {% endfor %}
+      </nav>
+      {% if canCreate %}
+        <a href="{{ path('admin_snt_quotes_create') }}" class="btn btn-primary snt-btn-main">
+          <i class="material-icons" aria-hidden="true">add_circle_outline</i> {{ 'New quote'|trans }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if currentTab == 'todo' and counts.todo == 0 %}
+      <div class="alert alert-success">{{ 'Nothing to process: all quotes are up to date.'|trans }}</div>
+    {% endif %}
+
+    {% include '@PrestaShop/Admin/Common/Grid/grid_panel.html.twig' with {'grid': grid} %}
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/grid.js') }}"></script>
+{% endblock %}

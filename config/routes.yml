@@ -1,0 +1,260 @@
+# Routes BO de snt_quotes. Toutes rattachées à l'onglet AdminSntQuotes (droits natifs + jeton d'URL admin).
+# Les droits fins sont vérifiés dans les contrôleurs (compatibles PS 8.2 et 9.x).
+
+admin_snt_quotes_index:
+  path: /sntquotes
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::indexAction'
+    _legacy_controller: AdminSntQuotes
+    _legacy_link: AdminSntQuotes
+
+admin_snt_quotes_search:
+  path: /sntquotes
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::searchAction'
+    _legacy_controller: AdminSntQuotes
+    _legacy_link: 'AdminSntQuotes:submitFiltersnt_quote'
+
+admin_snt_quotes_create:
+  path: /sntquotes/new
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::createAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_view:
+  path: /sntquotes/{quoteId}
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::viewAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_edit:
+  path: /sntquotes/{quoteId}/edit
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::editAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_pdf:
+  path: /sntquotes/{quoteId}/pdf
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::pdfAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_send_preview:
+  path: /sntquotes/{quoteId}/send/preview
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::sendPreviewAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_send:
+  path: /sntquotes/{quoteId}/send
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::sendAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_remind:
+  path: /sntquotes/{quoteId}/remind
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::remindAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_transition:
+  path: /sntquotes/{quoteId}/status/{to}
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::transitionAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+    to: '[a-z_]+'
+
+admin_snt_quotes_duplicate:
+  path: /sntquotes/{quoteId}/duplicate
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::duplicateAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_new_version:
+  path: /sntquotes/{quoteId}/version
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::newVersionAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_delete:
+  path: /sntquotes/{quoteId}/delete
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::deleteAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_bulk_expire:
+  path: /sntquotes/bulk/expire
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::bulkExpireAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_bulk_remind:
+  path: /sntquotes/bulk/remind
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::bulkRemindAction'
+    _legacy_controller: AdminSntQuotes
+
+# --- API JSON de l'éditeur ----------------------------------------------------
+
+admin_snt_quotes_api_save:
+  path: /sntquotes/api/save
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::saveAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_recalc:
+  path: /sntquotes/api/recalculate
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::recalcAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_customers:
+  path: /sntquotes/api/customers
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::customersAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_customer:
+  path: /sntquotes/api/customer
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::customerAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_quick_customer:
+  path: /sntquotes/api/customer
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::quickCustomerAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_quick_address:
+  path: /sntquotes/api/address
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::quickAddressAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_products:
+  path: /sntquotes/api/products
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::productsAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_product_line:
+  path: /sntquotes/api/product-line
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::productLineAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_combinations:
+  path: /sntquotes/api/combinations
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::combinationsAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_cart_lines:
+  path: /sntquotes/api/cart-lines
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::cartLinesAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_bulk_lines:
+  path: /sntquotes/api/bulk-lines
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::bulkLinesAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_vouchers:
+  path: /sntquotes/api/vouchers
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::vouchersAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_carriers:
+  path: /sntquotes/api/carriers
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::carriersAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_shipping:
+  path: /sntquotes/api/shipping
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::shippingAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_relays:
+  path: /sntquotes/api/relays
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::relaysAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_api_tax_rules:
+  path: /sntquotes/api/tax-rules
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteApiController::taxRulesAction'
+    _legacy_controller: AdminSntQuotes
+
+# --- Configuration --------------------------------------------------------------
+
+admin_snt_quotes_configuration:
+  path: /sntquotes/configuration
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\ConfigurationController::indexAction'
+    _legacy_controller: AdminSntQuotes
+
+admin_snt_quotes_configuration_s3_test:
+  path: /sntquotes/configuration/s3-test
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\ConfigurationController::s3TestAction'
+    _legacy_controller: AdminSntQuotes

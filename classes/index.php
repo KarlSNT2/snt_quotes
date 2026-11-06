@@ -1,3 +1,5 @@
 <?php
-header("Location: ../");
+
+declare(strict_types=1);
+header('Location: ../');
 exit;

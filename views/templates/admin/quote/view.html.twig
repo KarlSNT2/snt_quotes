@@ -1,0 +1,281 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+{% trans_default_domain 'Modules.Sntquotes.Admin' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="snt-quotes snt-view">
+  {# --- En-tête ----------------------------------------------------------- #}
+  <div class="snt-pagehead">
+    <div>
+      <a href="{{ path('admin_snt_quotes_index') }}" class="snt-back"><i class="material-icons" aria-hidden="true">arrow_back</i> {{ 'Back to quotes'|trans }}</a>
+      <h2 class="snt-title">
+        {{ quote.full_reference }}
+        {% include '@Modules/snt_quotes/views/templates/admin/quote/_badge.html.twig' with {badge: quote.status} %}
+      </h2>
+      <p class="snt-subtitle">
+        <a href="{{ customerUrl }}">{{ quote.customer.company ?: quote.customer.name }}</a>{% if quote.customer.company %} — {{ quote.customer.name }}{% endif %}
+        {% if quote.project_name %} · {{ quote.project_name }}{% endif %}
+        {% if quote.employee %} · {{ 'Sales rep:'|trans }} {{ quote.employee.name }}{% endif %}
+      </p>
+    </div>
+    <div class="snt-head-figures">
+      <div><span class="snt-label">{{ 'Total incl. tax'|trans }}</span><strong class="snt-amount">{{ quote.total_ti_display }}</strong><small>{{ quote.total_te_display }} {{ 'excl. tax'|trans }}</small></div>
+      {% if quote.valid_until_display %}
+        <div><span class="snt-label">{{ 'Valid until'|trans }}</span><strong class="{{ quote.validity_warning ? 'text-danger' : '' }}">{{ quote.valid_until_display }}</strong>
+          {% if quote.days_left is not null and quote.validity_warning %}<small class="text-danger">{{ quote.days_left < 0 ? 'Expired'|trans : '%days% days left'|trans({'%days%': quote.days_left}) }}</small>{% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if requiresApproval %}
+    <div class="alert alert-warning">
+      {% if permissions.approve_discount %}
+        {{ 'This quote is waiting for your approval: the discount exceeds the authorised threshold. Check it, then send it to approve it.'|trans }}
+      {% else %}
+        {{ 'This quote is waiting for a manager’s approval (discount above the authorised threshold).'|trans }}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {# --- Barre d'actions contextuelle -------------------------------------- #}
+  <div class="snt-actionbar" role="toolbar" aria-label="{{ 'Actions'|trans }}">
+    {% for action in actions %}
+      {% set cls = action.primary ? 'btn btn-primary snt-btn-main' : 'btn btn-outline-secondary' %}
+      {% if action.key == 'delete' %}{% set cls = 'btn btn-outline-danger' %}{% endif %}
+      {% if action.kind == 'link' %}
+        <a href="{{ action.url }}" class="{{ cls }}"{% if action.key == 'pdf' %} target="_blank" rel="noopener"{% endif %}><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</a>
+      {% elseif action.kind == 'post' %}
+        <form method="post" action="{{ action.url }}" class="d-inline"{% if action.confirm %} data-confirm="{{ action.confirm }}"{% endif %}>
+          <input type="hidden" name="_csrf" value="{{ csrf }}">
+          <button type="submit" class="{{ cls }}"><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</button>
+        </form>
+      {% elseif action.kind == 'send' %}
+        <button type="button" class="{{ cls }}" data-send-config="{{ {
+          previewUrl: path('admin_snt_quotes_send_preview', {quoteId: quoteId}),
+          sendUrl: action.url,
+          pdfUrl: path('admin_snt_quotes_pdf', {quoteId: quoteId}),
+          to: sendDefaults.to,
+          subject: sendDefaults.subject,
+          copyEmployee: sendDefaults.copyEmployee
+        }|json_encode }}"><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</button>
+      {% elseif action.kind == 'disabled' %}
+        <button type="button" class="{{ cls }}" disabled title="{{ 'Available with the next update of the module (milestone 2).'|trans }}"><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</button>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="snt-view__layout">
+    <div class="snt-view__main">
+      {# --- Lignes ---------------------------------------------------------- #}
+      <section class="card">
+        <h3 class="card-header">{{ 'Quote content'|trans }}</h3>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table snt-view-lines mb-0">
+              <thead>
+                <tr>
+                  <th>{{ 'Description'|trans }}</th>
+                  <th class="text-center">{{ 'Qty'|trans }}</th>
+                  <th class="text-right">{{ 'Unit price excl. tax'|trans }}</th>
+                  <th class="text-right">{{ 'Discount'|trans }}</th>
+                  <th class="text-right">{{ 'VAT'|trans }}</th>
+                  <th class="text-right">{{ 'Total excl. tax'|trans }}</th>
+                  {% if permissions.see_margin %}<th class="text-right">{{ 'Margin'|trans }}</th>{% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for line in quote.lines %}
+                  {% if line.type == 'section' %}
+                    <tr class="snt-line--section"><td colspan="{{ permissions.see_margin ? 7 : 6 }}"><strong>{{ line.label }}</strong>{% if line.comment %}<br><em>{{ line.comment|nl2br }}</em>{% endif %}</td></tr>
+                  {% elseif line.type == 'comment' %}
+                    <tr class="snt-line--comment"><td colspan="{{ permissions.see_margin ? 7 : 6 }}"><em>{{ line.comment|nl2br }}</em></td></tr>
+                  {% else %}
+                    <tr class="{{ line.below_cost|default(false) ? 'is-below-cost' : '' }}">
+                      <td>
+                        {{ line.label }}
+                        <div class="small text-muted">{{ line.reference }}{% if line.type == 'free' %} · {{ 'Free line'|trans }}{% endif %}</div>
+                        {% if line.comment %}<div class="small"><em>{{ line.comment|nl2br }}</em></div>{% endif %}
+                      </td>
+                      <td class="text-center">{{ line.qty }}</td>
+                      <td class="text-right">
+                        {% if line.has_reduction %}<s class="text-muted">{{ line.unit_price_te_display }}</s><br>{% endif %}
+                        {{ line.unit_net_te_display }}
+                        {% if line.catalog_price_te_display is defined and line.catalog_price_te_display %}<div class="small text-muted">{{ 'Catalogue: %price%'|trans({'%price%': line.catalog_price_te_display}) }}</div>{% endif %}
+                      </td>
+                      <td class="text-right">{{ line.reduction_display }}</td>
+                      <td class="text-right">{{ line.tax_rate_display }} %</td>
+                      <td class="text-right"><strong>{{ line.total_te_display }}</strong></td>
+                      {% if permissions.see_margin %}<td class="text-right">{{ line.margin_display ?: '—' }}{% if line.below_cost|default(false) %}<br><span class="badge badge-danger">{{ 'Below purchase price'|trans }}</span>{% endif %}</td>{% endif %}
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <section class="card">
+            <h3 class="card-header">{{ 'Customer and delivery'|trans }}</h3>
+            <div class="card-body snt-addresses">
+              <div>
+                <span class="snt-label">{{ 'Invoice address'|trans }}</span>
+                {% if quote.address_invoice %}<p>{{ quote.address_invoice.lines_text|nl2br }}</p>{% else %}<p class="text-muted">—</p>{% endif %}
+              </div>
+              <div>
+                <span class="snt-label">{{ 'Delivery'|trans }}</span>
+                {% if quote.delivery_mode == 'pickup' %}
+                  <p>{{ 'Pickup'|trans }}</p>
+                {% elseif quote.relay %}
+                  <p><strong>{{ quote.relay.name }}</strong><br>{{ quote.relay.address }}<br>{{ quote.relay.zip }} {{ quote.relay.city }}</p>
+                {% elseif quote.address_delivery %}
+                  <p>{{ quote.address_delivery.lines_text|nl2br }}</p>
+                {% endif %}
+                <p><span class="snt-label">{{ 'Carrier'|trans }}</span> {{ quote.carrier_label ?: '—' }}</p>
+              </div>
+              {% if quote.tax_exempt %}<p class="alert alert-info mb-0">{{ 'VAT reverse charge (intra-EU B2B) — VAT no. %vat%'|trans({'%vat%': quote.vat_number}) }}</p>{% endif %}
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-6">
+          <section class="card">
+            <h3 class="card-header">{{ 'Terms'|trans }}</h3>
+            <div class="card-body">
+              <p><span class="snt-label">{{ 'Payment methods allowed'|trans }}</span>
+                {% set methodLabels = {'card': 'Credit card'|trans, 'transfer': 'Bank transfer'|trans, 'deferred': 'Deferred payment (B2B)'|trans, 'pending': 'Awaiting payment'|trans} %}
+                {% for m in quote.payment_methods %}{{ methodLabels[m]|default(m) }}{% if not loop.last %}, {% endif %}{% else %}—{% endfor %}
+              </p>
+              {% if quote.customer_message %}<p><span class="snt-label">{{ 'Message to the customer'|trans }}</span>{{ quote.customer_message|nl2br }}</p>{% endif %}
+              {% if quote.internal_note is defined and quote.internal_note %}<div class="snt-internal-view"><span class="snt-label"><i class="material-icons" aria-hidden="true">lock</i> {{ 'Internal note'|trans }}</span>{{ quote.internal_note|nl2br }}</div>{% endif %}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {# --- Historique ----------------------------------------------------- #}
+      <section class="card">
+        <h3 class="card-header">{{ 'History'|trans }}</h3>
+        <div class="card-body">
+          <ol class="snt-timeline">
+            {% set eventLabels = {
+              'created': 'Quote created'|trans,
+              'updated': 'Quote modified'|trans,
+              'email_sent': 'E-mail sent'|trans,
+              'pdf_archived': 'PDF archived'|trans,
+              'note': 'Note'|trans,
+              'payment_link': 'Payment link'|trans
+            } %}
+            {% set statusLabels = {
+              'draft': 'Draft'|trans, 'pending_approval': 'Awaiting internal approval'|trans, 'sent': 'Sent'|trans, 'viewed': 'Viewed'|trans,
+              'revision_requested': 'Change requested'|trans, 'accepted': 'Accepted'|trans, 'declined': 'Declined'|trans, 'expired': 'Expired'|trans,
+              'ordered': 'Ordered'|trans, 'paid': 'Paid'|trans, 'cancelled': 'Replaced'|trans
+            } %}
+            {% for entry in history %}
+              <li class="snt-timeline__item snt-timeline__item--{{ entry.event }}">
+                <div class="snt-timeline__when">{{ entry.date_add|date('d/m/Y H:i') }}</div>
+                <div class="snt-timeline__what">
+                  {% if entry.event == 'status_change' %}
+                    {{ 'Status: %from% → %to%'|trans({'%from%': statusLabels[entry.status_from]|default(entry.status_from), '%to%': statusLabels[entry.status_to]|default(entry.status_to)}) }}
+                  {% else %}
+                    {{ eventLabels[entry.event]|default(entry.event) }}
+                  {% endif %}
+                  {% if entry.event == 'email_sent' and entry.payload.to is defined %}<span class="text-muted"> — {{ entry.payload.to|join(', ') }}</span>{% endif %}
+                  {% if entry.event == 'pdf_archived' and entry.payload.id_snt_quote_pdf is defined %}
+                    — <a href="{{ path('admin_snt_quotes_pdf', {quoteId: quoteId, archive: entry.payload.id_snt_quote_pdf}) }}" target="_blank" rel="noopener">{{ entry.payload.file }}</a>
+                  {% endif %}
+                  {% if entry.event == 'note' and entry.payload.copied_to_reference is defined %} — {{ 'copied to %ref%'|trans({'%ref%': entry.payload.copied_to_reference}) }}{% endif %}
+                  {% if entry.event == 'created' and entry.payload.from_reference is defined %} — {{ 'from %ref%'|trans({'%ref%': entry.payload.from_reference}) }}{% endif %}
+                  {% if entry.comment %}<div class="small">{{ entry.comment }}</div>{% endif %}
+                </div>
+                <div class="snt-timeline__who small text-muted">
+                  {% if entry.actor_type == 'employee' %}{{ entry.actor_name }}{% elseif entry.actor_type == 'customer' %}{{ 'Customer'|trans }} — {{ entry.actor_name }}{% else %}{{ 'System'|trans }}{% endif %}
+                  {% if entry.ip %} · {{ entry.ip }}{% endif %}
+                </div>
+              </li>
+            {% else %}
+              <li class="text-muted">{{ 'No events yet.'|trans }}</li>
+            {% endfor %}
+          </ol>
+        </div>
+      </section>
+    </div>
+
+    {# --- Colonne de droite ------------------------------------------------ #}
+    <aside class="snt-view__side">
+      <section class="card snt-summary">
+        <h3 class="card-header">{{ 'Amounts'|trans }}</h3>
+        <div class="card-body">
+          <dl class="snt-totals">
+            <div><dt>{{ 'Products excl. tax'|trans }}</dt><dd>{{ quote.total_products_te_display }}</dd></div>
+            {% for discount in quote.discounts %}
+              <div><dt>{{ discount.scope == 'global' ? 'Overall discount'|trans : discount.label }}{% if discount.reduction_display %} ({{ discount.reduction_display }}){% endif %}{% if discount.is_dedicated %} <small class="text-muted">· {{ 'dedicated voucher'|trans }}</small>{% endif %}</dt><dd>−{{ discount.amount_te_display }}</dd></div>
+            {% endfor %}
+            <div><dt>{{ 'Shipping excl. tax'|trans }}</dt><dd>{% if quote.free_shipping %}{{ 'Free'|trans }}{% else %}{% if quote.shipping_discounted %}<s class="text-muted">{{ quote.shipping_gross_te_display }}</s> {% endif %}{{ quote.shipping_te_display }}{% endif %}</dd></div>
+            <div class="snt-totals__sep"><dt>{{ 'Total excl. tax'|trans }}</dt><dd>{{ quote.total_te_display }}</dd></div>
+            {% for tax in quote.taxes %}
+              <div class="snt-totals__tax"><dt>{{ 'VAT'|trans }} {{ tax.rate_display }} %</dt><dd>{{ tax.tax_display }}</dd></div>
+            {% endfor %}
+            <div class="snt-totals__grand"><dt>{{ 'Total incl. tax'|trans }}</dt><dd>{{ quote.total_ti_display }}</dd></div>
+          </dl>
+          {% if quote.margin_total_display is defined and quote.margin_total_display %}
+            <p class="snt-margin">{{ 'Total margin: %amount%'|trans({'%amount%': quote.margin_total_display}) }}</p>
+          {% endif %}
+        </div>
+      </section>
+
+      {% if orderUrl %}
+        <section class="card">
+          <div class="card-body"><a href="{{ orderUrl }}" class="btn btn-outline-primary btn-block"><i class="material-icons" aria-hidden="true">receipt</i> {{ 'View the order'|trans }}</a></div>
+        </section>
+      {% endif %}
+
+      {% if versions|length > 1 %}
+        <section class="card">
+          <h3 class="card-header">{{ 'Versions'|trans }}</h3>
+          <ul class="list-group list-group-flush">
+            {% for v in versions %}
+              <li class="list-group-item d-flex justify-content-between align-items-center{% if v.id_snt_quote == quoteId %} active{% endif %}">
+                <a href="{{ path('admin_snt_quotes_view', {quoteId: v.id_snt_quote}) }}" class="{% if v.id_snt_quote == quoteId %}text-white{% endif %}">v{{ v.version }}</a>
+                <small>{{ statusLabels[v.status]|default(v.status) }}</small>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+
+      <section class="card">
+        <h3 class="card-header">{{ 'PDF sent'|trans }}</h3>
+        <div class="card-body">
+          {% for archive in archives %}
+            <p class="mb-1"><a href="{{ path('admin_snt_quotes_pdf', {quoteId: quoteId, archive: archive.id_snt_quote_pdf}) }}" target="_blank" rel="noopener"><i class="material-icons" aria-hidden="true">picture_as_pdf</i> v{{ archive.version }} — {{ archive.date_add|date('d/m/Y H:i') }}</a>
+              <br><small class="text-muted" title="SHA-256">{{ archive.sha256|slice(0, 16) }}…</small></p>
+          {% else %}
+            <p class="text-muted mb-0">{{ 'No PDF sent yet. Each PDF sent to the customer is archived here, unchanged.'|trans }}</p>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="card-header">{{ 'Payment link'|trans }}</h3>
+        <div class="card-body"><p class="text-muted mb-0">{{ 'Payment links will be available with the next update of the module.'|trans }}</p></div>
+      </section>
+    </aside>
+  </div>
+
+  {% include '@Modules/snt_quotes/views/templates/admin/quote/_send_modal.html.twig' %}
+  <script>window.SntQuotes = window.SntQuotes || {}; window.SntQuotes.csrf = {{ csrf|json_encode|raw }};</script>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/send-modal.js') }}"></script>
+{% endblock %}

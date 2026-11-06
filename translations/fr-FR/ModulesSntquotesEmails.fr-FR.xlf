@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="snt_quotes" source-language="en-US" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="368e0856867ed9445c374e39c0d690aa">
+        <source>Reminder: your quote %reference% expires soon</source>
+        <target>Rappel : votre devis %reference% arrive à échéance</target>
+      </trans-unit>
+      <trans-unit id="bbe4923e710ce8918bfaed48e9c1c36d">
+        <source>Updated quote %reference% — %shop%</source>
+        <target>Mise à jour de votre devis %reference% — %shop%</target>
+      </trans-unit>
+      <trans-unit id="857fc2ae5b4f9c1ef6ec81c5d75f6ac0">
+        <source>Your quote %reference% — %shop%</source>
+        <target>Votre devis %reference% — %shop%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

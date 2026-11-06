@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Snt\Quotes\Install;
 
 use Snt\Quotes\Config\ConfigKeys;
+use Snt\Quotes\Service\QuoteStateMachine;
 
 /**
  * Installation / désinstallation : tables, onglet BO, configuration par défaut.
@@ -24,7 +25,33 @@ final class Installer
     {
         return (new SchemaInstaller())->install()
             && $this->installTab()
-            && $this->installConfiguration();
+            && $this->installConfiguration()
+            && $this->installCustomHooks();
+    }
+
+    /**
+     * Hook publié par le module (changements de statut), pour que d'autres modules puissent s'y abonner.
+     */
+    public function installCustomHooks(): bool
+    {
+        $hooks = [
+            QuoteStateMachine::HOOK_STATUS_UPDATE => 'SNT Quotes: quote status changed',
+        ];
+        foreach ($hooks as $name => $title) {
+            if (\Hook::getIdByName($name)) {
+                continue;
+            }
+            $hook = new \Hook();
+            $hook->name = $name;
+            $hook->title = $title;
+            $hook->description = 'Params: quote (SntQuote), status_from, status_to, payload';
+            $hook->position = false;
+            if (!$hook->add()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function uninstall(): bool

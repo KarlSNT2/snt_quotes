@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="snt_quotes" source-language="en-US" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="e19cbfe4c7e6c6ec86fdf75983553a0b">
+        <source>Approved — « Bon pour accord »</source>
+        <target>Bon pour accord</target>
+      </trans-unit>
+      <trans-unit id="996442aee6b43f86c6adca47923397e4">
+        <source>Bank transfer:</source>
+        <target>Virement :</target>
+      </trans-unit>
+      <trans-unit id="22d57c94a5b8d930b7b2724d9082c206">
+        <source>Base excl. tax</source>
+        <target>Base HT</target>
+      </trans-unit>
+      <trans-unit id="ce26601dac0dea138b7295f02b7620a7">
+        <source>Customer</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="246e35731005e058a6df0314a83449d7">
+        <source>Customer VAT no.</source>
+        <target>N° TVA client</target>
+      </trans-unit>
+      <trans-unit id="8f57edbf0ec48645e3bca6e4e1704b26">
+        <source>Date, signature and company stamp, preceded by the handwritten words « Bon pour accord ».</source>
+        <target>Date, signature et cachet de l’entreprise, précédés de la mention manuscrite « Bon pour accord ».</target>
+      </trans-unit>
+      <trans-unit id="0d8d58008ef5dd7afce337373ef73993">
+        <source>Date:</source>
+        <target>Date :</target>
+      </trans-unit>
+      <trans-unit id="065ab3a28ca4f16f55f103adc7d0226f">
+        <source>Delivery</source>
+        <target>Livraison</target>
+      </trans-unit>
+      <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39">
+        <source>Description</source>
+        <target>Désignation</target>
+      </trans-unit>
+      <trans-unit id="104d9898c04874d0fbac36e125fa1369">
+        <source>Discount</source>
+        <target>Remise</target>
+      </trans-unit>
+      <trans-unit id="b24ce0cd392a5b0b8dedc66c25213594">
+        <source>Free</source>
+        <target>Offert</target>
+      </trans-unit>
+      <trans-unit id="8274227929e0d71598f86d7ecd92e2a1">
+        <source>General terms and conditions of sale</source>
+        <target>Conditions générales de vente</target>
+      </trans-unit>
+      <trans-unit id="c8c3d7f1939fee97c1efa7850b28e5ae">
+        <source>Issued on</source>
+        <target>Émis le</target>
+      </trans-unit>
+      <trans-unit id="4c2a8fe7eaf24721cc7a9f0175115bd4">
+        <source>Message</source>
+        <target>Message</target>
+      </trans-unit>
+      <trans-unit id="cf51246a9f3c968b850c4014a9253e03">
+        <source>Overall discount</source>
+        <target>Remise globale</target>
+      </trans-unit>
+      <trans-unit id="193cfc9be3b995831c6af2fea6650e60">
+        <source>Page</source>
+        <target>Page</target>
+      </trans-unit>
+      <trans-unit id="099d78613715c3c32ab5b50352bd3219">
+        <source>Pickup at our premises</source>
+        <target>Retrait dans nos locaux</target>
+      </trans-unit>
+      <trans-unit id="2091eecdb8d7db4e0d42e23386ccf9f4">
+        <source>Products excl. tax</source>
+        <target>Produits HT</target>
+      </trans-unit>
+      <trans-unit id="f23460318e154389d2838cc1f23621e2">
+        <source>Project:</source>
+        <target>Projet :</target>
+      </trans-unit>
+      <trans-unit id="b6473d082e47c479ca94a81a5daeff14">
+        <source>QUOTE</source>
+        <target>DEVIS</target>
+      </trans-unit>
+      <trans-unit id="03ab340b3f99e03cff9e84314ead38c0">
+        <source>Qty</source>
+        <target>Qté</target>
+      </trans-unit>
+      <trans-unit id="12d3c7a4296542c62474856ec452c045">
+        <source>Ref.</source>
+        <target>Réf.</target>
+      </trans-unit>
+      <trans-unit id="4f68183551e5dbd7c341347ffe308682">
+        <source>SIRET</source>
+        <target>SIRET</target>
+      </trans-unit>
+      <trans-unit id="ea9cf7e47ff33b2be14e6dd07cbcefc6">
+        <source>Shipping</source>
+        <target>Livraison</target>
+      </trans-unit>
+      <trans-unit id="6ab9375e8f8108c11f21ab43d913e79c">
+        <source>Tel.</source>
+        <target>Tél.</target>
+      </trans-unit>
+      <trans-unit id="6f1bf85c9ebb3c7fa26251e1e335e032">
+        <source>Terms</source>
+        <target>Conditions</target>
+      </trans-unit>
+      <trans-unit id="7a906e2d87ae973504b0a010acf1ffe3">
+        <source>This quote is valid until %date%.</source>
+        <target>Ce devis est valable jusqu’au %date%.</target>
+      </trans-unit>
+      <trans-unit id="25b77b23fda3d051fb72598c952a82d7">
+        <source>Total excl. tax</source>
+        <target>Total HT</target>
+      </trans-unit>
+      <trans-unit id="ba12e59b20a9720f70fb907a55cd2620">
+        <source>Total incl. tax</source>
+        <target>Total TTC</target>
+      </trans-unit>
+      <trans-unit id="e0fd4e35546b7f0eeae62dfa604bd973">
+        <source>Unit price excl. tax</source>
+        <target>PU HT</target>
+      </trans-unit>
+      <trans-unit id="43183e955e3019bf7f8c942e016b7b13">
+        <source>VAT</source>
+        <target>TVA</target>
+      </trans-unit>
+      <trans-unit id="18a2d9a298f1eca9823e79ecdfad3fed">
+        <source>VAT no.</source>
+        <target>N° TVA</target>
+      </trans-unit>
+      <trans-unit id="12b83b3edbdb3a16811d65ea18697839">
+        <source>VAT rate</source>
+        <target>Taux TVA</target>
+      </trans-unit>
+      <trans-unit id="521ebea3db3af8b7f040c68b3c3709cb">
+        <source>VAT reverse charge — Article 196 of Directive 2006/112/EC (intra-community supply).</source>
+        <target>Autoliquidation — article 196 de la directive 2006/112/CE (livraison intracommunautaire).</target>
+      </trans-unit>
+      <trans-unit id="b2844b8e17ecaaeae68d018fe9418af0">
+        <source>Valid until</source>
+        <target>Valable jusqu’au</target>
+      </trans-unit>
+      <trans-unit id="0daa205efa9a710aa60c9d6cc615b25c">
+        <source>Your contact</source>
+        <target>Votre contact</target>
+      </trans-unit>
+      <trans-unit id="8668db45521819991ea241c2e53da754">
+        <source>reference to quote:</source>
+        <target>référence à rappeler :</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
