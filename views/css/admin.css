@@ -42,7 +42,7 @@
 .snt-product-option__price { font-weight: 600; white-space: nowrap; }
 
 .snt-customer-card { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--snt-border); border-radius: 4px; background: #f8fafb; }
-.snt-carts { margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--snt-accent); background: #f4fbfd; }
+.snt-carts { margin-top: 12px; padding: 10px 12px; border: 1px solid #cdeaf2; border-radius: 4px; background: #f4fbfd; }
 
 .snt-lines { margin-bottom: 0; }
 .snt-lines th { white-space: nowrap; font-size: .8125rem; }
@@ -82,7 +82,6 @@
 .snt-carrier__logo--none { display: inline-flex; align-items: center; justify-content: center; color: #9aa4ad; }
 .snt-carrier__out { color: #8a4b00; }
 .snt-carrier__out .material-icons { font-size: 14px; vertical-align: -2px; }
-.snt-carrier-warning { border-left: 4px solid #e08600; }
 .snt-relay__search { max-width: 320px; }
 .snt-relay__selected { margin: 8px 0; font-weight: 600; }
 .snt-relay__list { max-height: 220px; overflow-y: auto; }
@@ -118,8 +117,9 @@
 .snt-actionbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; margin-bottom: 16px; background: #fff; border: 1px solid var(--snt-border); border-radius: 4px; }
 .snt-actionbar .btn { display: inline-flex; align-items: center; gap: 6px; }
 .snt-addresses { display: grid; gap: 12px; }
-.snt-internal-view { padding: 8px; background: #fffaf0; border-left: 3px solid #e08600; }
-.snt-timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--snt-border); }
+.snt-internal-view { padding: 8px; background: #fffaf0; border: 1px solid #f0d9b5; border-radius: 4px; }
+.snt-timeline { position: relative; list-style: none; margin: 0; padding: 0 0 0 18px; }
+.snt-timeline::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; background: var(--snt-border); }
 .snt-timeline__item { position: relative; padding: 0 0 14px 12px; }
 .snt-timeline__item::before { content: ''; position: absolute; left: -25px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 2px solid var(--snt-accent); }
 .snt-timeline__item--status_change::before { background: var(--snt-accent); }
