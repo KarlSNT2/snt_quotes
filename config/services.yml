@@ -150,6 +150,8 @@ services:
       $translator: '@translator'
       $permissions: '@Snt\Quotes\Service\Permission\QuotePermissions'
       $gridFactory: '@snt_quotes.grid.factory'
+      # Injecté : le conteneur restreint des contrôleurs-services ne le fournit pas à presentGrid().
+      $gridPresenter: '@prestashop.core.grid.presenter.grid_presenter'
       $gridDefinitionFactory: '@Snt\Quotes\Grid\QuoteGridDefinitionFactory'
       $queryBuilder: '@Snt\Quotes\Grid\QuoteQueryBuilder'
       $responseBuilder: '@prestashop.bundle.grid.response_builder'

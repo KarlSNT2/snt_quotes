@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Snt\Quotes\Controller\Admin;
 
 use PrestaShop\PrestaShop\Core\Grid\GridFactoryInterface;
+use PrestaShop\PrestaShop\Core\Grid\Presenter\GridPresenterInterface;
 use PrestaShopBundle\Service\Grid\ResponseBuilder;
 use Snt\Quotes\Adapter\TaxResolver;
 use Snt\Quotes\Config\ConfigKeys;
@@ -42,6 +43,7 @@ class QuoteController extends AbstractQuoteController
         TranslatorInterface $translator,
         QuotePermissions $permissions,
         private readonly GridFactoryInterface $gridFactory,
+        private readonly GridPresenterInterface $gridPresenter,
         private readonly QuoteGridDefinitionFactory $gridDefinitionFactory,
         private readonly QuoteQueryBuilder $queryBuilder,
         private readonly ResponseBuilder $responseBuilder,
@@ -78,7 +80,7 @@ class QuoteController extends AbstractQuoteController
         return $this->render(self::TPL . 'quote/index.html.twig', [
             'layoutTitle' => $this->t('Quotes'),
             'enableSidebar' => true,
-            'grid' => $this->presentGrid($grid),
+            'grid' => $this->gridPresenter->present($grid),
             'currentTab' => $tab,
             'counts' => $counts,
             'canCreate' => $this->permissions->canCreate(),
