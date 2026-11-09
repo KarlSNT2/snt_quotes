@@ -5,8 +5,10 @@ Cocher `[x]`, noter l'écart sinon.
 
 ## Jalon 1 — BO interne
 
+> **Recette DEV du 2026-11-09 (Karl)** : parcours nominal validé — création d'un devis, envoi de l'e-mail avec le PDF en pièce jointe, passage manuel en « Accepté ». Correctif appliqué pendant la recette : injection du présentateur de Grid (commit affbc62).
+
 ### Installation
-- [ ] Installation sans erreur ; onglet **Commandes > Devis** présent ; tables `ps_snt_quote*` créées
+- [x] Installation sans erreur ; onglet **Commandes > Devis** présent ; tables `ps_snt_quote*` créées
 - [ ] Configuration par défaut posée pour **chaque** boutique (code site deviné depuis le nom)
 - [ ] Mise à jour du module (même version) sans perte de données
 - [ ] Coexistence avec Opart Devis : panier et tunnel inchangés
