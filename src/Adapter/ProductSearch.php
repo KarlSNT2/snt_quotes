@@ -42,8 +42,9 @@ class ProductSearch
              INNER JOIN `' . _DB_PREFIX_ . 'product_shop` ps ON ps.`id_product` = p.`id_product` AND ps.`id_shop` = ' . $idShop . '
              INNER JOIN `' . _DB_PREFIX_ . 'product_lang` pl ON pl.`id_product` = p.`id_product` AND pl.`id_lang` = ' . $idLang . ' AND pl.`id_shop` = ' . $idShop . '
              LEFT JOIN `' . _DB_PREFIX_ . 'product_attribute` pa ON pa.`id_product` = p.`id_product`
-             WHERE pl.`name` LIKE ' . $like . ' OR p.`reference` LIKE ' . $like . ' OR p.`ean13` LIKE ' . $like . '
-                OR p.`supplier_reference` LIKE ' . $like . ' OR pa.`reference` LIKE ' . $like . ' OR pa.`ean13` LIKE ' . $like . '
+             WHERE (pl.`name` LIKE ' . $like . ' OR p.`reference` LIKE ' . $like . ' OR p.`ean13` LIKE ' . $like . '
+                OR p.`supplier_reference` LIKE ' . $like . ' OR pa.`reference` LIKE ' . $like . ' OR pa.`ean13` LIKE ' . $like . ')
+               AND p.`reference` NOT LIKE \'SNT-QUOTE-FREE%\'
              ORDER BY (p.`reference` = ' . $exact . ') DESC, ps.`active` DESC, pl.`name` ASC
              LIMIT ' . max(1, $limit)
         ) ?: []);

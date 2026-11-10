@@ -74,11 +74,43 @@ Cocher `[x]`, noter l'écart sinon.
 - [ ] Fiche client : bloc « Devis » + « Nouveau devis pour ce client » (client présélectionné)
 - [ ] Fiche commande : encart « Issue du devis » (vérifiable à partir du jalon 2)
 
-## Jalon 2 — Conversion et paiement *(à compléter)*
-- [ ] Transporteur hors règles → commande créée, `order_carrier` = transporteur réel
-- [ ] Bon de réduction et ligne libre reportés à l'identique ; totaux au centime
-- [ ] HiPay Payments v4 (PS 8) et v5 (PS 9) ; PayPlug (defense-privee)
-- [ ] `orderfees_shipping` n'altère pas le port du panier technique
+## Jalon 2 — Conversion et paiement
+
+### Mise à jour 0.1.0 → 0.2.0
+- [ ] Mise à jour sans erreur ; transporteur « Livraison selon devis » créé (actif, toutes zones) ; 3 statuts de commande créés
+- [ ] Le transporteur technique **n'apparaît pas** dans le tunnel d'un panier client normal
+- [ ] `orderfees_shipping` / ASC : transporteur technique exclu de leurs règles
+
+### Conversion (BO, modale « Convertir en commande »)
+- [ ] Résumé correct (montant TTC/HT, client, transporteur) ; stock insuffisant signalé sans bloquer
+- [ ] **FR TTC** → commande : totaux HT, TVA, TTC, port **identiques au devis au centime**
+- [ ] **B2B UE autoliquidé** → commande à TVA 0, identique au devis
+- [ ] **Transporteur hors règles** (zone non desservie) → commande créée, `orders.id_carrier` et `order_carrier` = transporteur réel
+- [ ] Transporteur **relais** `snt_carriers` → adresse relais matérialisée sur la commande
+- [ ] **Ligne libre** → ligne de commande avec le libellé et la référence du devis ; deux lignes libres de prix différents OK
+- [ ] **Bon de réduction** existant → remise identique sur la commande ; quantité du bon décrémentée
+- [ ] Remise globale %, remise de ligne, port offert, remise sur le port → reportés à l'identique
+- [ ] Client d'un **groupe avec remise** (ex. -10 %) → prix de la commande = prix du devis (pas de double remise)
+- [ ] Boutique avec **seuil de port gratuit** dépassé → port du devis appliqué et taxé
+- [ ] Modes virement, paiement différé, en attente → bon statut initial ; mode téléphone → bloc MO/TO HiPay visible
+- [ ] Lien PayPlug (defense-privee) → commande au nom de PayPlug, e-mail PayPlug reçu
+- [ ] E-mail de confirmation de commande : nom du **transporteur réel** (pas « Livraison selon devis »)
+- [ ] Message privé « Commande issue du devis … » sur la commande ; encart « Issue du devis » sur la fiche commande
+- [ ] Devis → « Commandé », puis « Payé » quand la commande passe à un statut payé
+- [ ] Double conversion impossible (deuxième clic, deux onglets) ; prix imposés et règle `SNTQ-…` nettoyés après commande
+- [ ] Même produit sur deux lignes à prix différents → message clair, pas de commande
+- [ ] Écart de totaux simulé (règle de frais active sur le transporteur technique) → aucune commande, message explicite
+
+### Lien et page de paiement (sans connexion)
+- [ ] Lien créé et envoyé (e-mail FR/EN) ; copie possible une seule fois ; nouveau lien → l'ancien est désactivé
+- [ ] Page client : récapitulatif identique au PDF, case CGV obligatoire, moyens = ceux cochés sur le devis
+- [ ] Ouverture du lien → devis « Vu » ; navigation privée (non connecté) OK ; mobile OK
+- [ ] **HiPay** : paiement accepté → commande créée par HiPay, devis « Commandé » puis « Payé », lien « Utilisé »
+- [ ] HiPay : paiement refusé / annulé → message, retour à la page, nouvel essai possible
+- [ ] Virement depuis la page → commande créée, IBAN affiché
+- [ ] Lien expiré, désactivé, devis remplacé par une nouvelle version, devis déjà payé → écran dédié
+- [ ] E-mail « Commande créée depuis le devis » reçu par le commercial
+- [ ] HiPay Payments v4 (PS 8.2) **et** v5 (PS 9.2)
 
 ## Jalon 3 — Front office *(à compléter)*
 - [ ] Multiboutique, mobile, accessibilité clavier

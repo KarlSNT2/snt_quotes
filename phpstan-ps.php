@@ -43,6 +43,12 @@ if (!is_file($stubFile) || filemtime($stubFile) < time() - 86400) {
 return [
     'parameters' => [
         'scanFiles' => [$stubFile, $psRoot . '/config/alias.php'],
+        // Modules de paiement utilisés (sources du module HiPay Payments, ex. dézippé) : HIPAY_DIR=/chemin/hipaypayments
+        'scanDirectories' => array_values(array_filter([
+            $psRoot . '/classes',
+            $psRoot . '/controllers',
+            getenv('HIPAY_DIR') ?: (is_dir($psRoot . '/modules/hipaypayments') ? $psRoot . '/modules/hipaypayments' : null),
+        ])),
         'paths' => [
             __DIR__ . '/snt_quotes.php',
             __DIR__ . '/classes',
@@ -54,10 +60,6 @@ return [
             $psRoot . '/config/defines.inc.php',
             __DIR__ . '/tests/phpstan-bootstrap.php',
             $psRoot . '/vendor/autoload.php',
-        ],
-        'scanDirectories' => [
-            $psRoot . '/classes',
-            $psRoot . '/controllers',
         ],
         'dynamicConstantNames' => ['_PS_VERSION_', '_PS_MODE_DEV_'],
     ],

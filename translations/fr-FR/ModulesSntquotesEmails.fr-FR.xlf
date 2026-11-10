@@ -2,6 +2,14 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="snt_quotes" source-language="en-US" target-language="fr-FR" datatype="plaintext">
     <body>
+      <trans-unit id="b24bf3dc434c4bd83d57d2053b49defd">
+        <source>Order created from quote %reference%</source>
+        <target>Commande créée depuis le devis %reference%</target>
+      </trans-unit>
+      <trans-unit id="5eb1e754399eb9c555dba30d74c16413">
+        <source>Pay your quote %reference% online — %shop%</source>
+        <target>Réglez votre devis %reference% en ligne — %shop%</target>
+      </trans-unit>
       <trans-unit id="368e0856867ed9445c374e39c0d690aa">
         <source>Reminder: your quote %reference% expires soon</source>
         <target>Rappel : votre devis %reference% arrive à échéance</target>
@@ -9,6 +17,10 @@
       <trans-unit id="bbe4923e710ce8918bfaed48e9c1c36d">
         <source>Updated quote %reference% — %shop%</source>
         <target>Mise à jour de votre devis %reference% — %shop%</target>
+      </trans-unit>
+      <trans-unit id="4ac6eeb9cd6f24fa89001b20c174a1a9">
+        <source>View and pay my quote</source>
+        <target>Consulter et régler mon devis</target>
       </trans-unit>
       <trans-unit id="857fc2ae5b4f9c1ef6ec81c5d75f6ac0">
         <source>Your quote %reference% — %shop%</source>

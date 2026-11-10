@@ -435,3 +435,11 @@ FR_EMAILS = {
  "Updated quote %reference% — %shop%": "Mise à jour de votre devis %reference% — %shop%",
  "Your quote %reference% — %shop%": "Votre devis %reference% — %shop%",
 }
+
+
+
+# Jalon 2
+from fr_j2 import FR_ADMIN_J2, FR_EMAILS_J2, FR_SHOP  # noqa: E402,F401
+
+FR.update(FR_ADMIN_J2)
+FR_EMAILS.update(FR_EMAILS_J2)

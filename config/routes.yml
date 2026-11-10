@@ -129,6 +129,44 @@ admin_snt_quotes_bulk_remind:
     _controller: 'Snt\Quotes\Controller\Admin\QuoteController::bulkRemindAction'
     _legacy_controller: AdminSntQuotes
 
+# --- Conversion en commande et liens de paiement (jalon 2) ----------------------
+
+admin_snt_quotes_convert_preview:
+  path: /sntquotes/{quoteId}/convert/preview
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\ConversionController::previewAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_convert:
+  path: /sntquotes/{quoteId}/convert
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\ConversionController::convertAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_payment_link:
+  path: /sntquotes/{quoteId}/payment-link
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\ConversionController::paymentLinkAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
+admin_snt_quotes_payment_link_revoke:
+  path: /sntquotes/{quoteId}/payment-link/revoke
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\ConversionController::revokeLinkAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
 # --- API JSON de l'éditeur ----------------------------------------------------
 
 admin_snt_quotes_api_save:

@@ -465,3 +465,25 @@ Vérifié : PHPUnit (30 tests), PHPStan niveau 6 sur tout le module contre les s
 syntaxique des gabarits Twig avec le Twig de PS 8.
 **Non vérifié** : installation et parcours dans une vraie boutique (8.2.6 et 9.2), à dérouler avec
 `tests/manual/checklist-recette.md`.
+Recette DEV du 2026-11-09 : parcours nominal validé (création, envoi e-mail + PDF, acceptation manuelle).
+
+### Jalon 2 — livré le 2026-11-10 (v0.2.0), recette DEV à faire
+
+Fait : transporteur technique, produits « ligne libre » (déclinaisons « emplacement » réutilisables pour plusieurs lignes
+libres de prix différents), statuts de commande ; `TechnicalCartBuilder` (prix imposés compensant remise de groupe et
+écotaxe, une règle panier HT pour toutes les remises, relais `snt_carriers`) ; contrôle des totaux au centime avant et après
+commande ; `QuoteToOrderConverter` (verrou MySQL ; modes virement, différé, en attente, téléphone HiPay, lien PayPlug) ;
+`OrderPostProcessor` (transporteur réel, lignes libres, bons d'origine, devis Commandé puis Payé, double paiement signalé par
+le statut « Erreur conversion devis ») ; liens de paiement ; page de paiement client sans connexion ; HiPay Payments
+(page hébergée, notification au module HiPay) ; e-mails « lien de paiement » et « commande créée ».
+
+Écarts au plan, volontaires :
+- **remises** : une seule règle panier HT au montant figé (globale + bons + bon dédié) au lieu d'une par remise ; les bons
+  d'origine sont décomptés à la commande. Plus simple, et garanti au centime ;
+- **seuils de port gratuit** neutralisés en mémoire pour les paniers de devis : sinon le cœur renvoie un port non taxé ;
+- **taxe du port** : la règle de taxe du transporteur technique est alignée sur celle du transporteur réel juste avant la conversion ;
+- le lien de paiement n'est affiché qu'à sa création (seule l'empreinte du jeton est stockée, comme le demande le §7 du cahier des charges).
+
+Vérifié : PHPUnit (37 tests), PHPStan niveau 6 sans erreur contre PS 8.2.3 et les sources de HiPay Payments v5,
+gabarits Twig et Smarty compilés, php-cs-fixer. **Non vérifié** : parcours réels (commandes, HiPay, PayPlug), à dérouler
+avec `tests/manual/checklist-recette.md`, section Jalon 2.

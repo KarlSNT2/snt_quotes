@@ -54,6 +54,10 @@
         <source>Actions</source>
         <target>Actions</target>
       </trans-unit>
+      <trans-unit id="4d3d769b812b6faa6b76e1a8abaece2d">
+        <source>Active</source>
+        <target>Actif</target>
+      </trans-unit>
       <trans-unit id="c3edcf2cedbd4ce230fd6d4ea8915718">
         <source>Add a comment</source>
         <target>Ajouter un commentaire</target>
@@ -126,6 +130,10 @@
         <source>Amounts</source>
         <target>Montants</target>
       </trans-unit>
+      <trans-unit id="3632dc6bc643185c92baa79ac11be482">
+        <source>An order of %amount% incl. tax (%amount_te% excl. tax) will be created for %customer%, delivered by %carrier%.</source>
+        <target>Une commande de %amount% TTC (%amount_te% HT) sera créée pour %customer%, livrée par %carrier%.</target>
+      </trans-unit>
       <trans-unit id="25005c0c0ba6429e576d9483a6d203fe">
         <source>An unexpected error occurred. Try again; if the problem persists, contact support (details in the logs).</source>
         <target>Une erreur inattendue s’est produite. Réessayez ; si le problème persiste, contactez le support (détails dans les journaux).</target>
@@ -133,6 +141,10 @@
       <trans-unit id="69a6281693076a0b33ff5dd618dd4de2">
         <source>Announced response time (working days)</source>
         <target>Délai de réponse annoncé (jours ouvrés)</target>
+      </trans-unit>
+      <trans-unit id="7f8b5443ab1ab17923902e531eac1e7e">
+        <source>Another conversion of this quote is in progress. Wait a few seconds, then reload the page.</source>
+        <target>Une autre conversion de ce devis est en cours. Patientez quelques secondes, puis rechargez la page.</target>
       </trans-unit>
       <trans-unit id="2448cccdbf3c6ca3e168a87d5d068513">
         <source>Apply an existing voucher</source>
@@ -262,9 +274,21 @@
         <source>Choose a pickup point for this carrier.</source>
         <target>Choisissez un point relais pour ce transporteur.</target>
       </trans-unit>
+      <trans-unit id="b6bb9d49a734171bac1c3ec13e2047fc">
+        <source>Choose how the order will be paid.</source>
+        <target>Choisissez comment la commande sera réglée.</target>
+      </trans-unit>
       <trans-unit id="57d056ed0984166336b7879c2af3657f">
         <source>City</source>
         <target>Ville</target>
+      </trans-unit>
+      <trans-unit id="d3d2e617335f08df83599665eef8a418">
+        <source>Close</source>
+        <target>Fermer</target>
+      </trans-unit>
+      <trans-unit id="e2dbac27eb9a433fb5e83d0f10a4cc0a">
+        <source>Comment (history and order message)</source>
+        <target>Commentaire (historique et message de la commande)</target>
       </trans-unit>
       <trans-unit id="82c5684ed9568779d980d6d3c4c1daf4">
         <source>Comment for this line (visible to the customer)</source>
@@ -290,13 +314,29 @@
         <source>Confirm that the customer accepted this quote (e.g. by phone or signed PDF)?</source>
         <target>Confirmer que le client a accepté ce devis (par téléphone ou PDF signé, par exemple) ?</target>
       </trans-unit>
+      <trans-unit id="c02c00a0e47249e32ded710e429d65a8">
+        <source>Confirm that the customer agreed to the quote.</source>
+        <target>Confirmez que le client a donné son accord sur le devis.</target>
+      </trans-unit>
       <trans-unit id="cb8cf9021815dd1a4b36836297561a57">
         <source>Connection OK: a test file was written and read back.</source>
         <target>Connexion OK : un fichier de test a été écrit puis relu.</target>
       </trans-unit>
+      <trans-unit id="11afa1dcfdb3ef02a905270c621a26bd">
+        <source>Convert the quote into an order</source>
+        <target>Convertir le devis en commande</target>
+      </trans-unit>
       <trans-unit id="20d5c36b135366375e213cc3a36c593b">
         <source>Convert to order</source>
         <target>Convertir en commande</target>
+      </trans-unit>
+      <trans-unit id="1a49eac551a89f0ca3757f5979a0b566">
+        <source>Convert to order (customer agreed)</source>
+        <target>Convertir en commande (accord du client)</target>
+      </trans-unit>
+      <trans-unit id="5fb63579fc981698f97d55bfecb213ea">
+        <source>Copy</source>
+        <target>Copier</target>
       </trans-unit>
       <trans-unit id="28da5a2b48e42565ff7d9b7607659617">
         <source>Copy (hidden)</source>
@@ -326,6 +366,14 @@
         <source>Create the customer</source>
         <target>Créer le client</target>
       </trans-unit>
+      <trans-unit id="bf2370d9003f16e4a28d2c24c330b98f">
+        <source>Create the link</source>
+        <target>Créer le lien</target>
+      </trans-unit>
+      <trans-unit id="034d2690db87b737dd810afccbe41b7a">
+        <source>Create the order</source>
+        <target>Créer la commande</target>
+      </trans-unit>
       <trans-unit id="63fa75be0206509ff72bd9e9164272c6">
         <source>Create version %v% of this quote? The current version will be replaced when the new one is sent.</source>
         <target>Créer la version %v% de ce devis ? La version actuelle sera remplacée à l’envoi de la nouvelle.</target>
@@ -334,6 +382,10 @@
         <source>Created from quote</source>
         <target>Issue du devis</target>
       </trans-unit>
+      <trans-unit id="442e3cdb4240cc2c28a9f7fe63707845">
+        <source>Creating a link deactivates the previous one.</source>
+        <target>Créer un lien désactive le précédent.</target>
+      </trans-unit>
       <trans-unit id="e7f9e382dc50889098cbe56f2554c77b">
         <source>Credit card</source>
         <target>Carte bancaire</target>
@@ -341,6 +393,10 @@
       <trans-unit id="3afaba4b9c876cf655396f98b03882b2">
         <source>Credit card (online)</source>
         <target>Carte bancaire (en ligne)</target>
+      </trans-unit>
+      <trans-unit id="eade8ee6059276059d8a23a7461b459e">
+        <source>Credit card by phone (HiPay MO/TO)</source>
+        <target>Carte bancaire par téléphone (HiPay MO/TO)</target>
       </trans-unit>
       <trans-unit id="99abdda34cff5f50ea0040d1af7ac1e8">
         <source>Cron URL (to call from n8n)</source>
@@ -362,6 +418,18 @@
         <source>Date</source>
         <target>Date</target>
       </trans-unit>
+      <trans-unit id="109fec06829bd79d222cfc8af52aaaf1">
+        <source>Deactivate</source>
+        <target>Désactiver</target>
+      </trans-unit>
+      <trans-unit id="5443394d94c6d4af52e393637bbe06ff">
+        <source>Deactivate the current payment link? The customer will no longer be able to use it.</source>
+        <target>Désactiver le lien de paiement actuel ? Le client ne pourra plus l’utiliser.</target>
+      </trans-unit>
+      <trans-unit id="43c7582c40594c3fe32a6634ef9dcb07">
+        <source>Deactivated</source>
+        <target>Désactivé</target>
+      </trans-unit>
       <trans-unit id="616b5940be86c327aaa5090f50c061f5">
         <source>Declined</source>
         <target>Refusé</target>
@@ -369,6 +437,10 @@
       <trans-unit id="9b3cc660f9c017c3007c16d3002fa76b">
         <source>Dedicated voucher</source>
         <target>Bon dédié</target>
+      </trans-unit>
+      <trans-unit id="cc18dd262eff97c4dd4b56f750896adb">
+        <source>Default status</source>
+        <target>Statut par défaut</target>
       </trans-unit>
       <trans-unit id="4bc7c73e4cd14c5663fe6de57e804d83">
         <source>Default validity (days)</source>
@@ -530,6 +602,10 @@
         <source>Fixed quotes converted into orders without the checkout funnel.</source>
         <target>Devis figés, convertis en commande sans passer par le tunnel.</target>
       </trans-unit>
+      <trans-unit id="c1312ad9ff272419eb535715c6b6605d">
+        <source>For security, a link is shown only when it is created. Create a new one if needed: the previous one is deactivated.</source>
+        <target>Par sécurité, un lien n’est affiché qu’à sa création. Créez-en un nouveau si besoin : le précédent est désactivé.</target>
+      </trans-unit>
       <trans-unit id="b24ce0cd392a5b0b8dedc66c25213594">
         <source>Free</source>
         <target>Offert</target>
@@ -550,9 +626,29 @@
         <source>History</source>
         <target>Historique</target>
       </trans-unit>
+      <trans-unit id="346bcd08e282a885bccd9fd602155daa">
+        <source>How will the order be paid?</source>
+        <target>Comment la commande sera-t-elle réglée ?</target>
+      </trans-unit>
       <trans-unit id="e90719b646c70b4f234907b63575471f">
         <source>Import limited to 300 lines.</source>
         <target>Import limité à 300 lignes.</target>
+      </trans-unit>
+      <trans-unit id="fd282be0a539046c5c22736ef41f4350">
+        <source>Initial order status</source>
+        <target>Statut initial de la commande</target>
+      </trans-unit>
+      <trans-unit id="0f4921b45e2543738599e2dbc58b8889">
+        <source>Initial order status — awaiting payment / card by phone</source>
+        <target>Statut initial — en attente de paiement / carte par téléphone</target>
+      </trans-unit>
+      <trans-unit id="7dca7706dc647cd32fd9714538150e7d">
+        <source>Initial order status — bank transfer</source>
+        <target>Statut initial — virement</target>
+      </trans-unit>
+      <trans-unit id="b5420537b0160a4e0cfa4ad81774f71e">
+        <source>Initial order status — deferred payment (B2B)</source>
+        <target>Statut initial — paiement différé (B2B)</target>
       </trans-unit>
       <trans-unit id="08643daceac5930a01274e8e41de11b3">
         <source>Internal note</source>
@@ -593,6 +689,10 @@
       <trans-unit id="823d0a9f26da1709909f89ebe82340b3">
         <source>Legal notices (PDF footer)</source>
         <target>Mentions légales (pied de page du PDF)</target>
+      </trans-unit>
+      <trans-unit id="90febc62ac396d5d3c9948ef7e6a9cff">
+        <source>Line %n% « %label% »: %qty% ordered, %stock% in stock.</source>
+        <target>Ligne %n% « %label% » : %qty% commandés, %stock% en stock.</target>
       </trans-unit>
       <trans-unit id="652bc7b6601cfe3c7c0c29d5684ee3b6">
         <source>Line %n%: a discount cannot exceed 100%.</source>
@@ -638,9 +738,21 @@
         <source>Line %n%: the quantity must be at least 1.</source>
         <target>Ligne %n% : la quantité doit être d’au moins 1.</target>
       </trans-unit>
+      <trans-unit id="0dcb856d3cc973be417e254b1464908b">
+        <source>Line %n%: this product no longer exists. Create a new version of the quote without it.</source>
+        <target>Ligne %n% : ce produit n’existe plus. Créez une nouvelle version du devis sans lui.</target>
+      </trans-unit>
       <trans-unit id="5d6d88b0a40e007e03cab086ddb822ce">
         <source>Line %n%: this product no longer exists. Remove the line or replace it.</source>
         <target>Ligne %n% : ce produit n’existe plus. Supprimez ou remplacez la ligne.</target>
+      </trans-unit>
+      <trans-unit id="3fea9fac281def05a54c0e321eb16219">
+        <source>Lines %a% and %b% contain the same product at different prices: PrestaShop cannot put them in the same order. Merge them in a new version of the quote.</source>
+        <target>Les lignes %a% et %b% contiennent le même produit à des prix différents : PrestaShop ne peut pas les mettre dans la même commande. Regroupez-les dans une nouvelle version du devis.</target>
+      </trans-unit>
+      <trans-unit id="a58252e21aaf876bf7b64c05cce1c477">
+        <source>Link copied.</source>
+        <target>Lien copié.</target>
       </trans-unit>
       <trans-unit id="2a9c7c069e91954f4ad5963dbec24ff4">
         <source>Main colour</source>
@@ -746,6 +858,10 @@
         <source>No lines yet: search for a product above, or add a free line.</source>
         <target>Aucune ligne pour l’instant : recherchez un produit ci-dessus ou ajoutez une ligne libre.</target>
       </trans-unit>
+      <trans-unit id="e0b791150f5baf2b703c3be4ce5db37e">
+        <source>No payment link yet.</source>
+        <target>Aucun lien de paiement pour l’instant.</target>
+      </trans-unit>
       <trans-unit id="3385cacc9de82b049a7cd6a9a4a1a4f9">
         <source>No quotes for this customer yet.</source>
         <target>Aucun devis pour ce client.</target>
@@ -778,9 +894,17 @@
         <source>One line per product: reference ; quantity</source>
         <target>Une ligne par produit : référence ; quantité</target>
       </trans-unit>
+      <trans-unit id="9af4be98318fb2c9088c6a37a2ba7072">
+        <source>Online card payment is not available on this shop.</source>
+        <target>Le paiement par carte en ligne n’est pas disponible sur cette boutique.</target>
+      </trans-unit>
       <trans-unit id="e50c7a9e4f8d4c31ada09973c94c59b3">
         <source>Online payment module</source>
         <target>Module de paiement en ligne</target>
+      </trans-unit>
+      <trans-unit id="23f90d1551691238a46f5de288aa8045">
+        <source>Only an accepted (or sent) quote can be converted into an order. Current status: « %status% ».</source>
+        <target>Seul un devis accepté (ou envoyé) peut être converti en commande. Statut actuel : « %status% ».</target>
       </trans-unit>
       <trans-unit id="f6a52f6bf60f518ee8be119637a5b5dd">
         <source>Only drafts that have never been sent can be deleted. Expire the quote instead.</source>
@@ -798,9 +922,29 @@
         <source>Order</source>
         <target>Commande</target>
       </trans-unit>
+      <trans-unit id="d9fe6a51b9d1fbb1b7533c163e2bdc8b">
+        <source>Order %ref% created from the quote.</source>
+        <target>Commande %ref% créée à partir du devis.</target>
+      </trans-unit>
+      <trans-unit id="9cf9af8373afedef0a49175be4342575">
+        <source>Order created (to the sales rep)</source>
+        <target>Commande créée (au commercial)</target>
+      </trans-unit>
+      <trans-unit id="92d79c926f6448f81eab675152909d06">
+        <source>Order validated, payment on invoice (B2B customers).</source>
+        <target>Commande validée, règlement à réception de facture (clients B2B).</target>
+      </trans-unit>
       <trans-unit id="26e09a1ee1517389c7b07f42df65561a">
         <source>Ordered</source>
         <target>Commandé</target>
+      </trans-unit>
+      <trans-unit id="08c95b387edd53b72c1573f8735be01f">
+        <source>Orders are synchronised with the ERP according to their status.</source>
+        <target>Les commandes sont synchronisées avec l’ERP selon leur statut.</target>
+      </trans-unit>
+      <trans-unit id="520d4219606c7bdc5131091891627110">
+        <source>Orders are synchronised with the ERP according to their status: choose statuses that n8n does not send to OASIS until payment.</source>
+        <target>Les commandes sont synchronisées avec l’ERP selon leur statut : choisissez des statuts que n8n n’envoie pas à OASIS avant le paiement.</target>
       </trans-unit>
       <trans-unit id="cf51246a9f3c968b850c4014a9253e03">
         <source>Overall discount</source>
@@ -834,6 +978,14 @@
         <source>Paid</source>
         <target>Payé</target>
       </trans-unit>
+      <trans-unit id="826c665f3946e328746b742ebb8a01f9">
+        <source>PayPlug is sending the payment link to the customer.</source>
+        <target>PayPlug envoie le lien de paiement au client.</target>
+      </trans-unit>
+      <trans-unit id="cee286fa48f900c3ad3558271e6ad2fb">
+        <source>PayPlug payment link</source>
+        <target>Lien de paiement PayPlug</target>
+      </trans-unit>
       <trans-unit id="c453a4b8e8d98e82f35b67f433e3b4da">
         <source>Payment</source>
         <target>Paiement</target>
@@ -842,13 +994,17 @@
         <source>Payment link</source>
         <target>Lien de paiement</target>
       </trans-unit>
+      <trans-unit id="ad03b1e45bcc6f3af73e5684ebfbfe3b">
+        <source>Payment link created. Copy it now: for security, it cannot be displayed again.</source>
+        <target>Lien de paiement créé. Copiez-le maintenant : par sécurité, il ne pourra plus être affiché.</target>
+      </trans-unit>
+      <trans-unit id="e67d160507a8ec18a3e9aeda8d6c2191">
+        <source>Payment link sent. It is valid until %date%.</source>
+        <target>Lien de paiement envoyé. Il est valable jusqu’au %date%.</target>
+      </trans-unit>
       <trans-unit id="82e9d934dce4c4971cedf7d6ad5b8521">
         <source>Payment link validity (days)</source>
         <target>Validité du lien de paiement (jours)</target>
-      </trans-unit>
-      <trans-unit id="42d16f3d24a67c76e04c26db8625887c">
-        <source>Payment links will be available with the next update of the module.</source>
-        <target>Les liens de paiement seront disponibles avec la prochaine mise à jour du module.</target>
       </trans-unit>
       <trans-unit id="71c3cdf97afedd63429323be9e532d88">
         <source>Payment methods allowed</source>
@@ -1082,6 +1238,10 @@
         <source>Send again</source>
         <target>Renvoyer</target>
       </trans-unit>
+      <trans-unit id="bf38621a5402edbc65d90f5fedfb29b2">
+        <source>Send it to the customer by e-mail</source>
+        <target>L’envoyer au client par e-mail</target>
+      </trans-unit>
       <trans-unit id="cea716639bb091a9b57d4462b2fca646">
         <source>Send me a copy</source>
         <target>M’envoyer une copie</target>
@@ -1089,6 +1249,10 @@
       <trans-unit id="65ffcf5f8fe1b1016b5686daa9941598">
         <source>Send the quote to the customer</source>
         <target>Envoyer le devis au client</target>
+      </trans-unit>
+      <trans-unit id="72351b03af774f6775f7999e93ec6489">
+        <source>Send the quote to the customer before creating a payment link.</source>
+        <target>Envoyez le devis au client avant de créer un lien de paiement.</target>
       </trans-unit>
       <trans-unit id="704ffe0b00405daa5c669f4963a5224b">
         <source>Send to customer</source>
@@ -1206,6 +1370,10 @@
         <source>Text below</source>
         <target>Texte ci-dessous</target>
       </trans-unit>
+      <trans-unit id="711b22a19680e7f762c1e25c2bd48f01">
+        <source>The PayPlug « payment link by e-mail » status is not configured in the PayPlug module.</source>
+        <target>Le statut PayPlug « lien de paiement par e-mail » n’est pas configuré dans le module PayPlug.</target>
+      </trans-unit>
       <trans-unit id="b4caefa4a4f0eb07fc24309cc3df3423">
         <source>The address could not be created.</source>
         <target>L’adresse n’a pas pu être créée.</target>
@@ -1225,6 +1393,18 @@
       <trans-unit id="160559db32aa21ed939cf7f4aa0e56e0">
         <source>The customer could not be created. Check the information entered.</source>
         <target>Le client n’a pas pu être créé. Vérifiez les informations saisies.</target>
+      </trans-unit>
+      <trans-unit id="e6007b7b473c01d9818b59493d3a3d74">
+        <source>The customer has agreed to this quote (phone, e-mail or signed PDF).</source>
+        <target>Le client a donné son accord sur ce devis (téléphone, e-mail ou PDF signé).</target>
+      </trans-unit>
+      <trans-unit id="86899ead9b40f78fe6f6a612f7dbe57a">
+        <source>The customer of this quote no longer exists.</source>
+        <target>Le client de ce devis n’existe plus.</target>
+      </trans-unit>
+      <trans-unit id="6392a8fc4382d7133072bf3dc9b75d7b">
+        <source>The customer opens the quote, accepts the terms and pays, without logging in. The order is created automatically.</source>
+        <target>Le client ouvre le devis, accepte les conditions et paie, sans se connecter. La commande est créée automatiquement.</target>
       </trans-unit>
       <trans-unit id="1b5a453f26ff78a9bd1a3cad8f0675dd">
         <source>The customer will no longer be able to accept this quote. Continue?</source>
@@ -1258,9 +1438,45 @@
         <source>The file was written but could not be read back. Check the key permissions.</source>
         <target>Le fichier a été écrit mais n’a pas pu être relu. Vérifiez les droits de la clé.</target>
       </trans-unit>
+      <trans-unit id="62a637ffdb611fa8005725ee0aab0da6">
+        <source>The initial order status for this payment method is not configured (settings, « Payment » tab).</source>
+        <target>Le statut initial de commande de ce moyen de paiement n’est pas configuré (configuration, onglet « Paiement »).</target>
+      </trans-unit>
+      <trans-unit id="49f0e670b811733bd130f2eadab80da9">
+        <source>The order is created and will be paid later.</source>
+        <target>La commande est créée et sera réglée plus tard.</target>
+      </trans-unit>
+      <trans-unit id="ab1dcc7371dc8e4a9045e51c93bf3cdb">
+        <source>The order is created on behalf of HiPay; enter the card from the HiPay block of the order page.</source>
+        <target>La commande est créée au nom de HiPay ; saisissez la carte depuis le bloc HiPay de la fiche commande.</target>
+      </trans-unit>
+      <trans-unit id="2978b1d9366e54dae16d865d6d6260ce">
+        <source>The order is created on behalf of PayPlug, which e-mails its payment link to the customer.</source>
+        <target>La commande est créée au nom de PayPlug, qui envoie son lien de paiement au client par e-mail.</target>
+      </trans-unit>
+      <trans-unit id="2c615318714131df512de19064c2401b">
+        <source>The order waits for the bank transfer.</source>
+        <target>La commande attend le virement.</target>
+      </trans-unit>
+      <trans-unit id="cfe4dc34a16ec9311f2fde1faaa88526">
+        <source>The order would not match the quote to the cent (%details%). No order has been created. Check the shipping rules (free shipping threshold, fees module) and the customer group discounts, then try again.</source>
+        <target>La commande ne correspondrait pas au devis au centime près (%details%). Aucune commande n’a été créée. Vérifiez les règles de port (seuil de port gratuit, module de frais) et les remises du groupe client, puis réessayez.</target>
+      </trans-unit>
       <trans-unit id="d2b2cff9c17d2d9630ad68f3e30dd8b9">
         <source>The parcel exceeds the maximum weight of this carrier</source>
         <target>Le colis dépasse le poids maximum de ce transporteur</target>
+      </trans-unit>
+      <trans-unit id="8dcdb7480210c22da3f7113efa6f9405">
+        <source>The payment link has been deactivated.</source>
+        <target>Le lien de paiement a été désactivé.</target>
+      </trans-unit>
+      <trans-unit id="90dea08fe7cfaa44b2e94a9041e9b472">
+        <source>The payment module required for this method is not enabled.</source>
+        <target>Le module de paiement nécessaire à ce moyen n’est pas activé.</target>
+      </trans-unit>
+      <trans-unit id="e710e01deee8dbf1a1e71bf484ace27e">
+        <source>The payment page could not be opened. Try again in a few minutes or contact us.</source>
+        <target>La page de paiement n’a pas pu s’ouvrir. Réessayez dans quelques minutes ou contactez-nous.</target>
       </trans-unit>
       <trans-unit id="cb69948afd53cdeb8b9648812cb0a79b">
         <source>The postcode is not valid for this country.</source>
@@ -1273,6 +1489,18 @@
       <trans-unit id="3d7051b64c26793dd5ca9cd537686f95">
         <source>The quote PDF is attached automatically. Add technical sheets or terms if needed (8 MB max per file).</source>
         <target>Le PDF du devis est joint automatiquement. Ajoutez des fiches techniques ou des CGV si besoin (8 Mo max par fichier).</target>
+      </trans-unit>
+      <trans-unit id="6b98ae24a6b6a16a5780983504ce96d8">
+        <source>The quote has no carrier. Create a new version with a carrier.</source>
+        <target>Le devis n’a pas de transporteur. Créez une nouvelle version avec un transporteur.</target>
+      </trans-unit>
+      <trans-unit id="bf1b297adf80a6617c8c7098e37e5e9c">
+        <source>The quote has no product or free line.</source>
+        <target>Le devis ne contient ni produit ni ligne libre.</target>
+      </trans-unit>
+      <trans-unit id="fcd87b4b09c788126dcb1632be0d33b2">
+        <source>The quote has no valid delivery address. Edit it in a new version.</source>
+        <target>Le devis n’a pas d’adresse de livraison valide. Corrigez-la dans une nouvelle version.</target>
       </trans-unit>
       <trans-unit id="f87e42e165687ac8a5dc35f991ffb16d">
         <source>The quote is now « %status% ».</source>
@@ -1330,6 +1558,10 @@
         <source>The voucher « %code% » is reserved for another customer.</source>
         <target>Le bon « %code% » est réservé à un autre client.</target>
       </trans-unit>
+      <trans-unit id="b70ce294ffe937a1b8ecc7a37a3a8ddb">
+        <source>The « Delivery as quoted » carrier could not be created. Reinstall or update the module.</source>
+        <target>Le transporteur « Livraison selon devis » n’a pas pu être créé. Réinstallez ou mettez à jour le module.</target>
+      </trans-unit>
       <trans-unit id="c736c29c2d1dfcf87c05009f46d3a3ec">
         <source>This action is not allowed.</source>
         <target>Cette action n’est pas autorisée.</target>
@@ -1386,9 +1618,17 @@
         <source>This quote does not exist or has been deleted.</source>
         <target>Ce devis n’existe pas ou a été supprimé.</target>
       </trans-unit>
+      <trans-unit id="411ff1a5702f163962585091f3f18ed8">
+        <source>This quote has already been converted into an order.</source>
+        <target>Ce devis a déjà été converti en commande.</target>
+      </trans-unit>
       <trans-unit id="73b6887e6fb049e24285ffeafc54b461">
         <source>This quote has already been ordered: duplicate it instead.</source>
         <target>Ce devis a déjà été commandé : dupliquez-le plutôt.</target>
+      </trans-unit>
+      <trans-unit id="d3e612b607c8eb94de58d53d22806b99">
+        <source>This quote has already been ordered: no payment link is needed.</source>
+        <target>Ce devis a déjà été commandé : aucun lien de paiement n’est nécessaire.</target>
       </trans-unit>
       <trans-unit id="810d396e8e8f9c8a37e9a5d725ed4df1">
         <source>This quote has been sent: to change it, create a new version.</source>
@@ -1441,6 +1681,10 @@
       <trans-unit id="0aed4e816d2ab18361bbfe990b4fdcde">
         <source>Use this cart</source>
         <target>Utiliser ce panier</target>
+      </trans-unit>
+      <trans-unit id="5fb9d89c71e2b207ffb41aaebc521c22">
+        <source>Used (order created)</source>
+        <target>Utilisé (commande créée)</target>
       </trans-unit>
       <trans-unit id="800c7c6208553e26c4ab7d166d08e845">
         <source>Used in references (DEV-{SHOP}-…) and in the PDF storage folder. Letters and digits only.</source>
@@ -1537,6 +1781,10 @@
       <trans-unit id="4f52f9a6a8936bbd5595eb76221838d2">
         <source>n8n webhooks</source>
         <target>Webhooks n8n</target>
+      </trans-unit>
+      <trans-unit id="f43425d5efcee6dfd94080fc26b5627c">
+        <source>not ticked on the quote</source>
+        <target>non coché sur le devis</target>
       </trans-unit>
       <trans-unit id="d57c24f3fe52d16e7169b912dd647f0d">
         <source>optional</source>

@@ -1,0 +1,4 @@
+Bonjour {employee_name},
+
+La commande {order_reference} ({order_total_ti}) vient d’être créée à partir du devis {quote_reference} du client {customer_name}.
+Moyen de paiement : {order_payment}

@@ -26,7 +26,8 @@ final class Installer
         return (new SchemaInstaller())->install()
             && $this->installTab()
             && $this->installConfiguration()
-            && $this->installCustomHooks();
+            && $this->installCustomHooks()
+            && (new TechnicalSetup($this->module->name))->installAll();
     }
 
     /**
@@ -57,11 +58,35 @@ final class Installer
     public function uninstall(): bool
     {
         $this->uninstallTab();
+        $this->disableTechnicalObjects();
         foreach (ConfigKeys::all() as $key) {
             \Configuration::deleteByName($key);
         }
 
         return (new SchemaInstaller())->uninstall();
+    }
+
+    /**
+     * Transporteur technique supprimé (logiquement : l'historique des commandes est conservé),
+     * produits « ligne libre » désactivés. Les statuts de commande restent (utilisés par des commandes).
+     */
+    public function disableTechnicalObjects(): void
+    {
+        $setup = new TechnicalSetup($this->module->name);
+        $idCarrier = $setup->technicalCarrierId();
+        if ($idCarrier) {
+            $carrier = new \Carrier($idCarrier);
+            $carrier->deleted = true;
+            $carrier->active = false;
+            $carrier->update();
+        }
+        foreach ($setup->freeLineProductIds() as $idProduct) {
+            $product = new \Product($idProduct);
+            if (\Validate::isLoadedObject($product)) {
+                $product->active = false;
+                $product->update();
+            }
+        }
     }
 
     public function installTab(): bool

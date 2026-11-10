@@ -32,25 +32,38 @@ if (is_file(__DIR__ . '/vendor/autoload.php')) {
     });
 }
 
+use Snt\Quotes\Conversion\QuoteCartContext;
 use Snt\Quotes\Domain\QuoteStatus;
 use Snt\Quotes\Install\Installer;
 use Snt\Quotes\Presenter\StatusPresenter;
 use Snt\Quotes\Repository\QuoteRepository;
+use Snt\Quotes\ServiceFactory;
 
 class Snt_Quotes extends PaymentModule
 {
-    /** Hooks enregistrés (jalon 1). Les jalons suivants les complètent via upgrade/. */
+    /** Hooks enregistrés. Toute nouvelle entrée est aussi ajoutée par un script upgrade/. */
     public const HOOKS = [
+        // Jalon 1
         'displayAdminCustomers',
         'displayAdminOrderMain',
         'actionAdminControllerSetMedia',
+        // Jalon 2 — conversion sans tunnel
+        'paymentOptions',
+        'actionFilterDeliveryOptionList',
+        'actionValidateOrder',
+        'actionOrderStatusPostUpdate',
+        'actionEmailSendBefore',
+        'actionDispatcherBefore',
     ];
+
+    /** @var int|null renseigné par le cœur avant getOrderShippingCost*() (transporteur technique) */
+    public $id_carrier;
 
     public function __construct()
     {
         $this->name = 'snt_quotes';
         $this->tab = 'billing_invoicing';
-        $this->version = '0.1.0';
+        $this->version = '0.2.0';
         $this->author = 'SNT2';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -157,5 +170,162 @@ class Snt_Quotes extends PaymentModule
         ]);
 
         return $this->fetch('module:snt_quotes/views/templates/hook/admin_order_quote.tpl');
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Paiement intégré et transporteur technique (jalon 2)                */
+    /* ------------------------------------------------------------------ */
+
+    /**
+     * Les moyens « devis » ne sont jamais proposés dans le tunnel : seules les conversions les utilisent.
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return array<int, mixed>
+     */
+    public function hookPaymentOptions(array $params): array
+    {
+        return [];
+    }
+
+    /**
+     * Port HT du devis pour son panier technique (transporteur « Livraison selon devis »).
+     *
+     * @param Cart $cart
+     *
+     * @return float|false
+     */
+    public function getOrderShippingCostExternal($cart)
+    {
+        $idQuote = QuoteCartContext::quoteIdForCart((int) $cart->id);
+        if (!$idQuote) {
+            return false; // transporteur indisponible pour un panier normal
+        }
+
+        return (float) (new SntQuote($idQuote))->total_shipping_te;
+    }
+
+    /**
+     * @param Cart  $cart
+     * @param float $shippingCost
+     *
+     * @return float|false
+     */
+    public function getOrderShippingCost($cart, $shippingCost)
+    {
+        return $this->getOrderShippingCostExternal($cart);
+    }
+
+    /**
+     * Le transporteur technique n'apparaît que pour les paniers de devis, et seul.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function hookActionFilterDeliveryOptionList(array $params): void
+    {
+        if (!isset($params['delivery_option_list']) || !is_array($params['delivery_option_list'])) {
+            return;
+        }
+        $technical = ServiceFactory::technicalSetup()->technicalCarrierId();
+        if (!$technical) {
+            return;
+        }
+        $cart = $params['cart'] ?? $this->context->cart;
+        $isQuoteCart = $cart instanceof Cart && QuoteCartContext::isQuoteCart((int) $cart->id);
+        foreach ($params['delivery_option_list'] as $idAddress => $options) {
+            foreach ($options as $key => $option) {
+                $carriers = array_map('intval', array_keys($option['carrier_list'] ?? []));
+                $hasTechnical = in_array($technical, $carriers, true);
+                if ($isQuoteCart !== $hasTechnical) {
+                    unset($params['delivery_option_list'][$idAddress][$key]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Notification HiPay pour un panier de devis : neutralise les seuils de port gratuit pour la requête.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function hookActionDispatcherBefore(array $params): void
+    {
+        if (Tools::getValue('module') !== 'hipaypayments' || Tools::getValue('controller') !== 'notify') {
+            return;
+        }
+        $order = Tools::getValue('order');
+        $reference = is_array($order) ? (string) ($order['id'] ?? '') : '';
+        $idCart = (int) strtok($reference, '-');
+        if ($idCart && QuoteCartContext::isQuoteCart($idCart)) {
+            $cart = new Cart($idCart);
+            QuoteCartContext::activateOverrides((int) $cart->id_shop, (int) $cart->id_shop_group);
+        }
+    }
+
+    /**
+     * Post-traitement de toute commande issue d'un panier de devis (avant l'écriture du premier statut).
+     *
+     * @param array<string, mixed> $params
+     */
+    public function hookActionValidateOrder(array $params): void
+    {
+        $order = $params['order'] ?? null;
+        $cart = $params['cart'] ?? null;
+        if (!$order instanceof Order || !$cart instanceof Cart || !QuoteCartContext::isQuoteCart((int) $cart->id)) {
+            return;
+        }
+        try {
+            ServiceFactory::postProcessor()->process($order, $cart);
+            $quote = new SntQuote(QuoteCartContext::quoteIdForCart((int) $cart->id));
+            if ((int) $quote->id_order === (int) $order->id) {
+                ServiceFactory::mailer()->notifyEmployeeOrdered($quote, $order);
+            }
+        } catch (Throwable $e) {
+            PrestaShopLogger::addLog('[snt_quotes] post-processing order ' . (int) $order->id . ': ' . $e->getMessage(), 3, null, 'Order', (int) $order->id);
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     */
+    public function hookActionOrderStatusPostUpdate(array $params): void
+    {
+        $idOrder = (int) ($params['id_order'] ?? 0);
+        $state = $params['newOrderStatus'] ?? null;
+        if (!$idOrder || !$state instanceof OrderState) {
+            return;
+        }
+        try {
+            $processor = ServiceFactory::postProcessor();
+            $processor->onOrderStatusChanged($idOrder, (int) $state->id);
+            if ($state->paid) {
+                $processor->onOrderPaid($idOrder);
+            }
+        } catch (Throwable $e) {
+            PrestaShopLogger::addLog('[snt_quotes] order status ' . $idOrder . ': ' . $e->getMessage(), 3, null, 'Order', $idOrder);
+        }
+    }
+
+    /**
+     * Confirmation de commande : nom du transporteur réel au lieu de « Livraison selon devis ».
+     *
+     * @param array<string, mixed> $params
+     */
+    public function hookActionEmailSendBefore(array $params): bool
+    {
+        if (($params['template'] ?? '') !== 'order_conf' || !isset($params['templateVars']['{order_name}'])) {
+            return true;
+        }
+        $reference = (string) $params['templateVars']['{order_name}'];
+        $label = (string) Db::getInstance()->getValue(
+            'SELECT q.`carrier_label` FROM `' . _DB_PREFIX_ . 'snt_quote` q
+             INNER JOIN `' . _DB_PREFIX_ . 'orders` o ON o.`id_order` = q.`id_order`
+             WHERE o.`reference` = \'' . pSQL($reference) . '\''
+        );
+        if ($label !== '') {
+            $params['templateVars']['{carrier}'] = htmlspecialchars($label, ENT_QUOTES, 'UTF-8');
+        }
+
+        return true;
     }
 }

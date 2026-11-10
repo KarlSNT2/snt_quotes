@@ -1,0 +1,11 @@
+Bonjour {firstname} {lastname},
+
+Vous pouvez consulter et régler votre devis {quote_reference} ({quote_total_ti}) en ligne, de façon sécurisée :
+{payment_link_url}
+
+{custom_message_txt}
+
+Ce lien est personnel et valable jusqu’au {payment_link_expires}.
+
+Cordialement,
+L’équipe {shop_name}

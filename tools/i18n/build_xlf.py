@@ -6,7 +6,7 @@ import sys
 from xml.sax.saxutils import escape
 
 sys.path.insert(0, os.path.dirname(__file__))
-from fr import FR, FR_EMAILS, FR_PDF  # noqa: E402
+from fr import FR, FR_EMAILS, FR_PDF, FR_SHOP  # noqa: E402
 
 root, strings_file = sys.argv[1], sys.argv[2]
 strings = json.load(open(strings_file, encoding='utf-8'))
@@ -15,11 +15,16 @@ extra_admin = [
     'Download the PDF', 'Create a new draft quote from this one?', 'Company, name, e-mail', 'e.g. >1000 or 500-1000',
     'Send a reminder', 'Mark as expired', 'View', 'Duplicate',
     'The selected quotes will be marked as expired. Customers will no longer be able to accept them.',
+    # Libellés des modes de conversion (PaymentMode::label(), traduits dynamiquement)
+    'Bank transfer', 'Deferred payment (B2B)', 'Awaiting payment', 'Credit card by phone (HiPay MO/TO)',
+    'PayPlug payment link', 'Credit card (online)',
 ]
 domains = {
     'Modules.Sntquotes.Admin': (sorted(set(strings.get('Modules.Sntquotes.Admin', [])) | set(extra_admin)), FR),
     'Modules.Sntquotes.Pdf': (sorted(set(strings.get('Modules.Sntquotes.Pdf', []))), FR_PDF),
-    'Modules.Sntquotes.Emails': (sorted(set(strings.get('Modules.Sntquotes.Emails', []))), FR_EMAILS),
+    'Modules.Sntquotes.Emails': (sorted(set(strings.get('Modules.Sntquotes.Emails', []) + ['View and pay my quote'])), FR_EMAILS),
+    # La phrase CGV contient une variable Smarty dans sprintf : non détectée par l'extracteur.
+    'Modules.Sntquotes.Shop': (sorted(set(strings.get('Modules.Sntquotes.Shop', []) + ['I have read and accept the [1]terms and conditions of sale[/1] and this quote.'])), FR_SHOP),
 }
 ignore = {'cart', 'cart_product', 'orders', 'snt_quote'}
 missing = []

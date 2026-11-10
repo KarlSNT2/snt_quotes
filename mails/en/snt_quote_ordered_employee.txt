@@ -1,0 +1,4 @@
+Hello {employee_name},
+
+Order {order_reference} ({order_total_ti}) has just been created from quote {quote_reference} for customer {customer_name}.
+Payment method: {order_payment}

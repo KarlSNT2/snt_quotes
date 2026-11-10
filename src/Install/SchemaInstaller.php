@@ -184,6 +184,19 @@ final class SchemaInstaller
                 KEY `k_quote` (`id_snt_quote`)
             ) $engine",
 
+            // Paniers techniques construits pour un devis (conversion BO, paiement HiPay, lien PayPlug).
+            'snt_quote_cart' => "(
+                `id_cart` INT UNSIGNED NOT NULL,
+                `id_snt_quote` INT UNSIGNED NOT NULL,
+                `purpose` VARCHAR(16) NOT NULL DEFAULT 'conversion',
+                `total_ti` DECIMAL(20,6) NOT NULL DEFAULT 0,
+                `quote_date_upd` DATETIME NULL,
+                `id_order` INT UNSIGNED NULL,
+                `date_add` DATETIME NOT NULL,
+                PRIMARY KEY (`id_cart`),
+                KEY `k_quote` (`id_snt_quote`)
+            ) $engine",
+
             'snt_quote_sequence' => "(
                 `id_shop` INT UNSIGNED NOT NULL,
                 `year` SMALLINT UNSIGNED NOT NULL,

@@ -19,9 +19,11 @@ class QuoteMailer
     public const TPL_SENT = 'snt_quote_sent';
     public const TPL_NEW_VERSION = 'snt_quote_new_version';
     public const TPL_REMINDER = 'snt_quote_reminder';
+    public const TPL_PAYMENT_LINK = 'snt_quote_payment_link';
+    public const TPL_ORDERED_EMPLOYEE = 'snt_quote_ordered_employee';
 
     /** Modèles activables / désactivables dans la configuration. */
-    public const TEMPLATES = [self::TPL_SENT, self::TPL_NEW_VERSION, self::TPL_REMINDER];
+    public const TEMPLATES = [self::TPL_SENT, self::TPL_NEW_VERSION, self::TPL_REMINDER, self::TPL_PAYMENT_LINK, self::TPL_ORDERED_EMPLOYEE];
 
     private const DOMAIN = 'Modules.Sntquotes.Emails';
 
@@ -49,6 +51,8 @@ class QuoteMailer
         return match ($template) {
             self::TPL_NEW_VERSION => $this->trans('Updated quote %reference% — %shop%', $params, $quote),
             self::TPL_REMINDER => $this->trans('Reminder: your quote %reference% expires soon', $params, $quote),
+            self::TPL_PAYMENT_LINK => $this->trans('Pay your quote %reference% online — %shop%', $params, $quote),
+            self::TPL_ORDERED_EMPLOYEE => $this->trans('Order created from quote %reference%', $params, $quote),
             default => $this->trans('Your quote %reference% — %shop%', $params, $quote),
         };
     }
@@ -57,8 +61,9 @@ class QuoteMailer
      * Envoie un e-mail de devis. Le PDF (si fourni) est joint automatiquement.
      *
      * @param array{content: string, name: string, mime: string}|null $pdf
+     * @param array<string, string>                                   $extraVars variables déjà échappées
      */
-    public function send(\SntQuote $quote, string $template, SendOptions $options, ?array $pdf = null): void
+    public function send(\SntQuote $quote, string $template, SendOptions $options, ?array $pdf = null, array $extraVars = []): void
     {
         $idShop = (int) $quote->id_shop;
         if (!$this->isEnabled($template, $idShop)) {
@@ -69,7 +74,7 @@ class QuoteMailer
         }
 
         $subject = trim((string) $options->subject) !== '' ? trim((string) $options->subject) : $this->defaultSubject($quote, $template);
-        $vars = $this->templateVars($quote, $options->message);
+        $vars = $extraVars + $this->templateVars($quote, $options->message);
         $attachments = array_values(array_filter(array_merge($pdf ? [$pdf] : [], $options->attachments)));
 
         [$fromName, $replyTo, $replyToName] = $this->sender($quote);
@@ -113,6 +118,59 @@ class QuoteMailer
             'bcc' => $bcc,
             'attachments' => array_map(static fn (array $a): string => $a['name'], $attachments),
         ]);
+    }
+
+    /**
+     * Lien de paiement envoyé au client.
+     *
+     * @param string[] $to
+     */
+    public function sendPaymentLink(\SntQuote $quote, string $url, string $expiresAt, array $to, ?string $message = null): void
+    {
+        $e = static fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+        $expires = \Tools::displayDate($expiresAt, true);
+        $this->send($quote, self::TPL_PAYMENT_LINK, new SendOptions($to, [], null, $message), null, [
+            '{payment_link_url}' => $e($url),
+            '{payment_link_expires}' => $e((string) $expires),
+            '{quote_link_html}' => '<p style="margin:16px 0;text-align:center;"><a href="' . $e($url) . '" style="display:inline-block;padding:12px 24px;background:#1F6FB2;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:bold;">'
+                . $e(\Context::getContext()->getTranslator()->trans('View and pay my quote', [], self::DOMAIN, (new \Language((int) $quote->id_lang))->locale ?: null)) . '</a></p>',
+            '{quote_link_txt}' => $url,
+        ]);
+    }
+
+    /**
+     * Prévient le commercial qu'une commande a été créée depuis son devis (paiement en ligne, lien…).
+     */
+    public function notifyEmployeeOrdered(\SntQuote $quote, \Order $order): void
+    {
+        if (!$quote->id_employee || !$this->isEnabled(self::TPL_ORDERED_EMPLOYEE, (int) $quote->id_shop)) {
+            return;
+        }
+        $employee = new \Employee((int) $quote->id_employee);
+        if (!\Validate::isLoadedObject($employee) || !$employee->email) {
+            return;
+        }
+        $e = static fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+        $vars = [
+            '{order_reference}' => $e((string) $order->reference),
+            '{order_payment}' => $e((string) $order->payment),
+            '{order_total_ti}' => $e(\Context::getContext()->getCurrentLocale()?->formatPrice((float) $order->total_paid_tax_incl, (string) \Currency::getIsoCodeById((int) $order->id_currency)) ?? (string) $order->total_paid_tax_incl),
+        ] + $this->templateVars($quote, null);
+        \Mail::send(
+            (int) ($employee->id_lang ?: $quote->id_lang),
+            self::TPL_ORDERED_EMPLOYEE,
+            $this->defaultSubject($quote, self::TPL_ORDERED_EMPLOYEE),
+            $vars,
+            (string) $employee->email,
+            trim($employee->firstname . ' ' . $employee->lastname),
+            null,
+            null,
+            null,
+            null,
+            _PS_MODULE_DIR_ . 'snt_quotes/mails/',
+            false,
+            (int) $quote->id_shop
+        );
     }
 
     /**

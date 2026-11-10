@@ -158,3 +158,10 @@
 @media (prefers-reduced-motion: reduce) {
   .snt-toast { transition: none; }
 }
+
+/* ---- Conversion (jalon 2) ---------------------------------------------- */
+.snt-convert-summary { font-size: 1rem; font-weight: 600; padding: 10px 12px; background: #f4f6f8; border-radius: 4px; }
+.snt-modes { display: grid; gap: 6px; }
+.snt-mode { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; margin: 0; border: 1px solid var(--snt-border); border-radius: 4px; font-weight: normal; cursor: pointer; }
+.snt-mode:focus-within { outline: 2px solid var(--snt-accent); outline-offset: 1px; }
+.snt-mode input { margin-top: 4px; }

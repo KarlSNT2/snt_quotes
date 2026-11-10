@@ -101,6 +101,41 @@ services:
       - '@Snt\Quotes\Presenter\QuotePresenter'
       - '@Snt\Quotes\Config\ModuleConfig'
 
+  # --- Conversion et paiement (jalon 2)
+  Snt\Quotes\Install\TechnicalSetup:
+    class: Snt\Quotes\Install\TechnicalSetup
+
+  Snt\Quotes\Conversion\TechnicalCartBuilder:
+    class: Snt\Quotes\Conversion\TechnicalCartBuilder
+    arguments:
+      - '@Snt\Quotes\Install\TechnicalSetup'
+
+  Snt\Quotes\Conversion\OrderPostProcessor:
+    class: Snt\Quotes\Conversion\OrderPostProcessor
+    arguments:
+      - '@Snt\Quotes\Service\QuoteStateMachine'
+      - '@Snt\Quotes\Service\HistoryLogger'
+      - '@Snt\Quotes\Install\TechnicalSetup'
+      - '@Snt\Quotes\Conversion\TechnicalCartBuilder'
+
+  Snt\Quotes\Payment\PayPlugGateway:
+    class: Snt\Quotes\Payment\PayPlugGateway
+
+  Snt\Quotes\Conversion\QuoteToOrderConverter:
+    class: Snt\Quotes\Conversion\QuoteToOrderConverter
+    arguments:
+      - '@Snt\Quotes\Conversion\TechnicalCartBuilder'
+      - '@Snt\Quotes\Conversion\OrderPostProcessor'
+      - '@Snt\Quotes\Service\QuoteStateMachine'
+      - '@Snt\Quotes\Config\ModuleConfig'
+      - '@Snt\Quotes\Payment\PayPlugGateway'
+
+  Snt\Quotes\Payment\PaymentLinkService:
+    class: Snt\Quotes\Payment\PaymentLinkService
+    arguments:
+      - '@Snt\Quotes\Config\ModuleConfig'
+      - '@Snt\Quotes\Service\HistoryLogger'
+
   # --- Grid
   Snt\Quotes\Grid\QuoteQueryBuilder:
     class: Snt\Quotes\Grid\QuoteQueryBuilder
@@ -165,6 +200,22 @@ services:
       $config: '@Snt\Quotes\Config\ModuleConfig'
       $sender: '@Snt\Quotes\Service\QuoteSender'
       $mailer: '@Snt\Quotes\Mail\QuoteMailer'
+      $paymentLinks: '@Snt\Quotes\Payment\PaymentLinkService'
+    tags: ['controller.service_arguments']
+
+  Snt\Quotes\Controller\Admin\ConversionController:
+    class: Snt\Quotes\Controller\Admin\ConversionController
+    public: true
+    autowire: true
+    autoconfigure: true
+    arguments:
+      $translator: '@translator'
+      $permissions: '@Snt\Quotes\Service\Permission\QuotePermissions'
+      $converter: '@Snt\Quotes\Conversion\QuoteToOrderConverter'
+      $paymentLinks: '@Snt\Quotes\Payment\PaymentLinkService'
+      $mailer: '@Snt\Quotes\Mail\QuoteMailer'
+      $presenter: '@Snt\Quotes\Presenter\QuotePresenter'
+      $config: '@Snt\Quotes\Config\ModuleConfig'
     tags: ['controller.service_arguments']
 
   Snt\Quotes\Controller\Admin\QuoteApiController:

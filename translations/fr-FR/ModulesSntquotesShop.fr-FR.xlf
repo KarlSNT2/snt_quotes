@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="snt_quotes" source-language="en-US" target-language="fr-FR" datatype="plaintext">
+    <body>
+      <trans-unit id="17f0ff6e4e44ee7aaf17a990dd0f8289">
+        <source>A confirmation e-mail has been sent to you.</source>
+        <target>Un e-mail de confirmation vous a été envoyé.</target>
+      </trans-unit>
+      <trans-unit id="73863415a657ca7dc0fed36dc7b5a799">
+        <source>A new version has been sent to you by e-mail. Use the link in that e-mail.</source>
+        <target>Une nouvelle version vous a été envoyée par e-mail. Utilisez le lien de cet e-mail.</target>
+      </trans-unit>
+      <trans-unit id="d88ad2dc74e43a70afd10645cf8002a6">
+        <source>Accept and continue</source>
+        <target>Accepter et continuer</target>
+      </trans-unit>
+      <trans-unit id="27ac798065639d60aef90518d9b95e25">
+        <source>Accept and pay</source>
+        <target>Accepter et payer</target>
+      </trans-unit>
+      <trans-unit id="91a0266712972368b1fae9d84e2e073f">
+        <source>Accept and pay by bank transfer</source>
+        <target>Accepter et payer par virement</target>
+      </trans-unit>
+      <trans-unit id="c382bdaf12c11e5ef70d54db20342dfc">
+        <source>Accept — payment on invoice</source>
+        <target>Accepter — règlement à réception de facture</target>
+      </trans-unit>
+      <trans-unit id="d485aee26e404c028cc1ffae410cd5a5">
+        <source>Back to my quote</source>
+        <target>Retour à mon devis</target>
+      </trans-unit>
+      <trans-unit id="f104f31147330f9d009ae0d80f10248f">
+        <source>Check that you copied the whole link from the e-mail, or contact us.</source>
+        <target>Vérifiez que vous avez copié le lien complet depuis l’e-mail, ou contactez-nous.</target>
+      </trans-unit>
+      <trans-unit id="9cf7eb99e86ad10a8329cb9f94c5b5dd">
+        <source>Choose a payment method.</source>
+        <target>Choisissez un moyen de paiement.</target>
+      </trans-unit>
+      <trans-unit id="35fc6b5b9093ca2401cf9b0974a96b52">
+        <source>Contact my sales representative</source>
+        <target>Contacter mon commercial</target>
+      </trans-unit>
+      <trans-unit id="02d4482d332e1aef3437cd61c9bcc624">
+        <source>Contact us</source>
+        <target>Nous contacter</target>
+      </trans-unit>
+      <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39">
+        <source>Description</source>
+        <target>Désignation</target>
+      </trans-unit>
+      <trans-unit id="104d9898c04874d0fbac36e125fa1369">
+        <source>Discount</source>
+        <target>Remise</target>
+      </trans-unit>
+      <trans-unit id="b24ce0cd392a5b0b8dedc66c25213594">
+        <source>Free</source>
+        <target>Offert</target>
+      </trans-unit>
+      <trans-unit id="a87b8e7725ce030ac4933c7c13f57c3c">
+        <source>I accept the terms and conditions of sale and this quote.</source>
+        <target>J’accepte les conditions générales de vente et ce devis.</target>
+      </trans-unit>
+      <trans-unit id="b60571ec5908c1da1d9afc7fc523ece3">
+        <source>I have read and accept the [1]terms and conditions of sale[/1] and this quote.</source>
+        <target>J’ai lu et j’accepte les [1]conditions générales de vente[/1] et ce devis.</target>
+      </trans-unit>
+      <trans-unit id="af7a76e7689bdd8df9af95007ee5401e">
+        <source>No online payment method is available for this quote. Contact your sales representative.</source>
+        <target>Aucun moyen de paiement en ligne n’est disponible pour ce devis. Contactez votre commercial.</target>
+      </trans-unit>
+      <trans-unit id="9ab591bb784d63d1d39f055539aaaaf9">
+        <source>No payment has been taken. Try again, with another card if needed, or contact us.</source>
+        <target>Aucun paiement n’a été prélevé. Réessayez, avec une autre carte si besoin, ou contactez-nous.</target>
+      </trans-unit>
+      <trans-unit id="d4d19499f6d49b2a4dd25b2b9002ac37">
+        <source>No payment has been taken. You can try again whenever you like.</source>
+        <target>Aucun paiement n’a été prélevé. Vous pouvez réessayer quand vous le souhaitez.</target>
+      </trans-unit>
+      <trans-unit id="2c1977e00a7a7d3479dcae1a234fb16e">
+        <source>Order reference: %ref%</source>
+        <target>Référence de commande : %ref%</target>
+      </trans-unit>
+      <trans-unit id="cc21116ce900f38c0691823ab193b9a3">
+        <source>Pay by card</source>
+        <target>Payer par carte</target>
+      </trans-unit>
+      <trans-unit id="bf30a408b2e6428f4f3fb5f57794982d">
+        <source>Pay by card now</source>
+        <target>Payer maintenant par carte</target>
+      </trans-unit>
+      <trans-unit id="b3c0ed3d1879fe303564e2a06ad6948b">
+        <source>Payment according to the terms agreed with your sales representative.</source>
+        <target>Règlement selon les conditions convenues avec votre commercial.</target>
+      </trans-unit>
+      <trans-unit id="d27600e8af517a19b8f17713e91e4c8b">
+        <source>Payment cancelled</source>
+        <target>Paiement annulé</target>
+      </trans-unit>
+      <trans-unit id="f0aaaae189e9c7711931a65ffcd22543">
+        <source>Payment method</source>
+        <target>Moyen de paiement</target>
+      </trans-unit>
+      <trans-unit id="1dba57c404fa74d8cd2718d4e3001d75">
+        <source>Please accept the terms and conditions of sale to continue.</source>
+        <target>Veuillez accepter les conditions générales de vente pour continuer.</target>
+      </trans-unit>
+      <trans-unit id="c28f2075c0d6f21ff0f2b54c12ede005">
+        <source>Please make the bank transfer, quoting your order reference.</source>
+        <target>Merci d’effectuer le virement en indiquant la référence de votre commande.</target>
+      </trans-unit>
+      <trans-unit id="2091eecdb8d7db4e0d42e23386ccf9f4">
+        <source>Products excl. tax</source>
+        <target>Produits HT</target>
+      </trans-unit>
+      <trans-unit id="03ab340b3f99e03cff9e84314ead38c0">
+        <source>Qty</source>
+        <target>Qté</target>
+      </trans-unit>
+      <trans-unit id="67276ea930b4e804c3a8d2c8e2b4c2ed">
+        <source>Quote %ref%</source>
+        <target>Devis %ref%</target>
+      </trans-unit>
+      <trans-unit id="e00b0e616d7ec5664bfe65f94c6d1061">
+        <source>Quote payment</source>
+        <target>Paiement du devis</target>
+      </trans-unit>
+      <trans-unit id="cf070b231612ac7d02cccd2b4de2106e">
+        <source>Quote summary</source>
+        <target>Récapitulatif du devis</target>
+      </trans-unit>
+      <trans-unit id="2215db135a80b69df623f088f06e3a6a">
+        <source>Secure link, valid until %date%. Your card details are never stored by our shop.</source>
+        <target>Lien sécurisé, valable jusqu’au %date%. Vos données de carte ne sont jamais conservées par notre boutique.</target>
+      </trans-unit>
+      <trans-unit id="2c524f03ca02d544074bac47304256f0">
+        <source>Secure payment page of our bank (3-D Secure).</source>
+        <target>Page de paiement sécurisée de notre banque (3-D Secure).</target>
+      </trans-unit>
+      <trans-unit id="ea9cf7e47ff33b2be14e6dd07cbcefc6">
+        <source>Shipping</source>
+        <target>Livraison</target>
+      </trans-unit>
+      <trans-unit id="a8b0b6e79906227ea301b0da9c4856fe">
+        <source>Thank you for your payment</source>
+        <target>Merci pour votre paiement</target>
+      </trans-unit>
+      <trans-unit id="b1db1f4aaf59b030b142856e526f8210">
+        <source>Thank you! You will find your order in your customer account.</source>
+        <target>Merci ! Vous retrouverez votre commande dans votre compte client.</target>
+      </trans-unit>
+      <trans-unit id="6f42927534197af043f596d6cf99feaf">
+        <source>Thank you, your order is recorded</source>
+        <target>Merci, votre commande est enregistrée</target>
+      </trans-unit>
+      <trans-unit id="ace2115be95abf09664a0386dc60a6e6">
+        <source>The payment did not go through</source>
+        <target>Le paiement n’a pas abouti</target>
+      </trans-unit>
+      <trans-unit id="82150b52ea41d5e57896a5e8aba00806">
+        <source>This link is not valid</source>
+        <target>Ce lien n’est pas valide</target>
+      </trans-unit>
+      <trans-unit id="73b08173f2753115609b109040a511c4">
+        <source>This payment link has expired</source>
+        <target>Ce lien de paiement a expiré</target>
+      </trans-unit>
+      <trans-unit id="89cbdd14a3f74dc841bac1b0287918bf">
+        <source>This quote has already been ordered</source>
+        <target>Ce devis a déjà été commandé</target>
+      </trans-unit>
+      <trans-unit id="2664ae4fd51a1648ae88bcfb3ce82a46">
+        <source>This quote has been updated</source>
+        <target>Ce devis a été mis à jour</target>
+      </trans-unit>
+      <trans-unit id="25b77b23fda3d051fb72598c952a82d7">
+        <source>Total excl. tax</source>
+        <target>Total HT</target>
+      </trans-unit>
+      <trans-unit id="ba12e59b20a9720f70fb907a55cd2620">
+        <source>Total incl. tax</source>
+        <target>Total TTC</target>
+      </trans-unit>
+      <trans-unit id="560ccb8a84bfc2cf70bd0ae4698b4d3e">
+        <source>Total to pay:</source>
+        <target>Total à payer :</target>
+      </trans-unit>
+      <trans-unit id="f915a95e609bbd517a8a1e7bdcceef37">
+        <source>Try again</source>
+        <target>Réessayer</target>
+      </trans-unit>
+      <trans-unit id="e0fd4e35546b7f0eeae62dfa604bd973">
+        <source>Unit price excl. tax</source>
+        <target>PU HT</target>
+      </trans-unit>
+      <trans-unit id="93ea1358f3d80fd4fe12f27b86c808f2">
+        <source>VAT %rate%%</source>
+        <target>TVA %rate% %</target>
+      </trans-unit>
+      <trans-unit id="9d9737ef5fb5ff47f5cb0a79fd80a0b4">
+        <source>VAT reverse charge (intra-community supply).</source>
+        <target>Autoliquidation de TVA (livraison intracommunautaire).</target>
+      </trans-unit>
+      <trans-unit id="62e4527becc6017a7d4985a58b3b24cb">
+        <source>Valid until %date%</source>
+        <target>Valable jusqu’au %date%</target>
+      </trans-unit>
+      <trans-unit id="778861bdc4135c9832c239bd05c21ad8">
+        <source>You will receive a secure payment link by e-mail within a few minutes.</source>
+        <target>Vous allez recevoir un lien de paiement sécurisé par e-mail d’ici quelques minutes.</target>
+      </trans-unit>
+      <trans-unit id="0a32177f6a161dc88c585b6359f4e3c9">
+        <source>You will receive an e-mail with a secure payment link within a few minutes.</source>
+        <target>Vous allez recevoir un e-mail avec un lien de paiement sécurisé d’ici quelques minutes.</target>
+      </trans-unit>
+      <trans-unit id="593a255f12e6a236078591f4b6b3a72c">
+        <source>Your contact: %name%</source>
+        <target>Votre contact : %name%</target>
+      </trans-unit>
+      <trans-unit id="7e9db734b1940e1c34d8b83e24e7ed5f">
+        <source>Your order %ref% is recorded.</source>
+        <target>Votre commande %ref% est enregistrée.</target>
+      </trans-unit>
+      <trans-unit id="b075c9694ad1d2e9ea3bf9c7dbca1394">
+        <source>Your order is recorded; it is shipped once the transfer is received.</source>
+        <target>Votre commande est enregistrée ; elle est expédiée dès réception du virement.</target>
+      </trans-unit>
+      <trans-unit id="07af3edab7e3b4d14850612d65b9ad9f">
+        <source>Your payment could not be started. Please try again or contact us.</source>
+        <target>Le paiement n’a pas pu démarrer. Réessayez ou contactez-nous.</target>
+      </trans-unit>
+      <trans-unit id="61a0eae6567126fb0183ca71b713a211">
+        <source>Your payment is being confirmed by the bank. You will receive the order confirmation by e-mail within a few minutes.</source>
+        <target>Votre paiement est en cours de confirmation par la banque. Vous recevrez la confirmation de commande par e-mail d’ici quelques minutes.</target>
+      </trans-unit>
+      <trans-unit id="db920375e2bf446eb14ac9098d4c2215">
+        <source>Your sales representative can send you a new link or an updated quote.</source>
+        <target>Votre commercial peut vous envoyer un nouveau lien ou un devis mis à jour.</target>
+      </trans-unit>
+      <trans-unit id="7e285b7c3a264c7ba48eda458fb9b0dd">
+        <source>Your session has expired. Reload the page and try again.</source>
+        <target>Votre session a expiré. Rechargez la page et réessayez.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

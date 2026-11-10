@@ -46,6 +46,9 @@ class ConfigurationController extends AbstractQuoteController
         'iban' => ConfigKeys::IBAN,
         'bic' => ConfigKeys::BIC,
         'paylink_ttl_days' => ConfigKeys::PAYLINK_TTL_DAYS,
+        'os_transfer' => ConfigKeys::OS_TRANSFER,
+        'os_deferred' => ConfigKeys::OS_DEFERRED,
+        'os_pending' => ConfigKeys::OS_PENDING,
         'pdf_color' => ConfigKeys::PDF_COLOR,
         'pdf_legal' => ConfigKeys::PDF_LEGAL,
         'pdf_cgv_source' => ConfigKeys::PDF_CGV_SOURCE,
@@ -140,7 +143,7 @@ class ConfigurationController extends AbstractQuoteController
                 default => $value,
             };
         }
-        foreach (['validity_days', 'reminder_days', 'response_delay_days', 'paylink_ttl_days', 'pdf_cgv_id_cms'] as $intField) {
+        foreach (['validity_days', 'reminder_days', 'response_delay_days', 'paylink_ttl_days', 'pdf_cgv_id_cms', 'os_transfer', 'os_deferred', 'os_pending'] as $intField) {
             $data[$intField] = (int) $data[$intField];
         }
         $data['discount_threshold'] = $this->config->getFloat(ConfigKeys::DISCOUNT_THRESHOLD);
@@ -149,6 +152,12 @@ class ConfigurationController extends AbstractQuoteController
         $profiles = [];
         foreach (\Profile::getProfiles($this->langId()) as $profile) {
             $profiles[(string) $profile['name']] = (string) $profile['id_profile'];
+        }
+        $states = [];
+        foreach (\OrderState::getOrderStates($this->langId()) as $state) {
+            if (!$state['deleted']) {
+                $states[(string) $state['name']] = (int) $state['id_order_state'];
+            }
         }
         $cms = ['—' => 0];
         foreach (\CMS::getCMSPages($this->langId(), null, true, $this->shopId()) as $page) {
@@ -185,6 +194,9 @@ class ConfigurationController extends AbstractQuoteController
             ->add('payment_terms', TextareaType::class, ['label' => $this->t('Payment terms (printed on the PDF)'), 'required' => false, 'attr' => ['rows' => 3]])
             ->add('iban', TextType::class, ['label' => 'IBAN', 'required' => false] + $help('Printed on the PDF when bank transfer is allowed.'))
             ->add('bic', TextType::class, ['label' => 'BIC', 'required' => false])
+            ->add('os_transfer', ChoiceType::class, ['label' => $this->t('Initial order status — bank transfer'), 'choices' => $states])
+            ->add('os_deferred', ChoiceType::class, ['label' => $this->t('Initial order status — deferred payment (B2B)'), 'choices' => $states])
+            ->add('os_pending', ChoiceType::class, ['label' => $this->t('Initial order status — awaiting payment / card by phone'), 'choices' => $states] + $help('Orders are synchronised with the ERP according to their status: choose statuses that n8n does not send to OASIS until payment.'))
             ->add('paylink_ttl_days', IntegerType::class, ['label' => $this->t('Payment link validity (days)'), 'constraints' => [new Assert\Range(['min' => 1, 'max' => 90])]])
             // PDF et e-mails
             ->add('pdf_color', TextType::class, ['label' => $this->t('Main colour'), 'attr' => ['type' => 'color'], 'constraints' => [new Assert\Regex(['pattern' => '/^#[0-9A-Fa-f]{6}$/'])]])
@@ -208,6 +220,8 @@ class ConfigurationController extends AbstractQuoteController
                     $this->t('Quote sent') => QuoteMailer::TPL_SENT,
                     $this->t('New version') => QuoteMailer::TPL_NEW_VERSION,
                     $this->t('Reminder before expiry') => QuoteMailer::TPL_REMINDER,
+                    $this->t('Payment link') => QuoteMailer::TPL_PAYMENT_LINK,
+                    $this->t('Order created (to the sales rep)') => QuoteMailer::TPL_ORDERED_EMPLOYEE,
                 ],
             ])
             // Stockage

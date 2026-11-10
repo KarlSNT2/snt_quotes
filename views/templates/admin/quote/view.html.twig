@@ -63,6 +63,10 @@
           subject: sendDefaults.subject,
           copyEmployee: sendDefaults.copyEmployee
         }|json_encode }}"><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</button>
+      {% elseif action.kind == 'convert' %}
+        <button type="button" class="{{ cls }}" data-open-convert><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</button>
+      {% elseif action.kind == 'paylink' %}
+        <button type="button" class="{{ cls }}" data-open-paylink><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</button>
       {% elseif action.kind == 'disabled' %}
         <button type="button" class="{{ cls }}" disabled title="{{ 'Available with the next update of the module (milestone 2).'|trans }}"><i class="material-icons" aria-hidden="true">{{ action.icon }}</i> {{ action.label }}</button>
       {% endif %}
@@ -264,12 +268,37 @@
 
       <section class="card">
         <h3 class="card-header">{{ 'Payment link'|trans }}</h3>
-        <div class="card-body"><p class="text-muted mb-0">{{ 'Payment links will be available with the next update of the module.'|trans }}</p></div>
+        <div class="card-body" data-paylink-block>
+          {% if paymentLink %}
+            {% set linkStates = {'active': 'Active'|trans, 'used': 'Used (order created)'|trans, 'revoked': 'Deactivated'|trans, 'expired': 'Expired'|trans} %}
+            <p class="mb-1"><span class="snt-label">{{ 'Status'|trans }}</span> <strong>{{ linkStates[paymentLink.state] }}</strong></p>
+            <p class="mb-2"><span class="snt-label">{{ 'Valid until'|trans }}</span> {{ paymentLink.expires_at|date('d/m/Y H:i') }}</p>
+            {% if paymentLink.state == 'active' and permissions.edit %}
+              <button type="button" class="btn btn-outline-danger btn-sm" data-revoke-link>{{ 'Deactivate'|trans }}</button>
+            {% endif %}
+          {% else %}
+            <p class="text-muted">{{ 'No payment link yet.'|trans }}</p>
+          {% endif %}
+          <p class="snt-help mb-0">{{ 'For security, a link is shown only when it is created. Create a new one if needed: the previous one is deactivated.'|trans }}</p>
+        </div>
       </section>
     </aside>
   </div>
 
   {% include '@Modules/snt_quotes/views/templates/admin/quote/_send_modal.html.twig' %}
+  {% include '@Modules/snt_quotes/views/templates/admin/quote/_conversion_modals.html.twig' %}
+  <script type="application/json" id="snt-view-config">{{ {
+    urls: conversionUrls,
+    customerEmail: sendDefaults.to,
+    i18n: {
+      networkError: 'The server did not respond. Check your connection and try again.'|trans,
+      copied: 'Link copied.'|trans,
+      chooseMode: 'Choose how the order will be paid.'|trans,
+      confirmRevoke: 'Deactivate the current payment link? The customer will no longer be able to use it.'|trans,
+      notAllowedOnQuote: 'not ticked on the quote'|trans,
+      defaultState: 'Default status'|trans
+    }
+  }|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_AMP'))|raw }}</script>
   <script>window.SntQuotes = window.SntQuotes || {}; window.SntQuotes.csrf = {{ csrf|json_encode|raw }};</script>
 </div>
 {% endblock %}
@@ -278,4 +307,5 @@
   {{ parent() }}
   <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}"></script>
   <script src="{{ asset('../modules/snt_quotes/views/js/admin/send-modal.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/view.js') }}"></script>
 {% endblock %}

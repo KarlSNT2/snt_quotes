@@ -55,6 +55,12 @@ final class ConfigKeys
     public const WEBHOOK_SECRET = 'SNT_QUOTES_WEBHOOK_SECRET';
     public const CRON_TOKEN = 'SNT_QUOTES_CRON_TOKEN';
 
+    // Statuts de commande (globaux, modifiables dans l'onglet Paiement)
+    public const OS_PENDING = 'SNT_QUOTES_OS_PENDING';
+    public const OS_DEFERRED = 'SNT_QUOTES_OS_DEFERRED';
+    public const OS_TRANSFER = 'SNT_QUOTES_OS_TRANSFER';
+    public const OS_ERROR = 'SNT_QUOTES_OS_ERROR';
+
     // Technique (non éditable)
     public const CARRIER_ID_REFERENCE = 'SNT_QUOTES_CARRIER_ID_REFERENCE';
     public const FREE_LINE_PRODUCTS = 'SNT_QUOTES_FREE_LINE_PRODUCTS';
@@ -114,6 +120,10 @@ final class ConfigKeys
             self::CRON_TOKEN,
             self::CARRIER_ID_REFERENCE,
             self::FREE_LINE_PRODUCTS,
+            self::OS_PENDING,
+            self::OS_DEFERRED,
+            self::OS_TRANSFER,
+            self::OS_ERROR,
         ]);
     }
 }

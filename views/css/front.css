@@ -1,0 +1,30 @@
+/* snt_quotes — front office (compatible thème ZOne et enfant). Mobile d'abord, contrastes AA. */
+.snt-pay { max-width: 960px; margin: 0 auto; }
+.snt-pay .card { margin-bottom: 1rem; }
+.snt-pay__state { padding: 1.25rem; margin-bottom: 1rem; border: 1px solid #d6dbe1; border-radius: 6px; background: #fff; }
+.snt-pay__state--ok { border-color: #a5d6a7; background: #f1f8f2; }
+.snt-pay__state h2 { font-size: 1.25rem; margin-top: 0; }
+.snt-pay__head { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.snt-pay__meta { color: #4b5563; }
+.snt-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; line-height: 18px; color: #fff; }
+.snt-badge--strike { text-decoration: line-through; }
+.snt-pay__lines td, .snt-pay__lines th { vertical-align: top; }
+.snt-pay__section td { background: #eef1f5; }
+.snt-pay__totals { margin: 1rem 0 0 auto; max-width: 360px; }
+.snt-pay__totals > div { display: flex; justify-content: space-between; gap: 1rem; padding: 3px 0; }
+.snt-pay__totals dt { font-weight: normal; }
+.snt-pay__totals dd { margin: 0; white-space: nowrap; }
+.snt-pay__tax { color: #6b7280; font-size: .9em; }
+.snt-pay__grand { border-top: 2px solid #1f2937; margin-top: 6px; padding-top: 8px !important; font-size: 1.2rem; font-weight: 700; }
+.snt-pay__method { display: flex; gap: .75rem; align-items: flex-start; padding: .75rem; margin-bottom: .5rem; border: 1px solid #d6dbe1; border-radius: 6px; cursor: pointer; font-weight: normal; }
+.snt-pay__method:focus-within { outline: 2px solid #1f6fb2; outline-offset: 2px; }
+.snt-pay__method input { margin-top: .3rem; }
+.snt-pay__cgv { display: flex; gap: .5rem; align-items: flex-start; margin: 1rem 0; font-weight: normal; }
+.snt-pay__total { font-size: 1.25rem; }
+.snt-pay__secure { margin-top: .75rem; color: #4b5563; font-size: .875rem; }
+.snt-pay__secure .material-icons { font-size: 16px; vertical-align: -3px; }
+.snt-pay__iban { font-family: monospace; }
+@media (max-width: 575px) {
+  .snt-pay__totals { max-width: none; }
+  .snt-pay .btn-lg { width: 100%; }
+}

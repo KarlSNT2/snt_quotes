@@ -1,7 +1,7 @@
 # Guide utilisateur — Devis (équipes commerciales et ADV)
 
-> Version jalon 1 : création, envoi et suivi des devis dans le back office.
-> La conversion en commande et le paiement en ligne arrivent au jalon 2.
+> Version jalon 2 : création, envoi, suivi, conversion en commande et paiement par lien.
+> L'espace « Mes devis » du client arrive au jalon 3.
 > *[Captures à compléter]* marque l'emplacement des captures d'écran.
 
 ## 1. Retrouver ses devis
@@ -86,13 +86,38 @@ La barre d'actions propose seulement ce qui est possible pour ce statut :
 |---|---|
 | Brouillon | Envoyer au client, Modifier |
 | Envoyé / Vu | Relancer, Renvoyer, Marquer comme accepté / refusé, Expirer, Nouvelle version |
-| Accepté | Convertir en commande *(jalon 2)* |
+| Accepté | Convertir en commande, Lien de paiement |
 | Modification demandée, Refusé, Expiré | Rouvrir en brouillon, Nouvelle version |
 | Commandé / Payé | Voir la commande |
 
 Depuis la **fiche client**, le bloc « Devis » liste les 5 derniers devis et propose **Nouveau devis pour ce client**.
 
-## 5. Couleurs des statuts
+## 5. Transformer un devis en commande
+
+Sur la fiche d'un devis **accepté**, cliquez sur **Convertir en commande**. Si le client a donné son accord par téléphone ou
+par e-mail sur un devis encore « Envoyé », utilisez **Convertir en commande (accord du client)** et cochez la case d'accord.
+
+1. La fenêtre résume ce qui va se passer : « Une commande de 1 245,60 € TTC sera créée pour Société X, livrée par … ».
+   Les articles en stock insuffisant sont signalés (sans bloquer).
+2. Choisissez **comment la commande sera réglée** :
+   - **Virement**, **Paiement différé (B2B)** ou **En attente de paiement** : la commande est créée tout de suite ;
+   - **Carte par téléphone** : la commande est créée, puis vous saisissez la carte depuis le bloc HiPay de la fiche commande ;
+   - **Lien PayPlug** (defense-privee) : PayPlug envoie lui-même le lien de paiement au client.
+3. Vérifiez le **statut initial** proposé, ajoutez un commentaire si besoin, puis cliquez sur **Créer la commande**.
+
+La commande reprend **exactement** le devis : prix, remises, port et transporteur, même si ce transporteur ne livre pas
+normalement cette zone. Si PrestaShop trouvait un écart, même d'un centime, aucune commande n'est créée et un message explique pourquoi.
+
+## 6. Envoyer un lien de paiement
+
+Bouton **Lien de paiement** (devis envoyé ou accepté). Le client ouvre le lien, voit le devis, coche les CGV et paie, **sans se
+connecter**. La commande est créée automatiquement et vous recevez un e-mail « Commande créée depuis le devis ».
+
+- Laissez cochée l'option **L'envoyer au client par e-mail**, ou copiez le lien pour l'envoyer vous-même.
+- Par sécurité, le lien n'est affiché **qu'une fois**. Si vous le perdez, créez-en un nouveau : l'ancien est désactivé.
+- Le bloc « Lien de paiement » de la fiche indique son état : actif, utilisé, désactivé ou expiré.
+
+## 7. Couleurs des statuts
 
 Brouillon (gris) · En attente de validation interne (orange foncé) · Envoyé (bleu) · Vu (bleu clair) · Modification demandée (orange) ·
 Accepté (vert) · Refusé (rouge) · Expiré (gris barré) · Commandé (violet) · Payé (vert foncé) · Remplacé (gris clair barré).

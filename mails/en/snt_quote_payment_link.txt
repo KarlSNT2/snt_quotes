@@ -1,0 +1,11 @@
+Hello {firstname} {lastname},
+
+You can review and pay your quote {quote_reference} ({quote_total_ti}) online, securely:
+{payment_link_url}
+
+{custom_message_txt}
+
+This link is personal and valid until {payment_link_expires}.
+
+Kind regards,
+The {shop_name} team

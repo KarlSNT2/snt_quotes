@@ -13,7 +13,7 @@ ni par les règles transporteurs.
 | Jalon | Contenu | État |
 |---|---|---|
 | 1 — BO interne | Installation, tables, configuration, droits, liste, éditeur, fiche, PDF, envoi e-mail | ✅ livré (v0.1.0) |
-| 2 — Conversion et paiement | `QuoteToOrderConverter`, transporteur technique, paiement intégré, liens HiPay Payments / PayPlug | à faire |
+| 2 — Conversion et paiement | Conversion sans tunnel, transporteur technique, paiement intégré, liens de paiement HiPay Payments / PayPlug, page de paiement client | ✅ livré (v0.2.0), recette DEV à faire |
 | 3 — Front office et cycle de vie | Panier → devis, Mes devis, acceptation, page de paiement, cron, webhooks n8n | à faire |
 | 4 — Options | Versions avancées, statistiques, bouton fiche produit, reprise Opart | à faire |
 
@@ -59,22 +59,62 @@ passent par des URL présignées de 10 minutes. Sans bucket configuré (DEV), le
 
 Droits nécessaires pour la clé API : lecture et écriture d'objets sur le bucket.
 
-### Paiement (jalon 2)
+### Conversion en commande (jalon 2)
 
-Rien à saisir dans `snt_quotes` : les identifiants restent ceux du module de paiement de la boutique.
-- **HiPay Payments** (`hipaypayments` v4 sur PS 8, v5 sur PS 9) : la page de paiement est créée sur le panier technique du devis ;
-  à la notification HiPay, c'est le module HiPay qui crée la commande.
-- **PayPlug** (defense-privee) : la commande est créée au nom de PayPlug avec son statut « lien de paiement par e-mail » ; PayPlug envoie le lien.
+La conversion ne passe jamais par le tunnel :
+1. un **panier technique** est construit avec les lignes du devis au prix figé (prix imposés liés au panier et au client,
+   compensant remise de groupe et écotaxe), les remises regroupées dans une règle panier HT dédiée (code `SNTQ-…`) et le
+   transporteur **« Livraison selon devis »**, qui renvoie le port HT du devis ;
+2. les totaux calculés par PrestaShop sont comparés au devis **au centime** : en cas d'écart, aucune commande n'est créée et
+   le message indique les montants en cause ;
+3. la commande est validée par le module de paiement choisi ;
+4. avant l'écriture du premier statut, le module remet le **transporteur réel** sur la commande, nomme les lignes libres,
+   transmet le point relais à `snt_carriers`, décompte les bons d'origine et lie le devis à la commande.
 
-Détails dans [docs/PLAN.md §9](docs/PLAN.md).
+Objets créés à l'installation / mise à jour 0.2.0 : le transporteur « Livraison selon devis » (masqué du tunnel), des produits
+techniques « Ligne libre de devis » (un par règle de taxe, invisibles, exclus de la recherche) et trois statuts de commande :
+« Devis — en attente de paiement », « Paiement différé B2B », « Erreur conversion devis ».
+
+| Mode (modale « Convertir en commande ») | Module qui crée la commande | Statut initial |
+|---|---|---|
+| Virement | `snt_quotes` | configurable (défaut : en attente de virement) |
+| Paiement différé B2B | `snt_quotes` | configurable |
+| En attente de paiement | `snt_quotes` | configurable |
+| Carte par téléphone | `hipaypayments` (bloc MO/TO de la fiche commande) | configurable |
+| Lien PayPlug | `payplug` (envoie le lien) | statut « lien de paiement par e-mail » de PayPlug |
+| Carte en ligne (page de paiement client) | `hipaypayments`, à la notification | selon HiPay |
+
+### Paiement en ligne et liens de paiement
+
+Rien à saisir dans `snt_quotes` : les identifiants restent ceux du module de paiement de la boutique (configuration,
+onglet Paiement, « Module de paiement en ligne »).
+- **Lien de paiement** (fiche devis) : jeton aléatoire dont seule l'empreinte est stockée, expiration paramétrable, un seul
+  lien actif par devis, consommé dès qu'une commande est créée. Le lien n'est affiché qu'à sa création.
+- **Page client** (`module/snt_quotes/pay`) : sans connexion, récapitulatif figé, case CGV obligatoire, moyens cochés sur le devis.
+- **HiPay Payments** (`hipaypayments` v4 sur PS 8, v5 sur PS 9) : page hébergée sur le panier technique ; la notification
+  arrive au module HiPay, qui crée la commande.
+- **PayPlug** (defense-privee) : commande au nom de PayPlug avec son statut « lien de paiement par e-mail » ; PayPlug envoie le lien.
+
+### Points d'attention
+
+- **orderfees_shipping / Advanced Shipping Cost** : exclure le transporteur « Livraison selon devis » de leurs règles. Sinon,
+  le contrôle au centime bloque la conversion.
+- **Seuils de port gratuit** (`PS_SHIPPING_FREE_PRICE`, `PS_SHIPPING_FREE_WEIGHT`) : le cœur ne taxerait pas le port du devis ;
+  ils sont neutralisés en mémoire, uniquement pendant le traitement d'un panier de devis (conversion, page de paiement,
+  notification HiPay). Rien n'est modifié en base.
+- **HiPay en mode « notification par cron »** : la neutralisation ci-dessus ne s'applique pas à ce traitement différé. Si la
+  boutique a un seuil de port gratuit, gardez les notifications HiPay en temps réel.
+- **`PS_ATCP_SHIPWRAP`** (TVA du port au prorata des produits) : non pris en charge ; le contrôle au centime le détecte.
+- Deux lignes du **même produit à des prix différents** ne peuvent pas aller dans une même commande : la conversion le signale.
+
+Détails et décisions : [docs/PLAN.md §9-10](docs/PLAN.md).
 
 ## Intégrations existantes
 
 - **snt_carriers** : les transporteurs relais déclarés dans `config/carriers.php` sont reconnus. Le commercial choisit le point
   relais dans l'éditeur, via le même fournisseur de recherche (`RelayProviderFactory`).
 - **orderfees_shipping / Advanced Shipping Cost** : le bouton « Proposer le tarif calculé » applique leurs règles sur un panier
-  temporaire. Le port saisi dans le devis reste celui appliqué. **À faire avant le jalon 2** : exclure le transporteur technique
-  « Livraison selon devis » de leurs règles.
+  temporaire. Le port saisi dans le devis reste celui appliqué. Exclure le transporteur « Livraison selon devis » de leurs règles.
 - **snt_inscription_pro** : le n° de TVA intracom de l'adresse déclenche l'autoliquidation, avec la même règle que le cœur
   (`VATNUMBER_MANAGEMENT`, pays ≠ `VATNUMBER_COUNTRY`).
 
@@ -91,7 +131,11 @@ composer install
 composer test                                       # PHPUnit (calculs, statuts, références, signature S3)
 PS_ROOT_DIR=/chemin/vers/prestashop composer stan   # PHPStan niveau 6, tout le module
 composer cs                                         # php-cs-fixer (PSR-12)
+php tools/twig-lint.php /chemin/vers/prestashop .   # syntaxe des gabarits Twig
+php tools/smarty-lint.php /chemin/vers/prestashop . # compilation des gabarits Smarty
 ```
+
+Pour analyser l'intégration HiPay, pointer PHPStan vers les sources du module : `HIPAY_DIR=/chemin/hipaypayments`.
 
 Sans `PS_ROOT_DIR`, PHPStan n'analyse que les couches pures (`src/Domain`, `src/Calculator`).
 Traductions : chaînes sources en anglais, catalogue français dans `translations/fr-FR/` (voir `tools/i18n/README.md`).

@@ -1,0 +1,66 @@
+{% trans_default_domain 'Modules.Sntquotes.Admin' %}
+{# Modale « Convertir en commande » : impact résumé, mode de paiement, statut initial, avertissements de stock. #}
+<dialog class="snt-dialog" id="snt-dialog-convert" aria-labelledby="snt-dlg-convert-title">
+  <form method="dialog" data-form="convert">
+    <h3 id="snt-dlg-convert-title">{{ 'Convert the quote into an order'|trans }}</h3>
+    <p class="snt-convert-summary" data-convert-summary>…</p>
+    <ul class="snt-warnings" data-convert-stock></ul>
+
+    <fieldset class="form-group">
+      <legend class="form-control-label">{{ 'How will the order be paid?'|trans }}</legend>
+      <div class="snt-modes" data-convert-modes></div>
+    </fieldset>
+
+    <div class="form-group" data-convert-state-block>
+      <label class="form-control-label" for="convert-state">{{ 'Initial order status'|trans }}</label>
+      <select id="convert-state" class="custom-select" data-convert-state></select>
+      <p class="snt-help">{{ 'Orders are synchronised with the ERP according to their status.'|trans }}</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-control-label" for="convert-comment">{{ 'Comment (history and order message)'|trans }}</label>
+      <textarea id="convert-comment" class="form-control" rows="2" data-convert-comment></textarea>
+    </div>
+
+    <label class="snt-check" data-convert-agreed-block hidden>
+      <input type="checkbox" data-convert-agreed> {{ 'The customer has agreed to this quote (phone, e-mail or signed PDF).'|trans }}
+    </label>
+
+    <p class="text-danger small" data-dialog-error role="alert"></p>
+    <div class="snt-dialog__actions">
+      <button type="button" class="btn btn-outline-secondary" data-close>{{ 'Cancel'|trans }}</button>
+      <button type="submit" class="btn btn-primary" data-convert-submit><i class="material-icons" aria-hidden="true">shopping_cart</i> {{ 'Create the order'|trans }}</button>
+    </div>
+  </form>
+</dialog>
+
+{# Modale « Lien de paiement » #}
+<dialog class="snt-dialog" id="snt-dialog-paylink" aria-labelledby="snt-dlg-paylink-title">
+  <form method="dialog" data-form="paylink">
+    <h3 id="snt-dlg-paylink-title">{{ 'Payment link'|trans }}</h3>
+    <p>{{ 'The customer opens the quote, accepts the terms and pays, without logging in. The order is created automatically.'|trans }}</p>
+    <div data-paylink-create>
+      <label class="snt-check"><input type="checkbox" name="send" value="1" checked data-paylink-send> {{ 'Send it to the customer by e-mail'|trans }}</label>
+      <div class="form-group mt-2" data-paylink-mail>
+        <label class="form-control-label" for="paylink-to">{{ 'To'|trans }}</label>
+        <input id="paylink-to" name="to" class="form-control">
+        <label class="form-control-label mt-2" for="paylink-message">{{ 'Personal message'|trans }}</label>
+        <textarea id="paylink-message" name="message" class="form-control" rows="3"></textarea>
+      </div>
+      <p class="snt-help">{{ 'Creating a link deactivates the previous one.'|trans }}</p>
+    </div>
+    <div data-paylink-result hidden>
+      <label class="form-control-label" for="paylink-url">{{ 'Payment link'|trans }}</label>
+      <div class="input-group">
+        <input id="paylink-url" class="form-control" readonly data-paylink-url>
+        <div class="input-group-append"><button type="button" class="btn btn-outline-primary" data-paylink-copy><i class="material-icons" aria-hidden="true">content_copy</i> {{ 'Copy'|trans }}</button></div>
+      </div>
+      <p class="snt-help" data-paylink-expires></p>
+    </div>
+    <p class="text-danger small" data-dialog-error role="alert"></p>
+    <div class="snt-dialog__actions">
+      <button type="button" class="btn btn-outline-secondary" data-close>{{ 'Close'|trans }}</button>
+      <button type="submit" class="btn btn-primary" data-paylink-submit><i class="material-icons" aria-hidden="true">link</i> {{ 'Create the link'|trans }}</button>
+    </div>
+  </form>
+</dialog>

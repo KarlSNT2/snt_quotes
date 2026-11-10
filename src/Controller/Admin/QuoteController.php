@@ -16,6 +16,7 @@ use Snt\Quotes\Grid\QuoteGridDefinitionFactory;
 use Snt\Quotes\Grid\QuoteQueryBuilder;
 use Snt\Quotes\Mail\QuoteMailer;
 use Snt\Quotes\Mail\SendOptions;
+use Snt\Quotes\Payment\PaymentLinkService;
 use Snt\Quotes\Pdf\QuotePdfGenerator;
 use Snt\Quotes\Presenter\QuotePresenter;
 use Snt\Quotes\Repository\QuoteRepository;
@@ -57,6 +58,7 @@ class QuoteController extends AbstractQuoteController
         private readonly ModuleConfig $config,
         private readonly QuoteSender $sender,
         private readonly QuoteMailer $mailer,
+        private readonly PaymentLinkService $paymentLinks,
     ) {
         parent::__construct($translator, $permissions);
     }
@@ -241,6 +243,13 @@ class QuoteController extends AbstractQuoteController
             'csrf' => $this->csrfToken(),
             'customerUrl' => \Context::getContext()->link->getAdminLink('AdminCustomers', true, ['route' => 'admin_customers_view', 'customerId' => (int) $quote->id_customer]),
             'orderUrl' => $quote->id_order ? \Context::getContext()->link->getAdminLink('AdminOrders', true, ['route' => 'admin_orders_view', 'orderId' => (int) $quote->id_order]) : null,
+            'paymentLink' => $this->paymentLinks->latest($quote),
+            'conversionUrls' => [
+                'preview' => $this->generateUrl('admin_snt_quotes_convert_preview', ['quoteId' => (int) $quote->id]),
+                'convert' => $this->generateUrl('admin_snt_quotes_convert', ['quoteId' => (int) $quote->id]),
+                'paymentLink' => $this->generateUrl('admin_snt_quotes_payment_link', ['quoteId' => (int) $quote->id]),
+                'revokeLink' => $this->generateUrl('admin_snt_quotes_payment_link_revoke', ['quoteId' => (int) $quote->id]),
+            ],
             'sendDefaults' => [
                 'to' => (string) $customer->email,
                 'subject' => $this->mailer->defaultSubject($quote, $this->mailer->templateFor($quote)),
@@ -275,9 +284,22 @@ class QuoteController extends AbstractQuoteController
             $add('decline', $this->t('Mark as declined'), 'post', $this->transitionUrl($id, QuoteStatus::Declined), false, $this->t('Mark this quote as declined by the customer?'), 'cancel');
             $add('expire', $this->t('Expire'), 'post', $this->transitionUrl($id, QuoteStatus::Expired), false, $this->t('The customer will no longer be able to accept this quote. Continue?'), 'timer_off');
         }
-        if ($status === QuoteStatus::Accepted && $canEdit) {
-            // Conversion et lien de paiement : jalon 2.
-            $add('convert', $this->t('Convert to order'), 'disabled', '', true, null, 'shopping_cart');
+        $canConvert = $this->permissions->canConvert();
+        if (!$quote->id_order && $status === QuoteStatus::Accepted) {
+            if ($canConvert) {
+                $add('convert', $this->t('Convert to order'), 'convert', $this->generateUrl('admin_snt_quotes_convert', ['quoteId' => $id]), true, null, 'shopping_cart');
+            }
+            if ($canEdit) {
+                $add('paylink', $this->t('Payment link'), 'paylink', $this->generateUrl('admin_snt_quotes_payment_link', ['quoteId' => $id]), false, null, 'link');
+            }
+        }
+        if (!$quote->id_order && $status->isOpen()) {
+            if ($canEdit) {
+                $add('paylink', $this->t('Payment link'), 'paylink', $this->generateUrl('admin_snt_quotes_payment_link', ['quoteId' => $id]), false, null, 'link');
+            }
+            if ($canConvert) {
+                $add('convert', $this->t('Convert to order (customer agreed)'), 'convert', $this->generateUrl('admin_snt_quotes_convert', ['quoteId' => $id]), false, null, 'shopping_cart');
+            }
         }
         if ($status === QuoteStatus::Ordered || $status === QuoteStatus::Paid) {
             if ($quote->id_order) {
