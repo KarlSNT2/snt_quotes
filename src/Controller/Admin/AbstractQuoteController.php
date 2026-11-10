@@ -35,6 +35,32 @@ abstract class AbstractQuoteController extends FrameworkBundleAdminController
     }
 
     /**
+     * Ajoute aux pages la version des fichiers JS / CSS du module (date de dernière modification) : sans elle,
+     * le navigateur garde l'ancien script en cache après un déploiement.
+     *
+     * @param array<string, mixed> $parameters
+     *
+     * @return array<string, mixed>
+     */
+    protected function withAssetVersion(array $parameters): array
+    {
+        $parameters['sntAssetVersion'] = self::assetVersion();
+
+        return $parameters;
+    }
+
+    private static function assetVersion(): string
+    {
+        $base = dirname(__DIR__, 3) . '/views/';
+        $latest = 0;
+        foreach (array_merge(glob($base . 'js/admin/*.js') ?: [], glob($base . 'css/*.css') ?: []) as $file) {
+            $latest = max($latest, (int) @filemtime($file));
+        }
+
+        return (string) $latest;
+    }
+
+    /**
      * @param array<string, mixed> $parameters
      */
     protected function t(string $id, array $parameters = [], string $domain = self::DOMAIN): string

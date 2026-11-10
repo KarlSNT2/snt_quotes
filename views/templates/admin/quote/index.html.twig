@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}?v={{ sntAssetVersion|default('0') }}">
 {% endblock %}
 
 {% block content %}
@@ -41,5 +41,5 @@
 
 {% block javascripts %}
   {{ parent() }}
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/grid.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/grid.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
 {% endblock %}

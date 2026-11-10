@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Snt\Quotes\Adapter;
 
 use Snt\Quotes\Config\ConfigKeys;
+use Snt\Quotes\Relay\NativeRelays;
 
 /**
  * Transporteurs pour l'éditeur de devis.
@@ -57,6 +58,9 @@ class CarrierService
             }
 
             $relay = $relayDefs[$idCarrier] ?? null;
+            if ($relay === null && ($native = NativeRelays::providerForCarrier($idCarrier)) !== null) {
+                $relay = ['provider' => $native];
+            }
             $out[] = [
                 'id' => $idCarrier,
                 'name' => (string) $row['name'],
@@ -137,12 +141,18 @@ class CarrierService
     }
 
     /**
-     * Points relais (snt_carriers) autour d'un code postal.
+     * Points relais autour d'un code postal : module officiel du transporteur (Chronopost, Colissimo), sinon snt_carriers.
+     * L'adresse et la ville affinent la recherche quand le transporteur les accepte.
      *
      * @return array<int, array<string, mixed>>
      */
-    public function searchRelays(int $idCarrier, string $postcode, string $countryIso): array
+    public function searchRelays(int $idCarrier, string $postcode, string $countryIso, string $address = '', string $city = ''): array
     {
+        $native = NativeRelays::providerForCarrier($idCarrier);
+        if ($native !== null) {
+            return NativeRelays::get($native)->search($idCarrier, $postcode, $countryIso, $address, $city);
+        }
+
         $def = $this->relayDefinitions()[$idCarrier] ?? null;
         if (!$def || !class_exists('RelayProviderFactory')) {
             return [];

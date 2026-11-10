@@ -76,7 +76,9 @@
           comment: l.comment || ''
         };
       }),
-      delivery_mode: q.delivery_mode || 'carrier',
+      // Le mode « Retrait » n'est plus proposé (le retrait en magasin est un transporteur) : un ancien devis
+      // dans ce mode rouvre sur « Transporteur ».
+      delivery_mode: (!q.delivery_mode || q.delivery_mode === 'pickup') ? 'carrier' : q.delivery_mode,
       id_carrier: q.id_carrier || 0,
       carrier_label: q.carrier_label || '',
       shipping_te: q.shipping_te || 0,
@@ -223,8 +225,11 @@
     }
     var set = function (sel, html) { var el = $(sel, row); if (el) { el.innerHTML = html; } };
     if (line.line_type === 'product' || line.line_type === 'free') {
-      set('[data-c=net]', calc.unit_net_te === null ? '—' : money(calc.unit_net_te));
-      set('[data-c=total]', calc.total_te === null ? '—' : '<strong>' + money(calc.total_te) + '</strong>');
+      var ttc = function (value) {
+        return value === null || value === undefined ? '' : '<div class="snt-ttc">' + money(value) + ' ' + S.escape(t.priceTi) + '</div>';
+      };
+      set('[data-c=net]', calc.unit_net_te === null ? '—' : money(calc.unit_net_te) + ttc(calc.unit_net_ti));
+      set('[data-c=total]', calc.total_te === null ? '—' : '<strong>' + money(calc.total_te) + '</strong>' + ttc(calc.total_ti));
       set('[data-c=tax]', calc.tax_rate === null ? '—' : String(calc.tax_rate).replace('.', ',') + ' %');
       var hints = [];
       if (line.line_type === 'product' && calc.catalog_price_te !== null && calc.catalog_price_te !== undefined) {
@@ -252,6 +257,7 @@
     var set = function (key, value) { var el = $('[data-t=' + key + ']', box); if (el) { el.textContent = value; } };
     if (!totals) {
       ['products_te', 'discounts_te', 'shipping_te', 'total_te', 'total_ti'].forEach(function (k) { set(k, '—'); });
+      ['products_ti', 'discounts_ti', 'shipping_ti'].forEach(function (k) { set(k, ''); });
       $('[data-taxes]', box).innerHTML = '';
       return;
     }
@@ -261,6 +267,10 @@
     set('shipping_te', totals.shipping_te > 0 ? money(totals.shipping_te) : (totals.shipping_gross_te > 0 ? t.free : money(0)));
     set('total_te', money(totals.total_te));
     set('total_ti', money(totals.total_ti));
+    // Rappel TTC sous chaque montant HT.
+    set('products_ti', money(totals.products_ti) + ' ' + t.priceTi);
+    set('discounts_ti', '−' + money(totals.discounts_ti) + ' ' + t.priceTi);
+    set('shipping_ti', totals.shipping_te > 0 ? money(totals.shipping_ti) + ' ' + t.priceTi : '');
     $('[data-taxes]', box).innerHTML = (totals.tax_breakdown || []).map(function (tax) {
       return '<div class="snt-totals__tax"><dt>' + S.escape(t.vat) + ' ' + String(tax.rate).replace('.', ',') + ' %</dt><dd>' + money(tax.tax) + '</dd></div>';
     }).join('');
@@ -757,6 +767,7 @@
     var input = $('#snt-relay-postcode');
     if (!input.value && address) {
       input.value = address.postcode;
+      $('#snt-relay-city').value = address.city || '';
     }
   }
 
@@ -767,7 +778,7 @@
       return;
     }
     var list = $('[data-relay-list]');
-    S.api(urls.relays, { query: { id_carrier: carrier.id, postcode: $('#snt-relay-postcode').value.trim(), country: address ? address.country_iso : 'FR' } })
+    S.api(urls.relays, { query: { id_carrier: carrier.id, postcode: $('#snt-relay-postcode').value.trim(), city: $('#snt-relay-city').value.trim(), country: address ? address.country_iso : 'FR', id_address: address ? address.id : 0 } })
       .then(function (r) {
         list.innerHTML = r.items.length ? r.items.map(function (p, i) {
           return '<li><button type="button" class="btn btn-link btn-sm text-left" data-relay-index="' + i + '"><strong>' + S.escape(p.name) + '</strong> — '

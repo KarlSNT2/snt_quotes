@@ -83,6 +83,7 @@ final class QuoteCalculator
         $discounts = [];
         $discountsTe = 0.0;
         $discountsTi = 0.0;
+        $discountsTiRaw = 0.0;
         $remainingTe = $productsTe;
         foreach ($input->discounts as $d => $discount) {
             $amountTe = $discount->type === ReductionType::Percent
@@ -95,17 +96,22 @@ final class QuoteCalculator
             if ($amountTe > 0 && $productsTe > 0) {
                 foreach ($byRate as $key => $bucket) {
                     $shareTe = $amountTe * $bucket['te'] / $productsTe;
-                    $shareTi = $shareTe * (1 + $bucket['rate'] / 100);
+                    // Comme le cœur (CartRuleCalculator, règle panier HT) : le TTC de la remise suit le taux
+                    // EFFECTIF des lignes (TTC arrondi / HT arrondi), pas le taux nominal. Sinon le total TTC
+                    // du devis peut différer d'un centime de celui de la commande.
+                    $shareTi = $bucket['te'] > 0 ? $shareTe * $bucket['ti'] / $bucket['te'] : 0.0;
                     $byRate[$key]['disc_te'] += $shareTe;
                     $byRate[$key]['disc_ti'] += $shareTi;
                     $amountTi += $shareTi;
                 }
             }
+            $discountsTiRaw += $amountTi;
             $amountTi = $round($amountTi);
             $discounts[$d] = ['te' => $amountTe, 'ti' => $amountTi];
             $discountsTe += $amountTe;
-            $discountsTi += $amountTi;
         }
+        // Les remises partent dans UNE règle panier à la conversion : le cœur arrondit leur TTC une seule fois.
+        $discountsTi = $discountsTiRaw;
 
         // Port.
         $shippingGross = $round(max(0.0, $input->shippingTe));

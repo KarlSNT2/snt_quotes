@@ -82,7 +82,8 @@
 .snt-carrier__logo--none { display: inline-flex; align-items: center; justify-content: center; color: #9aa4ad; }
 .snt-carrier__out { color: #8a4b00; }
 .snt-carrier__out .material-icons { font-size: 14px; vertical-align: -2px; }
-.snt-relay__search { max-width: 320px; }
+.snt-relay__search { max-width: 520px; }
+.snt-relay__search #snt-relay-postcode { flex: 0 0 120px; }
 .snt-relay__selected { margin: 8px 0; font-weight: 600; }
 .snt-relay__list { max-height: 220px; overflow-y: auto; }
 .snt-vouchers .snt-voucher { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border: 1px dashed var(--snt-border); border-radius: 4px; margin-bottom: 4px; }
@@ -97,6 +98,7 @@
 .snt-totals > div { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
 .snt-totals dt { font-weight: normal; color: #4b5563; }
 .snt-totals dd { margin: 0; text-align: right; white-space: nowrap; }
+.snt-ttc { display: block; font-size: .8125rem; font-weight: normal; color: var(--snt-muted); white-space: nowrap; }
 .snt-totals__sep { border-top: 1px solid var(--snt-border); margin-top: 4px; padding-top: 8px !important; }
 .snt-totals__tax dt, .snt-totals__tax dd { font-size: .8125rem; color: var(--snt-muted); }
 .snt-totals [data-taxes] { display: block; padding: 0 !important; }

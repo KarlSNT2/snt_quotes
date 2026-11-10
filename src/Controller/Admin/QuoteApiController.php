@@ -346,10 +346,25 @@ class QuoteApiController extends AbstractQuoteController
                 throw new QuoteException('Enter a postcode to search for pickup points.');
             }
 
+            // Rue et ville de l'adresse de livraison, seulement si la recherche porte sur son code postal.
+            // La ville saisie prime ; à défaut, celle de l'adresse de livraison.
+            $street = '';
+            $city = trim((string) $request->query->get('city', ''));
+            $idAddress = (int) $request->query->get('id_address', 0);
+            if ($idAddress) {
+                $address = new \Address($idAddress);
+                if (\Validate::isLoadedObject($address) && trim((string) $address->postcode) === $postcode) {
+                    $street = (string) $address->address1;
+                    $city = $city !== '' ? $city : (string) $address->city;
+                }
+            }
+
             return ['items' => $this->carrierService->searchRelays(
                 (int) $request->query->get('id_carrier', 0),
                 $postcode,
-                (string) $request->query->get('country', 'FR')
+                (string) $request->query->get('country', 'FR'),
+                $street,
+                $city
             )];
         }, false);
     }
@@ -424,6 +439,7 @@ class QuoteApiController extends AbstractQuoteController
                 'reference' => $line['reference'],
                 'wholesale_price' => $this->permissions->canSeeMargin() ? $line['wholesale_price'] : null,
                 'unit_net_te' => $calc?->unitNetTe,
+                'unit_net_ti' => $calc?->unitNetTi,
                 'total_te' => $calc?->totalTe,
                 'total_ti' => $calc?->totalTi,
                 'discount_percent' => $calc?->effectiveDiscountPercent,

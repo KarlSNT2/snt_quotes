@@ -73,8 +73,8 @@
               <tr>
                 <th scope="col">{l s='Description' d='Modules.Sntquotes.Shop'}</th>
                 <th scope="col" class="text-center">{l s='Qty' d='Modules.Sntquotes.Shop'}</th>
-                <th scope="col" class="text-right">{l s='Unit price excl. tax' d='Modules.Sntquotes.Shop'}</th>
-                <th scope="col" class="text-right">{l s='Total excl. tax' d='Modules.Sntquotes.Shop'}</th>
+                <th scope="col" class="text-right">{l s='Unit price incl. tax' d='Modules.Sntquotes.Shop'}</th>
+                <th scope="col" class="text-right">{l s='Total incl. tax' d='Modules.Sntquotes.Shop'}</th>
               </tr>
             </thead>
             <tbody>
@@ -87,8 +87,8 @@
                   <tr>
                     <td>{$line.label}{if $line.reference}<br><small class="text-muted">{$line.reference}</small>{/if}{if $line.comment}<br><small><em>{$line.comment}</em></small>{/if}</td>
                     <td class="text-center">{$line.qty}</td>
-                    <td class="text-right">{if $line.has_reduction}<s class="text-muted">{$line.unit_price_te_display}</s><br>{/if}{$line.unit_net_te_display}</td>
-                    <td class="text-right">{$line.total_te_display}</td>
+                    <td class="text-right">{if $line.has_reduction}<s class="text-muted">{$line.unit_price_ti_display}</s><br>{/if}<strong>{$line.unit_net_ti_display}</strong><br><small class="snt-pay__ht">{$line.unit_net_te_display} {l s='excl. tax' d='Modules.Sntquotes.Shop'}</small></td>
+                    <td class="text-right"><strong>{$line.total_ti_display}</strong><br><small class="snt-pay__ht">{$line.total_te_display} {l s='excl. tax' d='Modules.Sntquotes.Shop'}</small></td>
                   </tr>
                 {/if}
               {/foreach}
@@ -97,12 +97,12 @@
         </div>
 
         <dl class="snt-pay__totals">
-          <div><dt>{l s='Products excl. tax' d='Modules.Sntquotes.Shop'}</dt><dd>{$snt_quote.total_products_te_display}</dd></div>
+          <div><dt>{l s='Products incl. tax' d='Modules.Sntquotes.Shop'}</dt><dd>{$snt_quote.total_products_ti_display}<small class="snt-pay__ht">{$snt_quote.total_products_te_display} {l s='excl. tax' d='Modules.Sntquotes.Shop'}</small></dd></div>
           {foreach $snt_quote.discounts as $discount}
-            <div><dt>{if $discount.scope == 'global'}{l s='Discount' d='Modules.Sntquotes.Shop'}{else}{$discount.label}{/if}</dt><dd>-{$discount.amount_te_display}</dd></div>
+            <div><dt>{if $discount.scope == 'global'}{l s='Discount' d='Modules.Sntquotes.Shop'}{else}{$discount.label}{/if}</dt><dd>-{$discount.amount_ti_display}<small class="snt-pay__ht">-{$discount.amount_te_display} {l s='excl. tax' d='Modules.Sntquotes.Shop'}</small></dd></div>
           {/foreach}
-          <div><dt>{l s='Shipping' d='Modules.Sntquotes.Shop'}{if $snt_quote.carrier_label} — {$snt_quote.carrier_label}{/if}</dt><dd>{if $snt_quote.free_shipping}{l s='Free' d='Modules.Sntquotes.Shop'}{else}{$snt_quote.shipping_te_display}{/if}</dd></div>
-          <div><dt>{l s='Total excl. tax' d='Modules.Sntquotes.Shop'}</dt><dd>{$snt_quote.total_te_display}</dd></div>
+          <div><dt>{l s='Shipping' d='Modules.Sntquotes.Shop'}{if $snt_quote.carrier_label} — {$snt_quote.carrier_label}{/if}</dt><dd>{if $snt_quote.free_shipping}{l s='Free' d='Modules.Sntquotes.Shop'}{else}{$snt_quote.shipping_ti_display}<small class="snt-pay__ht">{$snt_quote.shipping_te_display} {l s='excl. tax' d='Modules.Sntquotes.Shop'}</small>{/if}</dd></div>
+          <div class="snt-pay__sub"><dt>{l s='Total excl. tax' d='Modules.Sntquotes.Shop'}</dt><dd>{$snt_quote.total_te_display}</dd></div>
           {foreach $snt_quote.taxes as $tax}
             <div class="snt-pay__tax"><dt>{l s='VAT %rate%%' sprintf=['%rate%' => $tax.rate_display] d='Modules.Sntquotes.Shop'}</dt><dd>{$tax.tax_display}</dd></div>
           {/foreach}
@@ -125,7 +125,7 @@
               {foreach $snt_methods as $method}
                 <label class="snt-pay__method">
                   <input type="radio" name="method" value="{$method.value}" required{if $method@first} checked{/if}>
-                  <span><strong>{$method.label}</strong><br><small>{$method.help}</small></span>
+                  <span class="snt-pay__method-text"><strong>{$method.label}</strong><small>{$method.help}</small></span>
                 </label>
               {/foreach}
             </fieldset>

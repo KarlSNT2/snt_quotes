@@ -238,9 +238,9 @@
         <source>Check the address: %error%</source>
         <target>Vérifiez l’adresse : %error%</target>
       </trans-unit>
-      <trans-unit id="5e4e4b48008c9107ce2cd12077eb799e">
-        <source>Choose a carrier (or « Pickup ») before sending the quote.</source>
-        <target>Choisissez un transporteur (ou « Retrait ») avant d’envoyer le devis.</target>
+      <trans-unit id="26ef492b767606c460972f23302f41ec">
+        <source>Choose a carrier before sending the quote.</source>
+        <target>Choisissez un transporteur avant d’envoyer le devis.</target>
       </trans-unit>
       <trans-unit id="8a347a592b2b0c30096a295cf35f4e7d">
         <source>Choose a carrier first.</source>
@@ -553,6 +553,14 @@
       <trans-unit id="2d87deb58e4005bcf78e951a480f5fff">
         <source>Enter a postcode to search for pickup points.</source>
         <target>Saisissez un code postal pour chercher des points relais.</target>
+      </trans-unit>
+      <trans-unit id="f5b4d2b4d51058d9145075f464588e24">
+        <source>Enter the city as well to search for the pickup points of this carrier.</source>
+        <target>Saisissez aussi la ville pour chercher les points relais de ce transporteur.</target>
+      </trans-unit>
+      <trans-unit id="4c7c26ff2abc5904dcd3d83e4dcd054d">
+        <source>The pickup point search is unavailable for this carrier. Try again in a few minutes.</source>
+        <target>La recherche de points relais est indisponible pour ce transporteur. Réessayez dans quelques minutes.</target>
       </trans-unit>
       <trans-unit id="2b3e9729e125a5173fe20e1dc37d4271">
         <source>Enter a valid e-mail address.</source>
@@ -1562,6 +1570,10 @@
         <source>The « Delivery as quoted » carrier could not be created. Reinstall or update the module.</source>
         <target>Le transporteur « Livraison selon devis » n’a pas pu être créé. Réinstallez ou mettez à jour le module.</target>
       </trans-unit>
+      <trans-unit id="4f731ddf576df35decb10db27f66cbf5">
+        <source>The « Delivery as quoted » carrier is not available for the delivery address of this quote. No order has been created. Check that the country of the address is active and that no module restricts this carrier, then try again.</source>
+        <target>Le transporteur « Livraison selon devis » n’est pas disponible pour l’adresse de livraison de ce devis. Aucune commande n’a été créée. Vérifiez que le pays de l’adresse est actif et qu’aucun module ne restreint ce transporteur, puis réessayez.</target>
+      </trans-unit>
       <trans-unit id="c736c29c2d1dfcf87c05009f46d3a3ec">
         <source>This action is not allowed.</source>
         <target>Cette action n’est pas autorisée.</target>
@@ -1801,6 +1813,10 @@
       <trans-unit id="7af5d1daea567140ed6fcf4a65602d4b">
         <source>— the quote’s shipping cost will be applied as is.</source>
         <target>— le port du devis sera appliqué tel quel.</target>
+      </trans-unit>
+      <trans-unit id="d81452f69428210b408148ad9853c7a7">
+        <source>incl. tax</source>
+        <target>TTC</target>
       </trans-unit>
     </body>
   </file>

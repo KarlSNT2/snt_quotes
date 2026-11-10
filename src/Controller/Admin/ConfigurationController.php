@@ -98,7 +98,7 @@ class ConfigurationController extends AbstractQuoteController
             $this->addFlash('error', $this->t('Some fields are invalid: check the highlighted fields.'));
         }
 
-        return $this->render('@Modules/snt_quotes/views/templates/admin/configuration/index.html.twig', [
+        return $this->render('@Modules/snt_quotes/views/templates/admin/configuration/index.html.twig', $this->withAssetVersion([
             'layoutTitle' => $this->t('Quotes — settings'),
             'enableSidebar' => true,
             'form' => $form->createView(),
@@ -110,7 +110,7 @@ class ConfigurationController extends AbstractQuoteController
             's3TestUrl' => $this->generateUrl('admin_snt_quotes_configuration_s3_test'),
             'csrf' => (string) $this->container->get('security.csrf.token_manager')->getToken(self::CSRF_ID)->getValue(),
             'listUrl' => $this->generateUrl('admin_snt_quotes_index'),
-        ]);
+        ]));
     }
 
     public function s3TestAction(Request $request): JsonResponse

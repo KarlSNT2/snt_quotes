@@ -14,23 +14,25 @@ if (!defined('_PS_VERSION_')) {
 
 if (is_file(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
-} else {
-    // Repli si le module est déployé sans « composer install » : PSR-4 minimal + classmap.
-    spl_autoload_register(static function (string $class): void {
-        if (str_starts_with($class, 'Snt\\Quotes\\')) {
-            $file = __DIR__ . '/src/' . str_replace('\\', '/', substr($class, strlen('Snt\\Quotes\\'))) . '.php';
-        } elseif (str_starts_with($class, 'SntQuote') || $class === 'HTMLTemplateSntQuote') {
-            $file = $class === 'HTMLTemplateSntQuote'
-                ? __DIR__ . '/classes/pdf/HTMLTemplateSntQuote.php'
-                : __DIR__ . '/classes/' . $class . '.php';
-        } else {
-            return;
-        }
-        if (is_file($file)) {
-            require_once $file;
-        }
-    });
 }
+
+// Toujours enregistré, après celui de Composer : sert de repli quand le module est déployé sans
+// « composer install », et quand un vendor/ resté d'une version précédente a un classmap périmé
+// (une classe ajoutée dans classes/ y est alors introuvable).
+spl_autoload_register(static function (string $class): void {
+    if (str_starts_with($class, 'Snt\\Quotes\\')) {
+        $file = __DIR__ . '/src/' . str_replace('\\', '/', substr($class, strlen('Snt\\Quotes\\'))) . '.php';
+    } elseif (str_starts_with($class, 'SntQuote') || $class === 'HTMLTemplateSntQuote') {
+        $file = $class === 'HTMLTemplateSntQuote'
+            ? __DIR__ . '/classes/pdf/HTMLTemplateSntQuote.php'
+            : __DIR__ . '/classes/' . $class . '.php';
+    } else {
+        return;
+    }
+    if (is_file($file)) {
+        require_once $file;
+    }
+});
 
 use Snt\Quotes\Conversion\QuoteCartContext;
 use Snt\Quotes\Domain\QuoteStatus;
@@ -54,6 +56,8 @@ class Snt_Quotes extends PaymentModule
         'actionOrderStatusPostUpdate',
         'actionEmailSendBefore',
         'actionDispatcherBefore',
+        // 0.2.1 — le port du devis prime sur les règles de orderfees_shipping (Advanced Shipping Cost)
+        'actionCartGetPackageShippingCost',
     ];
 
     /** @var int|null renseigné par le cœur avant getOrderShippingCost*() (transporteur technique) */
@@ -63,7 +67,7 @@ class Snt_Quotes extends PaymentModule
     {
         $this->name = 'snt_quotes';
         $this->tab = 'billing_invoicing';
-        $this->version = '0.2.0';
+        $this->version = '0.2.1';
         $this->author = 'SNT2';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -203,6 +207,37 @@ class Snt_Quotes extends PaymentModule
         }
 
         return (float) (new SntQuote($idQuote))->total_shipping_te;
+    }
+
+    /**
+     * Hook de la surcharge Cart de orderfees_shipping (Advanced Shipping Cost). Ses règles peuvent désactiver un
+     * transporteur ou y ajouter des frais ; pour un panier de devis, le port est celui du devis, sans exception :
+     * on impose le résultat. Ce hook doit s'exécuter APRÈS celui de orderfees_shipping
+     * (voir TechnicalSetup::ensureShippingHookLast()). Les valeurs du tableau sont des références.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function hookActionCartGetPackageShippingCost(array $params): void
+    {
+        $cart = $params['object'] ?? null;
+        if (!$cart instanceof Cart || !$cart->id) {
+            return;
+        }
+        $idQuote = QuoteCartContext::quoteIdForCart((int) $cart->id);
+        if (!$idQuote) {
+            return;
+        }
+        $idCarrier = (int) ($params['id_carrier'] ?? 0) ?: (int) $cart->id_carrier;
+        if (!$idCarrier || $idCarrier !== ServiceFactory::technicalSetup()->technicalCarrierId()) {
+            return;
+        }
+        $quote = new SntQuote($idQuote);
+        $cost = (float) $quote->total_shipping_te;
+        if (!empty($params['use_tax']) && !Tax::excludeTaxeOption()) {
+            $cost *= 1 + (float) $quote->shipping_tax_rate / 100;
+        }
+        $params['total'] = (float) Tools::ps_round($cost, (int) $this->context->getComputingPrecision());
+        $params['return'] = true;
     }
 
     /**

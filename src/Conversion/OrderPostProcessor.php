@@ -8,6 +8,7 @@ use Snt\Quotes\Config\ConfigKeys;
 use Snt\Quotes\Domain\LineType;
 use Snt\Quotes\Domain\QuoteStatus;
 use Snt\Quotes\Install\TechnicalSetup;
+use Snt\Quotes\Relay\NativeRelays;
 use Snt\Quotes\Service\HistoryLogger;
 use Snt\Quotes\Service\QuoteStateMachine;
 
@@ -70,6 +71,7 @@ class OrderPostProcessor
         }
 
         $this->assignRealCarrier($quote, $order);
+        $this->applyNativeRelay($quote, $order, $cart);
         $this->renameFreeLines($quote, $order);
         $this->consumeOriginalVouchers($quote);
         $this->addOrderMessage($quote, $order);
@@ -165,6 +167,31 @@ class OrderPostProcessor
         \Db::getInstance()->update('orders', ['id_carrier' => $idReal], '`id_order` = ' . (int) $order->id);
         \Db::getInstance()->update('order_carrier', ['id_carrier' => $idReal], '`id_order` = ' . (int) $order->id);
         $order->id_carrier = $idReal;
+    }
+
+    /**
+     * Point relais d'un module transporteur officiel (Chronopost, Colissimo) : l'adresse de livraison de la commande
+     * devient celle du relais, une fois le transporteur réel remis sur la commande. Un échec ne bloque pas la commande : il est signalé à l'opérateur,
+     * qui devra saisir le point relais à la main.
+     */
+    private function applyNativeRelay(\SntQuote $quote, \Order $order, \Cart $cart): void
+    {
+        $relay = $quote->getRelayData();
+        $handler = $relay ? NativeRelays::get((string) ($relay['provider'] ?? '')) : null;
+        if (!$relay || !$handler) {
+            return;
+        }
+        try {
+            if (!$handler->isRelayCarrier((int) $order->id_carrier)) {
+                throw new \RuntimeException('the order carrier is not a pickup carrier of ' . (string) $relay['provider']);
+            }
+            $handler->applyToOrder($order, $cart, $relay);
+        } catch (\Throwable $e) {
+            $reason = 'Pickup point ' . (string) ($relay['relay_id'] ?? '') . ' could not be set on the order: ' . $e->getMessage();
+            $this->warnings[] = $reason;
+            $this->history->log($quote, \SntQuoteHistory::EVENT_NOTE, $reason, ['id_order' => (int) $order->id], null, null, \SntQuoteHistory::ACTOR_SYSTEM);
+            \PrestaShopLogger::addLog('[snt_quotes] ' . $reason, 3, null, 'Order', (int) $order->id);
+        }
     }
 
     private function renameFreeLines(\SntQuote $quote, \Order $order): void

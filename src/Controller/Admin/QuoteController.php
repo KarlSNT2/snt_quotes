@@ -79,14 +79,14 @@ class QuoteController extends AbstractQuoteController
         $this->queryBuilder->setQuickTab($tab);
         $grid = $this->gridFactory->getGrid($filters);
 
-        return $this->render(self::TPL . 'quote/index.html.twig', [
+        return $this->render(self::TPL . 'quote/index.html.twig', $this->withAssetVersion([
             'layoutTitle' => $this->t('Quotes'),
             'enableSidebar' => true,
             'grid' => $this->gridPresenter->present($grid),
             'currentTab' => $tab,
             'counts' => $counts,
             'canCreate' => $this->permissions->canCreate(),
-        ]);
+        ]));
     }
 
     public function searchAction(Request $request): RedirectResponse
@@ -166,13 +166,13 @@ class QuoteController extends AbstractQuoteController
             'urls' => $this->editorUrls($quote),
         ];
 
-        return $this->render(self::TPL . 'quote/edit.html.twig', [
+        return $this->render(self::TPL . 'quote/edit.html.twig', $this->withAssetVersion([
             'layoutTitle' => $quote->id ? $this->t('Edit quote %ref%', ['%ref%' => $quote->getFullReference()]) : $this->t('New quote'),
             'enableSidebar' => true,
             'bootstrap' => $bootstrap,
             'quoteId' => (int) $quote->id,
             'moduleUri' => __PS_BASE_URI__ . 'modules/snt_quotes/',
-        ]);
+        ]));
     }
 
     /**
@@ -228,7 +228,7 @@ class QuoteController extends AbstractQuoteController
         ) ?: [];
         $customer = new \Customer((int) $quote->id_customer);
 
-        return $this->render(self::TPL . 'quote/view.html.twig', [
+        return $this->render(self::TPL . 'quote/view.html.twig', $this->withAssetVersion([
             'layoutTitle' => $this->t('Quote %ref%', ['%ref%' => $quote->getFullReference()]),
             'enableSidebar' => true,
             'quote' => $view,
@@ -255,7 +255,7 @@ class QuoteController extends AbstractQuoteController
                 'subject' => $this->mailer->defaultSubject($quote, $this->mailer->templateFor($quote)),
                 'copyEmployee' => $this->config->getBool(ConfigKeys::MAIL_CC_EMPLOYEE),
             ],
-        ]);
+        ]));
     }
 
     /**

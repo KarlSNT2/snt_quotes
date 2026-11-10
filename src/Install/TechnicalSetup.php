@@ -42,6 +42,8 @@ class TechnicalSetup
         if ($reference) {
             $carrier = \Carrier::getCarrierByReference($reference);
             if ($carrier instanceof \Carrier && \Validate::isLoadedObject($carrier) && !$carrier->deleted) {
+                $this->ensureCarrierRanges($carrier);
+
                 return (int) $carrier->id;
             }
         }
@@ -51,7 +53,10 @@ class TechnicalSetup
         $carrier->is_module = true;
         $carrier->external_module_name = $this->moduleName;
         $carrier->shipping_external = true;
-        $carrier->need_range = false;
+        // need_range obligatoire : le cœur écarte des options de livraison les transporteurs de module sans tranches
+        // (Carrier::getCarriersForOrder, filtre PS_CARRIERS_AND_CARRIER_MODULES_NEED_RANGE).
+        $carrier->need_range = true;
+        $carrier->shipping_method = \Carrier::SHIPPING_METHOD_WEIGHT;
         $carrier->shipping_handling = false;
         $carrier->range_behavior = false;
         $carrier->is_free = false;
@@ -84,8 +89,128 @@ class TechnicalSetup
                 'id_shop' => (int) $idShop,
             ], false, true, \Db::INSERT_IGNORE);
         }
+        $this->ensureCarrierRanges($carrier);
 
         return (int) $carrier->id;
+    }
+
+    /**
+     * Le hook « actionCartGetPackageShippingCost » de snt_quotes doit passer après celui de orderfees_shipping,
+     * sinon ce dernier réécrit le résultat. Enregistre le hook si besoin (module mis à jour sans script d'upgrade)
+     * et le place en dernière position sur chaque boutique. Sans effet si orderfees_shipping n'est pas installé.
+     */
+    public function ensureShippingHookLast(): void
+    {
+        $hookName = 'actionCartGetPackageShippingCost';
+        $module = \Module::getInstanceByName($this->moduleName);
+        if (!$module instanceof \Module || !$module->id) {
+            return;
+        }
+        if (!$module->isRegisteredInHook($hookName)) {
+            $module->registerHook($hookName);
+        }
+        $idHook = (int) \Hook::getIdByName($hookName);
+        if (!$idHook) {
+            return;
+        }
+        $db = \Db::getInstance();
+        $rows = $db->executeS(
+            'SELECT hm.`id_shop`, MAX(hm.`position`) AS `last`,
+                    MAX(CASE WHEN hm.`id_module` = ' . (int) $module->id . ' THEN hm.`position` END) AS `mine`
+             FROM `' . _DB_PREFIX_ . 'hook_module` hm
+             WHERE hm.`id_hook` = ' . $idHook . '
+             GROUP BY hm.`id_shop`',
+            true,
+            false
+        ) ?: [];
+        $moved = false;
+        foreach ($rows as $row) {
+            if ($row['mine'] === null || (int) $row['mine'] >= (int) $row['last']) {
+                continue;
+            }
+            $db->update(
+                'hook_module',
+                ['position' => (int) $row['last'] + 1],
+                '`id_module` = ' . (int) $module->id . ' AND `id_hook` = ' . $idHook . ' AND `id_shop` = ' . (int) $row['id_shop']
+            );
+            $moved = true;
+        }
+        if ($moved) {
+            \Cache::clean('hook_module_list');
+            \Cache::clean(\Hook::MODULE_LIST_BY_HOOK_KEY . '*');
+        }
+    }
+
+    /**
+     * Tranche de poids unique à 0 € pour toutes les zones : sans elle, le cœur ne propose jamais le transporteur
+     * (le port réel est renvoyé par getOrderShippingCost() du module). Répare aussi un transporteur créé en 0.2.0
+     * sans tranches, et couvre les zones ajoutées depuis.
+     */
+    private function ensureCarrierRanges(\Carrier $carrier): void
+    {
+        $db = \Db::getInstance();
+        $idCarrier = (int) $carrier->id;
+
+        if (!$carrier->need_range || (int) $carrier->shipping_method !== \Carrier::SHIPPING_METHOD_WEIGHT || $carrier->range_behavior) {
+            $db->update('carrier', [
+                'need_range' => 1,
+                'shipping_method' => \Carrier::SHIPPING_METHOD_WEIGHT,
+                'range_behavior' => 0,
+            ], '`id_carrier` = ' . $idCarrier);
+            $carrier->need_range = true;
+            $carrier->shipping_method = \Carrier::SHIPPING_METHOD_WEIGHT;
+            $carrier->range_behavior = false;
+        }
+
+        $idRange = (int) $db->getValue(
+            'SELECT `id_range_weight` FROM `' . _DB_PREFIX_ . 'range_weight` WHERE `id_carrier` = ' . $idCarrier . ' ORDER BY `id_range_weight` ASC',
+            false
+        );
+        if (!$idRange) {
+            $db->insert('range_weight', ['id_carrier' => $idCarrier, 'delimiter1' => 0, 'delimiter2' => 1000000]);
+            $idRange = (int) $db->Insert_ID();
+        }
+
+        $covered = array_map('intval', array_column($db->executeS(
+            'SELECT `id_zone` FROM `' . _DB_PREFIX_ . 'delivery`
+             WHERE `id_carrier` = ' . $idCarrier . ' AND `id_range_weight` = ' . $idRange . '
+               AND `id_shop` IS NULL AND `id_shop_group` IS NULL',
+            true,
+            false
+        ) ?: [], 'id_zone'));
+        foreach (\Zone::getZones(false) as $zone) {
+            $idZone = (int) $zone['id_zone'];
+            if (in_array($idZone, $covered, true)) {
+                continue;
+            }
+            $db->insert('carrier_zone', ['id_carrier' => $idCarrier, 'id_zone' => $idZone], false, true, \Db::INSERT_IGNORE);
+            // Ligne commune à toutes les boutiques (id_shop / id_shop_group à NULL).
+            $db->insert('delivery', [
+                'id_shop' => null,
+                'id_shop_group' => null,
+                'id_carrier' => $idCarrier,
+                'id_range_price' => null,
+                'id_range_weight' => $idRange,
+                'id_zone' => $idZone,
+                'price' => 0,
+            ], true);
+        }
+
+        // Groupes clients et boutiques créés ou non visibles lors de la création du transporteur :
+        // sans association, le cœur ne le propose pas à ces clients / sur ces boutiques.
+        $prefix = _DB_PREFIX_;
+        $db->execute(
+            "INSERT IGNORE INTO `{$prefix}carrier_group` (`id_carrier`, `id_group`)
+             SELECT {$idCarrier}, g.`id_group` FROM `{$prefix}group` g"
+        );
+        $db->execute(
+            "INSERT IGNORE INTO `{$prefix}carrier_shop` (`id_carrier`, `id_shop`)
+             SELECT {$idCarrier}, s.`id_shop` FROM `{$prefix}shop` s"
+        );
+
+        \Cache::clean('Carrier::*');
+        \Cache::clean('carrier_*');
+        \Cache::clean('objectmodel_Carrier_*');
     }
 
     public function technicalCarrierId(): int

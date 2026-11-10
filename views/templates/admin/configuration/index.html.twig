@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}?v={{ sntAssetVersion|default('0') }}">
 {% endblock %}
 
 {% block content %}
@@ -72,6 +72,6 @@
 {% block javascripts %}
   {{ parent() }}
   <script>window.SntQuotes = window.SntQuotes || {}; window.SntQuotes.csrf = {{ csrf|json_encode|raw }};</script>
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}"></script>
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/configuration.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/configuration.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
 {% endblock %}

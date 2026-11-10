@@ -36,6 +36,8 @@ class TechnicalCartBuilder
             throw new QuoteException('The « Delivery as quoted » carrier could not be created. Reinstall or update the module.');
         }
 
+        $this->setup->ensureShippingHookLast();
+
         $this->setShopContext((int) $quote->id_shop);
         $this->setup->alignCarrierTaxRule($idCarrier, (int) $quote->id_tax_rules_group_shipping, (int) $quote->id_shop);
 
@@ -57,13 +59,18 @@ class TechnicalCartBuilder
         }
 
         try {
+            // À faire en tout premier, avant tout calcul sur le panier : tant qu'il n'est pas enregistré comme panier
+            // de devis, le transporteur technique se déclare indisponible. Or la surcharge Cart de orderfees_shipping
+            // mémorise ce « indisponible » pour toute la requête (cache statique jamais vidé, sans l'id du panier) :
+            // le cœur remettait alors id_carrier à 0 et la liste des options de livraison était vide.
+            QuoteCartContext::register((int) $cart->id, (int) $quote->id, $purpose, (float) $quote->total_ti, (string) $quote->date_upd);
+            QuoteCartContext::activateOverrides((int) $quote->id_shop, (int) $quote->id_shop_group);
             $this->addLines($quote, $cart, (int) $customer->id_default_group);
             $this->addDiscount($quote, $cart);
             $this->addRelay($quote, $cart, $idCarrier);
+            QuoteCartContext::flushCaches();
             $cart->setDeliveryOption([$idAddressDelivery => $idCarrier . ',']);
             $cart->update();
-            QuoteCartContext::register((int) $cart->id, (int) $quote->id, $purpose, (float) $quote->total_ti, (string) $quote->date_upd);
-            QuoteCartContext::activateOverrides((int) $quote->id_shop, (int) $quote->id_shop_group);
         } catch (\Throwable $e) {
             $this->discard($cart);
             throw $e;
@@ -110,6 +117,18 @@ class TechnicalCartBuilder
      */
     public function assertMatchesQuote(\SntQuote $quote, \Cart $cart): void
     {
+        // Sans cette option, validateOrder() du cœur échoue sur une clé de tableau vide.
+        QuoteCartContext::flushCaches();
+        $options = $cart->getDeliveryOptionList(null, true);
+        $idTechnical = $this->setup->technicalCarrierId();
+        if ((int) $cart->id_carrier !== $idTechnical || !isset($options[(int) $cart->id_address_delivery][$idTechnical . ','])) {
+            $diagnosis = 'cart_carrier=' . (int) $cart->id_carrier . ' ; ' . $this->carrierDiagnosis($cart, $idTechnical, $options);
+            $this->discard($cart);
+            \PrestaShopLogger::addLog('[snt_quotes] Technical carrier ' . $idTechnical . ' not offered for quote ' . $quote->getFullReference() . ' — ' . $diagnosis, 3, null, 'SntQuote', (int) $quote->id);
+
+            throw new QuoteException('The « Delivery as quoted » carrier is not available for the delivery address of this quote. No order has been created. Check that the country of the address is active and that no module restricts this carrier, then try again.');
+        }
+
         $diff = TotalsComparator::differences(self::quoteTotals($quote), $this->cartTotals($cart));
         if ($diff === []) {
             return;
@@ -125,6 +144,98 @@ class TechnicalCartBuilder
             'The order would not match the quote to the cent (%details%). No order has been created. Check the shipping rules (free shipping threshold, fees module) and the customer group discounts, then try again.',
             ['%details%' => implode(' ; ', $parts)]
         );
+    }
+
+    /**
+     * Pourquoi le cœur ne propose pas le transporteur technique : étape par étape, pour le journal.
+     *
+     * @param array<int|string, mixed> $options
+     */
+    private function carrierDiagnosis(\Cart $cart, int $idCarrier, array $options): string
+    {
+        try {
+            $idAddress = (int) $cart->id_address_delivery;
+            $idZone = (int) \Address::getZoneById($idAddress);
+            $customer = new \Customer((int) $cart->id_customer);
+            $groups = array_map('intval', $customer->getGroups());
+            $ids = static fn (array $rows): array => array_map('intval', array_column($rows, 'id_carrier'));
+
+            $errors = [];
+            $forOrder = $ids(\Carrier::getCarriersForOrder($idZone, $groups, $cart, $errors) ?: []);
+            $blocked = [];
+            foreach ($cart->getProducts(true) as $row) {
+                $list = array_map('intval', \Carrier::getAvailableCarrierList(new \Product((int) $row['id_product']), 0, $idAddress, (int) $cart->id_shop, $cart));
+                if (!in_array($idCarrier, $list, true)) {
+                    $restricted = (int) \Db::getInstance()->getValue(
+                        'SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'product_carrier` WHERE `id_product` = ' . (int) $row['id_product'] . ' AND `id_shop` = ' . (int) $cart->id_shop,
+                        false
+                    );
+                    $blocked[] = (int) $row['id_product'] . ($restricted ? ' (product_carrier: ' . $restricted . ')' : '');
+                }
+            }
+            $cost = $cart->getPackageShippingCost($idCarrier, false, null, null, $idZone);
+            $carrier = new \Carrier($idCarrier);
+
+            // Qui renvoie « indisponible » : notre module, le cœur, ou une surcharge de Cart (module de frais de port) ?
+            $module = \Module::getInstanceByName((string) $carrier->external_module_name);
+            $moduleCost = is_object($module) && method_exists($module, 'getOrderShippingCost') ? $module->getOrderShippingCost($cart, 0) : 'n/a';
+            $method = new \ReflectionMethod($cart, 'getPackageShippingCost');
+            $coreCost = (new \ReflectionMethod(\CartCore::class, 'getPackageShippingCost'))->invoke($cart, $idCarrier, false, null, null, $idZone);
+            $hooked = static function (string $hook): string {
+                $list = \Hook::getHookModuleExecList($hook);
+
+                return is_array($list) ? implode(',', array_column($list, 'module')) : 'none';
+            };
+            // Appel direct du hook de orderfees_shipping (Advanced Shipping Cost) : return=1 et total=false
+            // signifient qu'une de ses règles désactive le transporteur.
+            $hookTotal = 0;
+            $hookReturn = false;
+            $hookCarrier = $idCarrier;
+            $hookTax = false;
+            $hookCountry = null;
+            $hookProducts = null;
+            $hookZone = $idZone;
+            $hookKeep = false;
+            \Hook::exec('actionCartGetPackageShippingCost', [
+                'object' => &$cart,
+                'id_carrier' => &$hookCarrier,
+                'use_tax' => &$hookTax,
+                'default_country' => &$hookCountry,
+                'product_list' => &$hookProducts,
+                'id_zone' => &$hookZone,
+                'keepOrderPrices' => &$hookKeep,
+                'total' => &$hookTotal,
+                'return' => &$hookReturn,
+            ]);
+            // Mêmes paramètres avec un 6e argument explicite : clé différente dans le cache statique de la surcharge.
+            $freshCost = $cart->getPackageShippingCost($idCarrier, false, null, null, $idZone, false);
+
+            $who = [
+                'fees_hook return=' . var_export($hookReturn, true) . ' total=' . var_export($hookTotal, true) . ' carrier_after=' . var_export($hookCarrier, true),
+                'fresh_cost=' . var_export($freshCost, true),
+                'external_module=' . (string) $carrier->external_module_name . ' loaded=' . (int) is_object($module),
+                'quote_for_cart=' . QuoteCartContext::quoteIdForCart((int) $cart->id),
+                'module_cost=' . var_export($moduleCost, true),
+                'core_cost=' . var_export($coreCost, true),
+                'cart_override=' . $method->getDeclaringClass()->getName() . ' (' . basename(dirname((string) $method->getFileName())) . ')',
+                'hooks cost=' . $hooked('actionCartGetPackageShippingCost') . ' filter=' . $hooked('actionFilterDeliveryOptionList'),
+            ];
+
+            return implode(' ; ', $who) . ' ; ' . implode(' ; ', [
+                'shop=' . (int) $cart->id_shop . ' shop_context=' . (int) \Shop::getContext(),
+                'address=' . $idAddress . ' zone=' . $idZone . ' country_active=' . (int) \Address::isCountryActiveById($idAddress),
+                'customer_groups=' . implode(',', $groups),
+                'carrier active=' . (int) $carrier->active . ' deleted=' . (int) $carrier->deleted . ' need_range=' . (int) $carrier->need_range
+                    . ' method=' . (int) $carrier->shipping_method . ' is_module=' . (int) $carrier->is_module,
+                'in_getCarriersForOrder=' . (int) in_array($idCarrier, $forOrder, true) . ' (' . implode(',', $forOrder) . ')',
+                'range_errors=' . json_encode($errors),
+                'products_excluding_carrier=' . ($blocked ? implode(', ', $blocked) : 'none'),
+                'shipping_cost=' . var_export($cost, true),
+                'options=' . json_encode(array_map(static fn ($o): array => is_array($o) ? array_keys($o) : [], $options)),
+            ]);
+        } catch (\Throwable $e) {
+            return 'diagnosis failed: ' . get_class($e) . ' ' . $e->getMessage();
+        }
     }
 
     /**

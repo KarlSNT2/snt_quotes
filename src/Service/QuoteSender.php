@@ -61,7 +61,7 @@ class QuoteSender
             throw new QuoteException('The validity date has passed. Change it in « Terms » before sending.');
         }
         if ($quote->delivery_mode === 'carrier' && !$quote->id_carrier_real) {
-            throw new QuoteException('Choose a carrier (or « Pickup ») before sending the quote.');
+            throw new QuoteException('Choose a carrier before sending the quote.');
         }
     }
 

@@ -70,6 +70,7 @@ class CustomerSearch
                     $a['country'] ?? '',
                 ]))),
                 'postcode' => (string) $a['postcode'],
+                'city' => (string) $a['city'],
                 'country_iso' => (string) \Country::getIsoById((int) $a['id_country']),
                 'vat_number' => (string) ($a['vat_number'] ?? ''),
             ];

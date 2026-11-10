@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}?v={{ sntAssetVersion|default('0') }}">
 {% endblock %}
 
 {% block content %}
@@ -109,11 +109,12 @@
                       <td class="text-right">
                         {% if line.has_reduction %}<s class="text-muted">{{ line.unit_price_te_display }}</s><br>{% endif %}
                         {{ line.unit_net_te_display }}
+                        <div class="snt-ttc">{{ line.unit_net_ti_display }} {{ 'incl. tax'|trans }}</div>
                         {% if line.catalog_price_te_display is defined and line.catalog_price_te_display %}<div class="small text-muted">{{ 'Catalogue: %price%'|trans({'%price%': line.catalog_price_te_display}) }}</div>{% endif %}
                       </td>
                       <td class="text-right">{{ line.reduction_display }}</td>
                       <td class="text-right">{{ line.tax_rate_display }} %</td>
-                      <td class="text-right"><strong>{{ line.total_te_display }}</strong></td>
+                      <td class="text-right"><strong>{{ line.total_te_display }}</strong><div class="snt-ttc">{{ line.total_ti_display }} {{ 'incl. tax'|trans }}</div></td>
                       {% if permissions.see_margin %}<td class="text-right">{{ line.margin_display ?: '—' }}{% if line.below_cost|default(false) %}<br><span class="badge badge-danger">{{ 'Below purchase price'|trans }}</span>{% endif %}</td>{% endif %}
                     </tr>
                   {% endif %}
@@ -217,11 +218,11 @@
         <h3 class="card-header">{{ 'Amounts'|trans }}</h3>
         <div class="card-body">
           <dl class="snt-totals">
-            <div><dt>{{ 'Products excl. tax'|trans }}</dt><dd>{{ quote.total_products_te_display }}</dd></div>
+            <div><dt>{{ 'Products excl. tax'|trans }}</dt><dd>{{ quote.total_products_te_display }}<small class="snt-ttc">{{ quote.total_products_ti_display }} {{ 'incl. tax'|trans }}</small></dd></div>
             {% for discount in quote.discounts %}
-              <div><dt>{{ discount.scope == 'global' ? 'Overall discount'|trans : discount.label }}{% if discount.reduction_display %} ({{ discount.reduction_display }}){% endif %}{% if discount.is_dedicated %} <small class="text-muted">· {{ 'dedicated voucher'|trans }}</small>{% endif %}</dt><dd>−{{ discount.amount_te_display }}</dd></div>
+              <div><dt>{{ discount.scope == 'global' ? 'Overall discount'|trans : discount.label }}{% if discount.reduction_display %} ({{ discount.reduction_display }}){% endif %}{% if discount.is_dedicated %} <small class="text-muted">· {{ 'dedicated voucher'|trans }}</small>{% endif %}</dt><dd>−{{ discount.amount_te_display }}<small class="snt-ttc">−{{ discount.amount_ti_display }} {{ 'incl. tax'|trans }}</small></dd></div>
             {% endfor %}
-            <div><dt>{{ 'Shipping excl. tax'|trans }}</dt><dd>{% if quote.free_shipping %}{{ 'Free'|trans }}{% else %}{% if quote.shipping_discounted %}<s class="text-muted">{{ quote.shipping_gross_te_display }}</s> {% endif %}{{ quote.shipping_te_display }}{% endif %}</dd></div>
+            <div><dt>{{ 'Shipping excl. tax'|trans }}</dt><dd>{% if quote.free_shipping %}{{ 'Free'|trans }}{% else %}{% if quote.shipping_discounted %}<s class="text-muted">{{ quote.shipping_gross_te_display }}</s> {% endif %}{{ quote.shipping_te_display }}<small class="snt-ttc">{{ quote.shipping_ti_display }} {{ 'incl. tax'|trans }}</small>{% endif %}</dd></div>
             <div class="snt-totals__sep"><dt>{{ 'Total excl. tax'|trans }}</dt><dd>{{ quote.total_te_display }}</dd></div>
             {% for tax in quote.taxes %}
               <div class="snt-totals__tax"><dt>{{ 'VAT'|trans }} {{ tax.rate_display }} %</dt><dd>{{ tax.tax_display }}</dd></div>
@@ -305,7 +306,7 @@
 
 {% block javascripts %}
   {{ parent() }}
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}"></script>
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/send-modal.js') }}"></script>
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/view.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/send-modal.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/view.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
 {% endblock %}

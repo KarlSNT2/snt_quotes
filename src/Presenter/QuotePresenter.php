@@ -7,6 +7,7 @@ namespace Snt\Quotes\Presenter;
 use Snt\Quotes\Adapter\PrestaShopRounder;
 use Snt\Quotes\Calculator\CalcLine;
 use Snt\Quotes\Calculator\QuoteCalculator;
+use Snt\Quotes\Calculator\RoundingPolicy;
 use Snt\Quotes\Domain\ReductionType;
 
 /**
@@ -116,6 +117,11 @@ class QuotePresenter
             $unitNet = QuoteCalculator::unitNet($calc);
             $unitTi = $policy->round($unitNet * (1 + (float) $line->tax_rate / 100));
             $hasReduction = $type->hasAmount() && $unitNet < (float) $line->unit_price_te;
+            // Total TTC de la ligne, arrondi comme le calculateur (par article / par ligne / sur le total).
+            $rawUnitTi = $unitNet * (1 + (float) $line->tax_rate / 100);
+            $lineTi = $policy->roundType === RoundingPolicy::ROUND_ITEM
+                ? $policy->round($policy->round($rawUnitTi) * (int) $line->qty)
+                : $policy->round($rawUnitTi * (int) $line->qty);
             $row = [
                 'type' => $type->value,
                 'has_amount' => $type->hasAmount(),
@@ -131,6 +137,8 @@ class QuotePresenter
                 'reduction_display' => $this->reductionLabel($line->getReductionType(), (float) $line->reduction_value, $money),
                 'total_te' => (float) $line->total_te,
                 'total_te_display' => $money((float) $line->total_te),
+                'total_ti_display' => $money($lineTi),
+                'unit_price_ti_display' => $money($policy->round((float) $line->unit_price_te * (1 + (float) $line->tax_rate / 100))),
                 'tax_rate' => (float) $line->tax_rate,
                 'tax_rate_display' => rtrim(rtrim(number_format((float) $line->tax_rate, 3, ',', ''), '0'), ','),
                 'comment' => (string) $line->comment,
@@ -181,6 +189,13 @@ class QuotePresenter
         $shippingGross = (float) $quote->shipping_tax_excl;
         $shippingNet = (float) $quote->total_shipping_te;
         $shippingTi = $policy->round($shippingNet * (1 + (float) $quote->shipping_tax_rate / 100));
+        // Totaux TTC non stockés : remises TTC = somme des remises, produits TTC = le reste, pour que
+        // produits − remises + port = total TTC affiché, au centime.
+        $discountsTi = 0.0;
+        foreach ($quote->getDiscounts() as $discount) {
+            $discountsTi += (float) $discount->amount_ti;
+        }
+        $productsTi = $policy->round((float) $quote->total_ti - $shippingTi + $discountsTi);
 
         $view = [
             'id' => (int) $quote->id,
@@ -231,6 +246,8 @@ class QuotePresenter
             'total_products_te_display' => $money((float) $quote->total_products_te),
             'total_discount_te' => (float) $quote->total_discount_te,
             'total_discount_te_display' => $money((float) $quote->total_discount_te),
+            'total_products_ti_display' => $money($productsTi),
+            'total_discount_ti_display' => $money($policy->round($discountsTi)),
             'total_te' => (float) $quote->total_te,
             'total_te_display' => $money((float) $quote->total_te),
             'total_tax_display' => $money((float) $quote->total_tax),

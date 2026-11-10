@@ -487,3 +487,65 @@ le statut « Erreur conversion devis ») ; liens de paiement ; page de paiement 
 Vérifié : PHPUnit (37 tests), PHPStan niveau 6 sans erreur contre PS 8.2.3 et les sources de HiPay Payments v5,
 gabarits Twig et Smarty compilés, php-cs-fixer. **Non vérifié** : parcours réels (commandes, HiPay, PayPlug), à dérouler
 avec `tests/manual/checklist-recette.md`, section Jalon 2.
+
+### Recette DEV du jalon 2 — 2026-11-10 (v0.2.1, non commité à la fin de la séance)
+
+Recette menée par Karl sur DEV (boutique TOMAIR, PS 8.2, `orderfees_shipping` actif avec 39 règles). Aucun PHP sur le poste
+de développement : tout le code ci-dessous a été écrit sans exécution locale, puis vérifié par Karl sur DEV sauf mention contraire.
+
+Corrigé pendant la recette :
+- **autoloader** : le repli (PSR-4 + `classes/`) est toujours enregistré ; un `vendor/` resté d'une version précédente avait un
+  classmap sans `SntQuotePaymentLink` ;
+- **transporteur technique** : `need_range = 1`, tranche de poids unique à 0 € sur toutes les zones, tous groupes et boutiques
+  (le cœur écarte les transporteurs de module sans tranches) ; réparation à la volée dans `TechnicalSetup::ensureCarrier()` ;
+- **panier technique** : enregistré comme panier de devis AVANT tout calcul (la surcharge `Cart` de `orderfees_shipping` garde en
+  cache statique un « indisponible ») ;
+- **`orderfees_shipping`** (= Advanced Shipping Cost) : ses règles désactivaient « Livraison selon devis ». Le module se branche
+  sur `actionCartGetPackageShippingCost`, en dernière position, et impose le port du devis pour les paniers de devis ;
+- **garde-fou** avant `validateOrder()` : si le transporteur technique n'est pas proposé, message clair et diagnostic complet
+  dans le journal (`[snt_quotes] Technical carrier …`) ;
+- **remises** : le TTC d'une remise suit le taux effectif des lignes et n'est arrondi qu'une fois, comme `CartRuleCalculator`
+  (écart d'un centime constaté : devis 707,04 / PrestaShop 707,03). Les devis créés avant gardent leur ancien total figé ;
+- **mode « Retrait » supprimé** de l'éditeur : le retrait en magasin est un transporteur comme un autre ;
+- **points relais** : `snt_carriers` n'est PAS en production. Branchement sur les modules officiels Chronopost (7.6.7) et
+  Colissimo (2.2.6) dans `src/Relay/` : recherche dans l'éditeur, puis à la conversion l'adresse de livraison de la commande
+  devient celle du relais (identifiant dans `address.other`). Pas d'étiquette côté PrestaShop : elles sont générées par l'ERP ;
+- **scripts et styles du BO** chargés avec `?v=<date de modification>` (le navigateur gardait l'ancien `editor.js`) ;
+- **affichage TTC** : page du lien de paiement en pleine largeur, prix TTC en premier (HT en rappel), moyens de paiement alignés
+  à gauche, statuts traduits côté boutique ; rappel TTC sous les montants HT dans la fiche devis et l'éditeur ;
+- **`PROCEDURE.md`** à la racine : aide-mémoire opérateurs (lien de paiement OU conversion, jamais les deux).
+
+Validé sur DEV par Karl : envoi du lien de paiement et page client ; conversion en commande (virement) ; recherche de points
+relais Chronopost et Colissimo ; adresse du relais reprise en livraison après conversion ; total 707,03 sur un devis dupliqué.
+
+**Non validé** :
+- paiement par carte (lien HiPay, carte par téléphone via l'onglet « HiPay Payments » de la commande) — Karl le testera une fois
+  la V1 complète ;
+- conversion du devis dupliqué avec remise 15 % (le total est bon, la conversion n'a pas été relancée) ;
+- nouvel affichage TTC (page de paiement, fiche devis, éditeur) : écrit sans aperçu ;
+- arrivée dans l'ERP d'une commande en point relais ;
+- cas limite : visiteur ayant déjà un panier normal dans la même zone sur la page de paiement (cache de `orderfees_shipping`) ;
+- PHPUnit / PHPStan / php-cs-fixer non relancés depuis ces changements.
+
+### Plan d'action — reprise pour le jalon 3
+
+0. **Avant tout** : commiter le travail de la recette (tout est sur `main`, non commité), puis relancer PHPUnit, PHPStan et
+   php-cs-fixer sur un poste qui a PHP. Demander à Karl si l'affichage TTC lui convient à l'écran.
+1. **Décisions à confirmer avec Karl** :
+   - webhooks n8n : proposition de les retirer du jalon 3 (non nécessaires : l'ERP lit les commandes) et de ne garder que la
+     tâche planifiée — pas encore confirmé ;
+   - par quel bloc commencer (recommandé : espace « Mes devis ») ;
+   - affichage TTC / HT configurable par boutique pour les boutiques B2B ?
+2. **Espace client « Mes devis »** (FO-02, FO-03/04/06) : `controllers/front/list.php` et `view.php`, hook
+   `displayCustomerAccount`, routes `moduleRoutes` (`/mes-devis`, `/mes-devis/{reference}`), PDF, accepter / refuser / demander
+   une modification via `QuoteStateMachine`. Réutiliser `QuotePresenter::present($quote, true)` et les styles de `front.css`
+   (prix TTC en premier, comme la page de paiement).
+3. **Paiement depuis le compte** : depuis le détail d'un devis, créer un lien de paiement et rediriger vers
+   `module/snt_quotes/pay` (un seul lien actif par devis).
+4. **Panier → demande de devis** (FO-01) : bouton `displayShoppingCart`, `controllers/front/request.php`, devis en brouillon
+   avec `id_cart_source`, sans toucher au panier (coexistence Opart).
+5. **Tâche planifiée** : `controllers/front/cron.php` + `CronRunner` (relances J-x avec `snt_quote_reminder`, passage en
+   « Expiré », révocation des liens expirés), jeton `CRON_TOKEN`.
+6. **Reste du jalon 2** : points relais GLS (`nkmgls`, même modèle que `src/Relay/` ; attention, GLS identifie ses transporteurs
+   par `id_carrier` et non par référence) ; compléter `PROCEDURE.md` et `tests/manual/checklist-recette.md`.
+7. Mettre à jour `upgrade/` (nouveaux hooks FO), les traductions (`tools/i18n`), le README et le guide utilisateur.

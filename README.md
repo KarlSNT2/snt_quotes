@@ -13,7 +13,7 @@ ni par les règles transporteurs.
 | Jalon | Contenu | État |
 |---|---|---|
 | 1 — BO interne | Installation, tables, configuration, droits, liste, éditeur, fiche, PDF, envoi e-mail | ✅ livré (v0.1.0) |
-| 2 — Conversion et paiement | Conversion sans tunnel, transporteur technique, paiement intégré, liens de paiement HiPay Payments / PayPlug, page de paiement client | ✅ livré (v0.2.0), recette DEV à faire |
+| 2 — Conversion et paiement | Conversion sans tunnel, transporteur technique, paiement intégré, liens de paiement HiPay Payments / PayPlug, page de paiement client | ✅ livré (v0.2.0, correctifs v0.2.1), recette DEV en cours |
 | 3 — Front office et cycle de vie | Panier → devis, Mes devis, acceptation, page de paiement, cron, webhooks n8n | à faire |
 | 4 — Options | Versions avancées, statistiques, bouton fiche produit, reprise Opart | à faire |
 
@@ -69,7 +69,8 @@ La conversion ne passe jamais par le tunnel :
    le message indique les montants en cause ;
 3. la commande est validée par le module de paiement choisi ;
 4. avant l'écriture du premier statut, le module remet le **transporteur réel** sur la commande, nomme les lignes libres,
-   transmet le point relais à `snt_carriers`, décompte les bons d'origine et lie le devis à la commande.
+   transmet le point relais au module du transporteur (Chronopost et Colissimo officiels : adresse de
+   livraison de la commande remplacée par celle du relais ; `snt_carriers` sinon), décompte les bons d'origine et lie le devis à la commande.
 
 Objets créés à l'installation / mise à jour 0.2.0 : le transporteur « Livraison selon devis » (masqué du tunnel), des produits
 techniques « Ligne libre de devis » (un par règle de taxe, invisibles, exclus de la recherche) et trois statuts de commande :
@@ -97,8 +98,11 @@ onglet Paiement, « Module de paiement en ligne »).
 
 ### Points d'attention
 
-- **orderfees_shipping / Advanced Shipping Cost** : exclure le transporteur « Livraison selon devis » de leurs règles. Sinon,
-  le contrôle au centime bloque la conversion.
+- **orderfees_shipping / Advanced Shipping Cost** : aucun réglage à faire. Depuis la 0.2.1, pour un panier de devis, le module
+  impose le port du devis via le hook `actionCartGetPackageShippingCost` : les règles qui désactivent un transporteur ou
+  ajoutent des frais ne s'appliquent pas à « Livraison selon devis ». Ce hook doit passer **après** celui de
+  orderfees_shipping ; le module le replace en dernière position à chaque conversion. Si la conversion affiche
+  « transporteur non disponible », le journal (`[snt_quotes] Technical carrier …`) détaille la cause.
 - **Seuils de port gratuit** (`PS_SHIPPING_FREE_PRICE`, `PS_SHIPPING_FREE_WEIGHT`) : le cœur ne taxerait pas le port du devis ;
   ils sont neutralisés en mémoire, uniquement pendant le traitement d'un panier de devis (conversion, page de paiement,
   notification HiPay). Rien n'est modifié en base.
@@ -114,7 +118,7 @@ Détails et décisions : [docs/PLAN.md §9-10](docs/PLAN.md).
 - **snt_carriers** : les transporteurs relais déclarés dans `config/carriers.php` sont reconnus. Le commercial choisit le point
   relais dans l'éditeur, via le même fournisseur de recherche (`RelayProviderFactory`).
 - **orderfees_shipping / Advanced Shipping Cost** : le bouton « Proposer le tarif calculé » applique leurs règles sur un panier
-  temporaire. Le port saisi dans le devis reste celui appliqué. Exclure le transporteur « Livraison selon devis » de leurs règles.
+  temporaire. Le port saisi dans le devis reste celui appliqué, y compris à la conversion (voir Points d'attention).
 - **snt_inscription_pro** : le n° de TVA intracom de l'adresse déclenche l'autoliquidation, avec la même règle que le cœur
   (`VATNUMBER_MANAGEMENT`, pays ≠ `VATNUMBER_COUNTRY`).
 

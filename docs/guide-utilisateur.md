@@ -43,10 +43,11 @@ Si votre profil le permet, vous voyez aussi le prix d'achat et la marge. Une lig
 
 ### Étape 3 — Livraison
 - **Tous** les transporteurs sont proposés. Un bandeau orange signale un transporteur qui ne livre pas normalement cette zone ou ce poids : vous pouvez quand même le choisir, et le port du devis sera appliqué tel quel.
-- Transporteur en point relais : saisissez le code postal, cherchez, puis choisissez le point relais.
+- Transporteur en point relais (Chronopost, Colissimo) : un bloc « Point relais » s'ouvre sous la liste. Saisissez le code postal, cherchez, puis choisissez le point relais. À la conversion, la commande est livrée à l'adresse du relais au nom du client ; les étiquettes restent générées par l'ERP.
 - **Frais de port HT** : saisissez le montant, ou cliquez sur **Proposer le tarif calculé** pour reprendre le tarif habituel de la boutique.
 - **Port offert** ou **remise sur le port** au besoin.
-- **Retrait** : pas de port. **Livraison spéciale** : saisissez le libellé qui sera affiché au client.
+- **Retrait en magasin** : choisissez le transporteur correspondant dans la liste (il n'y a pas de mode « Retrait » séparé).
+- **Livraison spéciale** : saisissez le libellé qui sera affiché au client.
 
 ### Étape 4 — Remises
 - **Remise globale** sur les produits, en % ou en €.

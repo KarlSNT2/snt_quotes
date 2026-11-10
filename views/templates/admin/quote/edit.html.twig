@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}">
+  <link rel="stylesheet" href="{{ asset('../modules/snt_quotes/views/css/admin.css') }}?v={{ sntAssetVersion|default('0') }}">
 {% endblock %}
 
 {% block content %}
@@ -126,7 +126,6 @@
             <legend class="form-control-label">{{ 'Delivery method'|trans }}</legend>
             <div class="snt-radio-row">
               <label class="snt-radio"><input type="radio" name="delivery_mode" value="carrier" data-field="delivery_mode"> {{ 'Carrier'|trans }}</label>
-              <label class="snt-radio"><input type="radio" name="delivery_mode" value="pickup" data-field="delivery_mode"> {{ 'Pickup'|trans }}</label>
               <label class="snt-radio"><input type="radio" name="delivery_mode" value="special" data-field="delivery_mode"> {{ 'Special delivery'|trans }}</label>
             </div>
           </fieldset>
@@ -139,7 +138,8 @@
             <div class="snt-relay" data-relay hidden>
               <label for="snt-relay-postcode" class="form-control-label">{{ 'Pickup point'|trans }}</label>
               <div class="input-group snt-relay__search">
-                <input type="text" id="snt-relay-postcode" class="form-control" placeholder="{{ 'Postcode'|trans }}" maxlength="10">
+                <input type="text" id="snt-relay-postcode" class="form-control" placeholder="{{ 'Postcode'|trans }}" aria-label="{{ 'Postcode'|trans }}" maxlength="10">
+                <input type="text" id="snt-relay-city" class="form-control" placeholder="{{ 'City'|trans }}" aria-label="{{ 'City'|trans }}" maxlength="64">
                 <div class="input-group-append"><button type="button" class="btn btn-outline-secondary" data-action="search-relays">{{ 'Search'|trans }}</button></div>
               </div>
               <div data-relay-selected class="snt-relay__selected" hidden></div>
@@ -272,9 +272,9 @@
         <h3 class="card-header" id="snt-summary-title">{{ 'Summary'|trans }}</h3>
         <div class="card-body">
           <dl class="snt-totals" data-totals aria-live="polite">
-            <div><dt>{{ 'Products excl. tax'|trans }}</dt><dd data-t="products_te">—</dd></div>
-            <div data-row="discounts" hidden><dt>{{ 'Discounts'|trans }}</dt><dd data-t="discounts_te">—</dd></div>
-            <div><dt>{{ 'Shipping excl. tax'|trans }}</dt><dd data-t="shipping_te">—</dd></div>
+            <div><dt>{{ 'Products excl. tax'|trans }}</dt><dd><span data-t="products_te">—</span><small class="snt-ttc" data-t="products_ti"></small></dd></div>
+            <div data-row="discounts" hidden><dt>{{ 'Discounts'|trans }}</dt><dd><span data-t="discounts_te">—</span><small class="snt-ttc" data-t="discounts_ti"></small></dd></div>
+            <div><dt>{{ 'Shipping excl. tax'|trans }}</dt><dd><span data-t="shipping_te">—</span><small class="snt-ttc" data-t="shipping_ti"></small></dd></div>
             <div class="snt-totals__sep"><dt>{{ 'Total excl. tax'|trans }}</dt><dd data-t="total_te">—</dd></div>
             <div data-taxes></div>
             <div class="snt-totals__grand"><dt>{{ 'Total incl. tax'|trans }}</dt><dd data-t="total_ti">—</dd></div>
@@ -428,6 +428,7 @@
     'bulkImported': '%count% lines added.'|trans,
     'taxExempt': 'Intra-EU B2B customer with VAT number %vat%: VAT is not charged (reverse charge).'|trans,
     'priceTe': 'excl. tax'|trans,
+    'priceTi': 'incl. tax'|trans,
     'customerCreated': 'Customer created.'|trans,
     'addressCreated': 'Address created.'|trans,
     'addLinesFirst': 'Add at least one product or free line before sending.'|trans,
@@ -445,7 +446,7 @@
 
 {% block javascripts %}
   {{ parent() }}
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}"></script>
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/send-modal.js') }}"></script>
-  <script src="{{ asset('../modules/snt_quotes/views/js/admin/editor.js') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/common.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/send-modal.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
+  <script src="{{ asset('../modules/snt_quotes/views/js/admin/editor.js') }}?v={{ sntAssetVersion|default('0') }}"></script>
 {% endblock %}

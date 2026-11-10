@@ -55,7 +55,7 @@ FR = {
  "Change requested, awaiting approval, or accepted but not yet ordered": "Modification demandée, en attente de validation, ou accepté mais pas encore commandé",
  "Check the PDF": "Vérifier le PDF",
  "Check the address: %error%": "Vérifiez l’adresse : %error%",
- "Choose a carrier (or « Pickup ») before sending the quote.": "Choisissez un transporteur (ou « Retrait ») avant d’envoyer le devis.",
+ "Choose a carrier before sending the quote.": "Choisissez un transporteur avant d’envoyer le devis.",
  "Choose a carrier first.": "Choisissez d’abord un transporteur.",
  "Choose a combination": "Choisir une déclinaison",
  "Choose a customer and an address to see the carriers.": "Choisissez un client et une adresse pour voir les transporteurs.",
