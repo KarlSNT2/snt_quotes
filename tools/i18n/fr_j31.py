@@ -48,7 +48,6 @@ FR_SHOP_J31 = {
  "Edit my cart": "Modifier mon panier",
  "Invoice address": "Adresse de facturation",
  "Items in your request": "Articles de votre demande",
- "Large order, special delivery? Our team prepares a quote for you. Your cart is kept.": "Grosse quantité, livraison particulière ? Notre équipe vous prépare un devis. Votre panier est conservé.",
  "Our team is preparing it. If you change your cart, you can send a new request.": "Notre équipe le prépare. Si vous modifiez votre panier, vous pourrez envoyer une nouvelle demande.",
  "Our team will send you a quote within %days% working days.": "Notre équipe vous envoie un devis sous %days% jours ouvrés.",
  "Our team will send you a quote within 1 working day.": "Notre équipe vous envoie un devis sous 1 jour ouvré.",

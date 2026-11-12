@@ -9,5 +9,4 @@
     <i class="material-icons" aria-hidden="true">request_quote</i>
     {l s='Request a quote' d='Modules.Sntquotes.Shop'}
   </a>
-  <p class="snt-cart-request__help text-muted" style="font-size: .8125rem; margin: .4rem 0 0;">{l s='Large order, special delivery? Our team prepares a quote for you. Your cart is kept.' d='Modules.Sntquotes.Shop'}</p>
 </div>

@@ -166,10 +166,6 @@
         <source>Items in your request</source>
         <target>Articles de votre demande</target>
       </trans-unit>
-      <trans-unit id="77e6bbb4b55d887251990135d84670a9">
-        <source>Large order, special delivery? Our team prepares a quote for you. Your cart is kept.</source>
-        <target>Grosse quantité, livraison particulière ? Notre équipe vous prépare un devis. Votre panier est conservé.</target>
-      </trans-unit>
       <trans-unit id="bec13c4c71a80c51fcf1f34e28a6a800">
         <source>Message from your sales representative</source>
         <target>Message de votre commercial</target>

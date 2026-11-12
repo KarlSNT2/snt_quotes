@@ -69,7 +69,7 @@ class Snt_Quotes extends PaymentModule
     {
         $this->name = 'snt_quotes';
         $this->tab = 'billing_invoicing';
-        $this->version = '0.3.5';
+        $this->version = '0.3.6';
         $this->author = 'SNT2';
         $this->need_instance = 0;
         $this->bootstrap = true;
