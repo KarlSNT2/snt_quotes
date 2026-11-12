@@ -93,7 +93,8 @@ enum QuoteStatus: string
             self::RevisionRequested => [self::Draft, self::Sent, self::Cancelled],
             self::Accepted => [self::Ordered, self::Cancelled],
             self::Ordered => [self::Paid],
-            self::Declined, self::Expired => [self::Draft],
+            // Remplacé : quand une nouvelle version de ce devis refusé / expiré est envoyée au client.
+            self::Declined, self::Expired => [self::Draft, self::Cancelled],
             self::Paid, self::Cancelled => [],
         };
     }

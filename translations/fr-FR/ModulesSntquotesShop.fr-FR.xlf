@@ -430,6 +430,10 @@
         <source>This payment link has expired</source>
         <target>Ce lien de paiement a expiré</target>
       </trans-unit>
+      <trans-unit id="b05bd41f0c44af8ae9ff02b45e613052">
+        <source>This payment link is no longer valid</source>
+        <target>Ce lien de paiement n’est plus valable</target>
+      </trans-unit>
       <trans-unit id="2d6c258f4ec7b848b1b58f3d73137aeb">
         <source>This quote can no longer be accepted online.</source>
         <target>Ce devis ne peut plus être accepté en ligne.</target>

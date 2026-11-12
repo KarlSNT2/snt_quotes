@@ -454,6 +454,7 @@ class QuoteApiController extends AbstractQuoteController
             'requires_approval' => $result->requiresApproval,
             'can_approve' => $this->permissions->canApproveDiscount(),
             'max_discount_percent' => $result->maxDiscountPercent,
+            'tax_exempt' => $result->taxExempt,
         ];
     }
 

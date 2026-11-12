@@ -82,3 +82,8 @@ FR_ADMIN_J31.update({
  "Scheduled task URL (cron)": "URL de la tâche planifiée (cron)",
  "The scheduled task has never run on this shop.": "La tâche planifiée n’a encore jamais tourné sur cette boutique.",
 })
+
+# 0.3.4 — corrections de recette
+FR_SHOP_J31.update({
+ "This payment link is no longer valid": "Ce lien de paiement n’est plus valable",
+})

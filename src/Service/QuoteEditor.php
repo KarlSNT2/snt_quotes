@@ -207,7 +207,8 @@ class QuoteEditor
             $warnings,
             $guard->requiresApproval($input, $totals),
             $guard->maxDiscountPercent($input, $totals),
-            $data['lines']
+            $data['lines'],
+            (bool) $h['tax_exempt']
         );
     }
 

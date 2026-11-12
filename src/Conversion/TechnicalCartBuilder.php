@@ -66,7 +66,7 @@ class TechnicalCartBuilder
             QuoteCartContext::register((int) $cart->id, (int) $quote->id, $purpose, (float) $quote->total_ti, (string) $quote->date_upd);
             QuoteCartContext::activateOverrides((int) $quote->id_shop, (int) $quote->id_shop_group);
             $this->addLines($quote, $cart, (int) $customer->id_default_group);
-            $this->addDiscount($quote, $cart);
+            $this->addDiscount($quote, $cart, $idCarrier);
             $this->addRelay($quote, $cart, $idCarrier);
             QuoteCartContext::flushCaches();
             $cart->setDeliveryOption([$idAddressDelivery => $idCarrier . ',']);
@@ -296,6 +296,7 @@ class TechnicalCartBuilder
                 $idTax = (int) $line->id_tax_rules_group;
                 $freeSlots[$idTax] = ($freeSlots[$idTax] ?? 0) + 1;
                 [$idProduct, $idAttribute] = $this->setup->freeLineSlot($idTax, $freeSlots[$idTax]);
+                $this->keepFreeLineInStock($idProduct, $idAttribute, (int) $cart->id_shop, (int) $line->qty);
             }
             $key = $idProduct . '-' . $idAttribute;
             $net = round((float) $line->unit_net_te, 6);
@@ -357,7 +358,7 @@ class TechnicalCartBuilder
      * Toutes les remises sur produits (globale, bons, bon dédié) en une règle panier HT au montant figé,
      * réservée au client, utilisable une fois. Les bons d'origine sont décomptés à la commande.
      */
-    private function addDiscount(\SntQuote $quote, \Cart $cart): void
+    private function addDiscount(\SntQuote $quote, \Cart $cart, int $idTechnicalCarrier): void
     {
         $amount = round((float) $quote->total_discount_te, 6);
         if ($amount <= 0) {
@@ -385,8 +386,14 @@ class TechnicalCartBuilder
         $rule->reduction_product = 0;
         $rule->cart_rule_restriction = false;
         $rule->description = 'snt_quotes:' . (int) $quote->id;
+        // Utilisable seulement avec le transporteur technique (jamais proposé dans le tunnel) : si le paiement
+        // est abandonné, la remise du devis ne peut pas servir sur une commande normale du client.
+        $rule->carrier_restriction = $idTechnicalCarrier > 0;
         if (!$rule->add()) {
             throw new \RuntimeException('Unable to create the quote discount on the technical cart.');
+        }
+        if ($idTechnicalCarrier > 0) {
+            \Db::getInstance()->insert('cart_rule_carrier', ['id_cart_rule' => (int) $rule->id, 'id_carrier' => $idTechnicalCarrier]);
         }
         $cart->addCartRule((int) $rule->id);
     }
@@ -417,6 +424,19 @@ class TechnicalCartBuilder
             'payload_json' => pSQL((string) json_encode($payload), true),
             'date_upd' => date('Y-m-d H:i:s'),
         ], false, true, \Db::ON_DUPLICATE_KEY);
+    }
+
+    /**
+     * Les produits techniques des lignes libres n'ont pas de stock réel. Sans stock disponible, PrestaShop
+     * (validateOrder) passerait la commande en « En attente de réapprovisionnement » et afficherait une rupture :
+     * on garde donc toujours un stock large sur ces produits invisibles.
+     */
+    private function keepFreeLineInStock(int $idProduct, int $idAttribute, int $idShop, int $qty): void
+    {
+        $available = (int) \StockAvailable::getQuantityAvailableByProduct($idProduct, $idAttribute, $idShop);
+        if ($available < max(1000, $qty * 10)) {
+            \StockAvailable::setQuantity($idProduct, $idAttribute, 1000000, $idShop, false);
+        }
     }
 
     private function ecotax(int $idProduct, int $idAttribute, int $idCurrency): float

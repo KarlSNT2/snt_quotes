@@ -313,7 +313,9 @@ class QuoteController extends AbstractQuoteController
         if (in_array($status, [QuoteStatus::Declined, QuoteStatus::Expired, QuoteStatus::RevisionRequested], true) && $canEdit) {
             $add('reopen', $this->t('Reopen as draft'), 'post', $this->transitionUrl($id, QuoteStatus::Draft), $status === QuoteStatus::RevisionRequested, null, 'undo');
         }
-        if (!$quote->isEditable() && !in_array($status, [QuoteStatus::Ordered, QuoteStatus::Paid], true) && $this->permissions->canCreate()) {
+        // « Modification demandée » reste modifiable sur place, mais la nouvelle version garde intacte celle que le client a vue.
+        if ((!$quote->isEditable() || $status === QuoteStatus::RevisionRequested)
+            && !in_array($status, [QuoteStatus::Ordered, QuoteStatus::Paid], true) && $this->permissions->canCreate()) {
             $add('new_version', $this->t('New version'), 'post', $this->generateUrl('admin_snt_quotes_new_version', ['quoteId' => $id]), false, $this->t('Create version %v% of this quote? The current version will be replaced when the new one is sent.', ['%v%' => (int) $quote->version + 1]), 'difference');
         }
         $add('pdf', $this->t('Download the PDF'), 'link', $this->generateUrl('admin_snt_quotes_pdf', ['quoteId' => $id]), false, null, 'picture_as_pdf');
@@ -476,7 +478,8 @@ class QuoteController extends AbstractQuoteController
         $response->setContentDisposition(
             \Symfony\Component\HttpFoundation\ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             (string) $message->attachment_name,
-            'attachment'
+            // Nom de repli ASCII (anciens navigateurs) : le nom d'origine sans accents.
+            preg_replace('/[^A-Za-z0-9._-]+/', '_', \Tools::replaceAccentedChars((string) $message->attachment_name)) ?: 'attachment'
         );
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('X-Content-Type-Options', 'nosniff');
@@ -506,6 +509,9 @@ class QuoteController extends AbstractQuoteController
                 throw new AccessDeniedHttpException();
             }
             $this->stateMachine->apply($quote, $target, trim((string) $request->request->get('comment', '')) ?: null);
+            if (in_array($target, [QuoteStatus::Declined, QuoteStatus::Expired], true)) {
+                $this->paymentLinks->revokeAll($quote, $target->value); // comme un refus du client : le lien ne sert plus
+            }
 
             return $this->t('The quote is now « %status% ».', ['%status%' => $this->presenter->statusPresenter()->label($target)]);
         });
@@ -570,6 +576,7 @@ class QuoteController extends AbstractQuoteController
     {
         return $this->bulk($request, function (\SntQuote $quote): void {
             $this->sender->expire($quote, 'Bulk action');
+            $this->paymentLinks->revokeAll($quote, 'expired');
         }, 'Quotes marked as expired: %count%.');
     }
 

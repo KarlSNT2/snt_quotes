@@ -11,10 +11,7 @@
 
 {block name='page_content'}
 <div class="snt-pay">
-  {if $snt_errors}
-    <div class="alert alert-danger" role="alert">{foreach $snt_errors as $error}<p class="mb-0">{$error}</p>{/foreach}</div>
-  {/if}
-
+  {* Erreurs : affichées par le bloc « notifications » du thème ($this->errors), pas ici (sinon en double). *}
   {if $snt_state == 'invalid'}
     <div class="snt-pay__state">
       <h2>{l s='This link is not valid' d='Modules.Sntquotes.Shop'}</h2>
@@ -23,7 +20,7 @@
     </div>
   {elseif $snt_state == 'expired' || $snt_state == 'revoked' || $snt_state == 'unavailable'}
     <div class="snt-pay__state">
-      <h2>{l s='This payment link has expired' d='Modules.Sntquotes.Shop'}</h2>
+      <h2>{if $snt_state == 'expired'}{l s='This payment link has expired' d='Modules.Sntquotes.Shop'}{else}{l s='This payment link is no longer valid' d='Modules.Sntquotes.Shop'}{/if}</h2>
       <p>{l s='Your sales representative can send you a new link or an updated quote.' d='Modules.Sntquotes.Shop'}</p>
       <a class="btn btn-primary" href="mailto:{$snt_contact_email}?subject={$snt_quote.full_reference|default:''|escape:'url'}">{l s='Contact my sales representative' d='Modules.Sntquotes.Shop'}</a>
     </div>

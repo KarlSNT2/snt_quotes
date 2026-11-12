@@ -226,15 +226,54 @@ class OrderPostProcessor
 
     private function addOrderMessage(\SntQuote $quote, \Order $order): void
     {
-        $message = new \Message();
-        $message->id_order = (int) $order->id;
-        $message->id_cart = (int) $order->id_cart;
-        $message->id_customer = (int) $order->id_customer;
-        $message->id_employee = (int) ($quote->id_employee ?: 0);
-        $message->private = true;
-        $message->message = 'Commande issue du devis ' . $quote->getFullReference()
-            . ($quote->carrier_label ? ' — livraison : ' . $quote->carrier_label : '');
-        $message->add();
+        self::addPrivateOrderNote(
+            $order,
+            'Commande issue du devis ' . $quote->getFullReference()
+                . ($quote->carrier_label ? ' — livraison : ' . $quote->carrier_label : ''),
+            (int) ($quote->id_employee ?: 0)
+        );
+    }
+
+    /**
+     * Message privé (non visible du client) dans le bloc « Messages » de la fiche commande.
+     * PrestaShop 8 / 9 n'y affiche que les messages des fils client (customer_message), pas l'ancienne table message.
+     */
+    public static function addPrivateOrderNote(\Order $order, string $text, int $idEmployee = 0): void
+    {
+        $text = trim(strip_tags($text));
+        if ($text === '' || !\Validate::isCleanHtml($text)) {
+            return;
+        }
+        try {
+            $idThread = (int) \CustomerThread::getIdCustomerThreadByEmailAndIdOrder(
+                (string) (new \Customer((int) $order->id_customer))->email,
+                (int) $order->id
+            );
+            if (!$idThread) {
+                $thread = new \CustomerThread();
+                $thread->id_contact = 0;
+                $thread->id_customer = (int) $order->id_customer;
+                $thread->id_shop = (int) $order->id_shop;
+                $thread->id_order = (int) $order->id;
+                $thread->id_lang = (int) $order->id_lang;
+                $thread->email = (string) (new \Customer((int) $order->id_customer))->email;
+                $thread->status = 'closed';
+                $thread->token = \Tools::passwdGen(12);
+                if (!$thread->add()) {
+                    return;
+                }
+                $idThread = (int) $thread->id;
+            }
+            $message = new \CustomerMessage();
+            $message->id_customer_thread = $idThread;
+            $message->id_employee = $idEmployee;
+            $message->message = mb_substr($text, 0, 1600);
+            $message->private = true;
+            $message->read = true;
+            $message->add();
+        } catch (\Throwable $e) {
+            \PrestaShopLogger::addLog('[snt_quotes] order note ' . (int) $order->id . ': ' . $e->getMessage(), 2, null, 'Order', (int) $order->id);
+        }
     }
 
     private function registerHiPayMoto(\Order $order, \Cart $cart): void

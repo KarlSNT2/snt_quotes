@@ -18,6 +18,7 @@ final class EditorResult
         public readonly bool $requiresApproval,
         public readonly float $maxDiscountPercent,
         public readonly array $lines,
+        public readonly bool $taxExempt = false,
     ) {
     }
 }

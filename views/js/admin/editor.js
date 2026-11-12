@@ -369,7 +369,8 @@
   function renderTaxInfo() {
     var info = $('[data-tax-info]');
     var address = currentAddress();
-    var exempt = state.result && state.result.totals && state.result.totals.total_tax === 0 && address && address.vat_number;
+    // Exonération réelle calculée par le serveur (B2B UE avec n° de TVA), pas un simple total de TVA à 0.
+    var exempt = !!(state.result && state.result.tax_exempt && address && address.vat_number);
     info.hidden = !exempt;
     info.textContent = exempt ? S.format(t.taxExempt, { '%vat%': address.vat_number }) : '';
   }

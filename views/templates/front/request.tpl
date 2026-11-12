@@ -38,12 +38,7 @@
   {else}
     <p class="snt-request__intro">{l s='Tell us about your project: our team checks availability, delivery and the best price, then sends you a quote. Your cart is kept as it is.' d='Modules.Sntquotes.Shop'}</p>
 
-    {if $snt_errors}
-      <div class="alert alert-danger" role="alert">
-        <ul class="mb-0">{foreach $snt_errors as $error}<li>{$error}</li>{/foreach}</ul>
-      </div>
-    {/if}
-
+  {* Erreurs : affichées par le bloc « notifications » du thème ($this->errors), pas ici (sinon en double). *}
     <div class="snt-request__grid">
       <form method="post" action="{$snt_form_action}" enctype="multipart/form-data" class="snt-request__form card">
         <div class="card-block card-body">

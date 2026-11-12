@@ -123,7 +123,9 @@ class QuoteToOrderConverter
             $quote->payment_mode = $mode->value;
             $quote->update();
 
-            $idOrder = $this->validate($quote, $cart, $module, $state, $paymentLabel, $comment);
+            // Le commentaire n'est pas passé à validateOrder() : PrestaShop l'y range dans l'ancienne table « message »,
+            // invisible sur la fiche commande. Il est ajouté plus bas en message privé de la commande.
+            $idOrder = $this->validate($quote, $cart, $module, $state, $paymentLabel, null);
             if (!$idOrder) {
                 throw new \RuntimeException('validateOrder() did not create the order.');
             }
@@ -133,6 +135,10 @@ class QuoteToOrderConverter
             $quote = new \SntQuote((int) $quote->id);
             if ((int) $quote->id_order !== $idOrder) {
                 $this->postProcessor->process($order, $cart);
+            }
+            if ($comment !== null && trim($comment) !== '') {
+                $idEmployee = $actorType === 'employee' ? (int) (\Context::getContext()->employee->id ?? 0) : 0;
+                OrderPostProcessor::addPrivateOrderNote($order, $comment, $idEmployee);
             }
 
             return new ConversionResult($idOrder, (string) $order->reference, $this->postProcessor->lastWarnings());

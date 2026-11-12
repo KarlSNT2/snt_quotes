@@ -11,10 +11,7 @@
   {if $snt_success}
     <div class="alert alert-success" role="status">{foreach $snt_success as $message}<p class="mb-0">{$message}</p>{/foreach}</div>
   {/if}
-  {if $snt_errors}
-    <div class="alert alert-danger" role="alert">{foreach $snt_errors as $error}<p class="mb-0">{$error}</p>{/foreach}</div>
-  {/if}
-
+  {* Erreurs : affichées par le bloc « notifications » du thème ($this->errors), pas ici (sinon en double). *}
   {if $snt_is_request}
   {* --- Demande depuis le panier, en préparation par l'équipe ------------- *}
   <section class="snt-quote-fo__actions card">
