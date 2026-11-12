@@ -126,7 +126,10 @@ final class Installer
             $idShop = (int) $shop['id_shop'];
             $idShopGroup = (int) $shop['id_shop_group'];
             foreach (ConfigKeys::defaults() as $key => $value) {
-                if (\Configuration::hasKey($key, null, $idShopGroup, $idShop)) {
+                // Jamais écraser un réglage existant, quel que soit son niveau : sans multiboutique, PrestaShop
+                // l'enregistre en global, et hasKey() au niveau boutique répondait « absent » → remis à la valeur
+                // par défaut à chaque installation / mise à jour.
+                if (self::keyExists($key, $idShopGroup, $idShop)) {
                     continue;
                 }
                 \Configuration::updateValue($key, $value, false, $idShopGroup, $idShop);
@@ -140,6 +143,19 @@ final class Installer
         }
 
         return true;
+    }
+
+    /**
+     * Valeur déjà présente pour cette boutique, directement ou héritée (groupe de boutiques, global).
+     */
+    private static function keyExists(string $key, int $idShopGroup, int $idShop): bool
+    {
+        return (bool) \Db::getInstance()->getValue(
+            'SELECT 1 FROM `' . _DB_PREFIX_ . 'configuration`
+             WHERE `name` = \'' . pSQL($key) . '\'
+               AND (`id_shop` = ' . $idShop . '
+                    OR (`id_shop` IS NULL AND (`id_shop_group` IS NULL OR `id_shop_group` = ' . $idShopGroup . ')))'
+        );
     }
 
     /**
