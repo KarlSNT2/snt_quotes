@@ -162,6 +162,6 @@ Cocher `[x]`, noter l'écart sinon.
 - [ ] Nouveaux e-mails activables / désactivables dans la configuration (demande client, réponse de l'équipe)
 
 ### Reste du jalon 3 *(à venir)*
-- [ ] Panier → demande de devis
+- [x] Panier → demande de devis (livré en 0.3.1, voir section 0.3.1)
 - [ ] Tâche planifiée : relances avant expiration, passage en « Expiré », liens expirés révoqués
 - [ ] Multiboutique, accessibilité clavier
