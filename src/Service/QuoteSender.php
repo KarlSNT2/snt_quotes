@@ -89,6 +89,15 @@ class QuoteSender
             return self::RESULT_PENDING_APPROVAL;
         }
 
+        // Demande venue du panier sans commercial attribué : l'employé qui envoie devient le contact du devis.
+        if (!$quote->id_employee) {
+            $employee = \Context::getContext()->employee ?? null;
+            if ($employee instanceof \Employee && \Validate::isLoadedObject($employee)) {
+                $quote->id_employee = (int) $employee->id;
+                $quote->update();
+            }
+        }
+
         $archive = $this->pdf->archive($quote, $this->presenter);
         $content = $this->pdf->archivedContent($archive, (int) $quote->id_shop);
 

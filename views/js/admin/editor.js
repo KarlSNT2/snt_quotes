@@ -396,7 +396,8 @@
     select.innerHTML = boot.employees.map(function (e) {
       return '<option value="' + e.id + '">' + S.escape(e.name) + '</option>';
     }).join('');
-    select.value = String(state.quote.id_employee || (boot.employees[0] && boot.employees[0].id) || '');
+    // Sans commercial attribué (ex. demande depuis le panier) : l'employé connecté, jamais le premier de la liste.
+    select.value = String(state.quote.id_employee || boot.currentEmployee || (boot.employees[0] && boot.employees[0].id) || '');
     state.quote.id_employee = Number(select.value) || 0;
   }
 

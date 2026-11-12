@@ -154,6 +154,7 @@ class QuoteController extends AbstractQuoteController
             'currency' => ['id' => (int) $currency->id, 'iso' => (string) $currency->iso_code, 'sign' => (string) $currency->sign],
             'locale' => (string) $context->language->locale,
             'employees' => $employees,
+            'currentEmployee' => (int) ($context->employee->id ?? 0),
             'taxRules' => $this->taxResolver->taxRulesGroups($taxAddress),
             'permissions' => $this->permissions->toArray(),
             'discountThreshold' => $this->config->getFloat(ConfigKeys::DISCOUNT_THRESHOLD),
