@@ -562,7 +562,10 @@ relais Chronopost et Colissimo ; adresse du relais reprise en livraison après c
   depuis le panier (0.3.1).
 - **Reprise des devis Opart : facultative.** Transition par coexistence : les deux modules restent installés le temps que
   les devis Opart en cours se terminent, puis Opart est désinstallé. Un script de reprise reste possible si besoin.
-- **Relais GLS (`nkmgls`)** : à faire, Karl fournit le module.
+- **Relais GLS (`nkmgls`)** : livré en 0.3.2.
+- **Statistiques : pas nécessaires pour l'instant.**
+- **Recette PrestaShop 9.2 : évolution future** (hors V1). Le code gère PS 8 et 9 ; aucun essai sur une boutique 9.2.
+- Recette V1 : `tests/manual/plan-de-test-v1.md`, sur DEV après purge (`tools/sql/purge-devis-dev.sql`).
 
 ### Jalon 3 — partie « Mes devis » livrée le 2026-11-12 (v0.3.0), recette DEV à faire
 
