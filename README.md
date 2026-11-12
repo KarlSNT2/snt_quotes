@@ -14,7 +14,7 @@ ni par les règles transporteurs.
 |---|---|---|
 | 1 — BO interne | Installation, tables, configuration, droits, liste, éditeur, fiche, PDF, envoi e-mail | ✅ livré (v0.1.0) |
 | 2 — Conversion et paiement | Conversion sans tunnel, transporteur technique, paiement intégré, liens de paiement HiPay Payments / PayPlug, page de paiement client | ✅ livré (v0.2.0, correctifs v0.2.1), recette DEV en cours |
-| 3 — Front office et cycle de vie | Espace « Mes devis » (consultation, PDF, accepter et payer, demande de modification, refus, échanges), affichage TTC/HT par boutique | 🟡 « Mes devis » livré (v0.3.0) ; reste : panier → demande de devis, tâche planifiée (relances, expirations). Webhooks n8n abandonnés |
+| 3 — Front office et cycle de vie | Espace « Mes devis » (consultation, PDF, accepter et payer, demande de modification, refus, échanges), affichage TTC/HT par boutique | 🟡 « Mes devis » (v0.3.0), demande de devis depuis le panier (v0.3.1) ; reste : tâche planifiée (relances, expirations). Webhooks n8n abandonnés |
 | 4 — Options | Versions avancées, statistiques, bouton fiche produit, reprise Opart | à faire |
 
 ## Installation

@@ -30,6 +30,7 @@ spl_autoload_register(static function (string $class): void {
     }
 });
 
+use Snt\Quotes\Config\ConfigKeys;
 use Snt\Quotes\Conversion\QuoteCartContext;
 use Snt\Quotes\Domain\QuoteStatus;
 use Snt\Quotes\Install\Installer;
@@ -57,6 +58,8 @@ class Snt_Quotes extends PaymentModule
         // 0.3.0 — espace client « Mes devis »
         'displayCustomerAccount',
         'moduleRoutes',
+        // 0.3.1 — bouton « Demander un devis » sous « Commander » dans le panier
+        'displayExpressCheckout',
     ];
 
     /** @var int|null renseigné par le cœur avant getOrderShippingCost*() (transporteur technique) */
@@ -66,7 +69,7 @@ class Snt_Quotes extends PaymentModule
     {
         $this->name = 'snt_quotes';
         $this->tab = 'billing_invoicing';
-        $this->version = '0.3.0';
+        $this->version = '0.3.1';
         $this->author = 'SNT2';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -387,6 +390,26 @@ class Snt_Quotes extends PaymentModule
     }
 
     /**
+     * Bouton « Demander un devis » sous « Commander » (panier). Le panier n'est pas modifié :
+     * la demande crée un devis brouillon que le commercial complète puis envoie.
+     */
+    public function hookDisplayExpressCheckout(array $params): string
+    {
+        $cart = $this->context->cart;
+        if (!$cart instanceof Cart || !$cart->id || !$cart->nbProducts()
+            || !(int) ServiceFactory::config()->get(ConfigKeys::FO_REQUEST_ENABLED, (int) $this->context->shop->id)
+            || QuoteCartContext::isQuoteCart((int) $cart->id)
+        ) {
+            return '';
+        }
+        $this->context->smarty->assign([
+            'snt_request_url' => $this->context->link->getModuleLink($this->name, 'request', [], true),
+        ]);
+
+        return $this->fetch('module:snt_quotes/views/templates/hook/cart_request_button.tpl');
+    }
+
+    /**
      * URL lisibles : /mes-devis et /mes-devis/{id}.
      *
      * @return array<string, array<string, mixed>>
@@ -397,6 +420,12 @@ class Snt_Quotes extends PaymentModule
             'module-snt_quotes-quotes' => [
                 'controller' => 'quotes',
                 'rule' => 'mes-devis',
+                'keywords' => [],
+                'params' => ['fc' => 'module', 'module' => $this->name],
+            ],
+            'module-snt_quotes-request' => [
+                'controller' => 'request',
+                'rule' => 'demande-de-devis',
                 'keywords' => [],
                 'params' => ['fc' => 'module', 'module' => $this->name],
             ],

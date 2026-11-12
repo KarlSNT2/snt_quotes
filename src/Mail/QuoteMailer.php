@@ -285,6 +285,7 @@ class QuoteMailer
         $label = match ($action) {
             'revision' => $translator->trans('The customer asks for changes to the quote.', [], self::DOMAIN, $language->locale ?: null),
             'declined' => $translator->trans('The customer has declined the quote.', [], self::DOMAIN, $language->locale ?: null),
+            'request' => $translator->trans('New quote request from the cart: complete the draft and send it to the customer.', [], self::DOMAIN, $language->locale ?: null),
             default => $translator->trans('The customer sent a message about the quote.', [], self::DOMAIN, $language->locale ?: null),
         };
         $e = static fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
@@ -293,7 +294,8 @@ class QuoteMailer
             '{action_label}' => $e($label),
             '{customer_message_html}' => $message !== '' ? nl2br($e($message)) : '—',
             '{customer_message_txt}' => $message !== '' ? $message : '—',
-        ] + $this->templateVars($quote, null);
+        ] + ($action === 'request' ? ['{quote_link_html}' => '', '{quote_link_txt}' => ''] : []) // brouillon : pas de page client
+            + $this->templateVars($quote, null);
         \Mail::send(
             $idLang,
             self::TPL_CUSTOMER_ACTION,

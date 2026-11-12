@@ -22,7 +22,9 @@ use Snt\Quotes\Presenter\StatusPresenter;
 use Snt\Quotes\Repository\CustomerQuoteRepository;
 use Snt\Quotes\Service\HistoryLogger;
 use Snt\Quotes\Service\QuoteEditor;
+use Snt\Quotes\Service\QuoteFactory;
 use Snt\Quotes\Service\QuoteMessages;
+use Snt\Quotes\Service\ReferenceGenerator;
 use Snt\Quotes\Service\QuoteStateMachine;
 use Snt\Quotes\Storage\S3Storage;
 
@@ -125,6 +127,11 @@ final class ServiceFactory
     public static function editor(): QuoteEditor
     {
         return self::shared(QuoteEditor::class, static fn (): QuoteEditor => new QuoteEditor(new TaxResolver(), new CatalogPriceProvider(), self::config(), self::history()));
+    }
+
+    public static function factory(): QuoteFactory
+    {
+        return self::shared(QuoteFactory::class, static fn (): QuoteFactory => new QuoteFactory(self::editor(), new ReferenceGenerator(self::config()), self::presenter(), self::history()));
     }
 
     public static function messages(): QuoteMessages

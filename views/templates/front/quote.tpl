@@ -85,6 +85,11 @@
             <li class="snt-thread__item snt-thread__item--{$message.author_type}">
               <span class="snt-thread__meta">{if $message.author_type == 'customer'}{l s='You' d='Modules.Sntquotes.Shop'}{else}{$message.author_name}{/if} · {$message.date_display}</span>
               <span class="snt-thread__text">{$message.message|escape:'html':'UTF-8'|nl2br nofilter}</span>
+              {if $message.attachment}
+                <a class="snt-thread__attachment" href="{$message.attachment_url}" rel="nofollow">
+                  <i class="material-icons" aria-hidden="true">attach_file</i>{$message.attachment_name|escape:'html':'UTF-8'}
+                </a>
+              {/if}
             </li>
           {/foreach}
         </ol>

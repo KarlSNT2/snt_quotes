@@ -46,6 +46,22 @@ class Snt_QuotesQuotesModuleFrontController extends ModuleFrontController
         $quotes = [];
         foreach (ServiceFactory::customerQuotes()->listForCustomer($idCustomer, $idShop) as $row) {
             $status = QuoteStatus::tryFrom((string) $row['status']) ?? QuoteStatus::Sent;
+            if ($status === QuoteStatus::Draft) {
+                // Demande envoyée depuis le panier, pas encore traitée par le commercial : ni montant ni lien.
+                $quotes[] = [
+                    'id' => (int) $row['id_snt_quote'],
+                    'reference' => (string) $row['reference'],
+                    'project_name' => (string) $row['project_name'],
+                    'date' => Tools::displayDate((string) $row['date_add'], false),
+                    'valid_until' => '',
+                    'expires_soon' => false,
+                    'amount' => '—',
+                    'status' => ['label' => $this->trans('Request sent', [], 'Modules.Sntquotes.Shop'), 'color' => '#6c757d', 'strike' => false],
+                    'awaiting' => false,
+                    'url' => '',
+                ];
+                continue;
+            }
             $iso = (string) Currency::getIsoCodeById((int) $row['id_currency']);
             $quotes[] = [
                 'id' => (int) $row['id_snt_quote'],

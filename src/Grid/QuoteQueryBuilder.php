@@ -74,7 +74,8 @@ class QuoteQueryBuilder extends AbstractDoctrineQueryBuilder
             ->setParameter('shops', $this->contextShopIds(), Connection::PARAM_INT_ARRAY);
 
         if ($this->quickTab === self::TAB_TODO) {
-            $qb->andWhere('q.status IN (:tab_statuses)')
+            // + demandes de devis envoyées depuis le panier (brouillons créés par le client)
+            $qb->andWhere('(q.status IN (:tab_statuses) OR (q.status = \'draft\' AND q.source = \'fo_cart\'))')
                 ->andWhere('q.id_order IS NULL')
                 ->setParameter('tab_statuses', array_map(static fn (QuoteStatus $s): string => $s->value, QuoteStatus::toProcess()), Connection::PARAM_STR_ARRAY);
         } elseif ($this->quickTab === self::TAB_WAITING) {

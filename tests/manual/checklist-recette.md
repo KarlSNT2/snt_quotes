@@ -112,6 +112,19 @@ Cocher `[x]`, noter l'écart sinon.
 - [ ] E-mail « Commande créée depuis le devis » reçu par le commercial
 - [ ] HiPay Payments v4 (PS 8.2) **et** v5 (PS 9.2)
 
+## 0.3.1 — Demande de devis depuis le panier
+
+- [ ] Mise à jour 0.3.0 → 0.3.1 sans erreur, vider le cache
+- [ ] Panier (Classic / ZOne) : bouton « Demander un devis » sous « Commander », même largeur ; absent si panier vide ou option désactivée
+- [ ] Non connecté → connexion → retour sur `/demande-de-devis` avec le panier
+- [ ] Formulaire : articles du panier, adresses préremplies, envoi sans message ni pièce jointe accepté
+- [ ] Pièce jointe : PDF/image acceptés ; `.exe` refusé ; > 10 Mo refusé
+- [ ] Confirmation « Votre demande DEV-… a bien été envoyée », délai de réponse, lien « Mes devis »
+- [ ] Panier inchangé après la demande ; 2ᵉ envoi sur le même panier → « déjà demandé »
+- [ ] BO : brouillon dans « À traiter », source panier, prix = prix du client ; message + pièce jointe dans les échanges (téléchargement OK)
+- [ ] E-mail au commercial (ou à la boutique) avec le message
+- [ ] « Mes devis » : ligne « Demande envoyée », sans montant ni lien ; après envoi par l'équipe → devis normal
+
 ## Jalon 3 — Espace client « Mes devis » (v0.3.0)
 
 ### Mise à jour 0.2.1 → 0.3.0

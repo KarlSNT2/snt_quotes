@@ -450,3 +450,10 @@ from fr_j3 import FR_ADMIN_J3, FR_EMAILS_J3, FR_SHOP_EXCEPTIONS, FR_SHOP_J3  # n
 FR.update(FR_ADMIN_J3)
 FR_EMAILS.update(FR_EMAILS_J3)
 FR_SHOP.update(FR_SHOP_J3)
+
+# 0.3.1 — demande de devis depuis le panier
+from fr_j31 import FR_ADMIN_J31, FR_EMAILS_J31, FR_SHOP_EXCEPTIONS_J31, FR_SHOP_J31  # noqa: E402,F401
+
+FR.update(FR_ADMIN_J31)
+FR_EMAILS.update(FR_EMAILS_J31)
+FR_SHOP.update(FR_SHOP_J31)

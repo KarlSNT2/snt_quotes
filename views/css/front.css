@@ -66,3 +66,20 @@
   .snt-thread__item { max-width: 100%; }
   .snt-quote-fo__main .btn { width: 100%; }
 }
+
+/* --- Demande de devis depuis le panier (0.3.1) --- */
+.snt-request__intro { max-width: 60ch; color: #374151; }
+.snt-request__grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+@media (max-width: 767px) { .snt-request__grid { grid-template-columns: 1fr; } .snt-request__cart { order: -1; } }
+.snt-request__help { font-size: .875rem; color: #4b5563; margin: .25rem 0 1rem; }
+.snt-request__submit { margin-top: .5rem; }
+.snt-request__items { list-style: none; margin: 0 0 .75rem; padding: 0; }
+.snt-request__items li { display: flex; gap: .5rem; padding: .5rem 0; border-bottom: 1px solid #eef0f3; font-size: .9375rem; }
+.snt-request__items li:last-child { border-bottom: 0; }
+.snt-request__qty { flex: 0 0 auto; font-weight: 600; min-width: 3ch; }
+.snt-request__edit { font-size: .875rem; }
+.snt-request__done { max-width: 60ch; padding: 1.5rem; border: 1px solid #b7dfc4; border-radius: 6px; background: #f2faf5; }
+.snt-request__done > .material-icons { font-size: 2.25rem; color: #1e7a3c; }
+.snt-request__actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 0; }
+.snt-thread__attachment { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; font-size: .875rem; }
+.snt-thread__attachment .material-icons { font-size: 1.1rem; }

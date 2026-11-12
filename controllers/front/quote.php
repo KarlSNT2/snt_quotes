@@ -73,6 +73,13 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
         if (Tools::getValue('pdf')) {
             $this->downloadPdf();
         }
+        if ($idMessage = (int) Tools::getValue('attachment')) {
+            $message = ServiceFactory::messages()->findAttachment($this->quote, $idMessage);
+            if ($message) {
+                Snt\Quotes\Service\QuoteMessages::streamAttachment($message);
+            }
+            $this->errors[] = $this->trans('This file is no longer available.', [], 'Modules.Sntquotes.Shop');
+        }
         $action = (string) Tools::getValue('snt_action');
         if ($action === '') {
             return;
@@ -168,7 +175,11 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
             'snt_is_accepted' => $status === QuoteStatus::Accepted,
             'snt_is_expired' => $status === QuoteStatus::Expired || ($status->isOpen() && $quote->isExpiredByDate()),
             'snt_order_url' => $orderUrl,
-            'snt_messages' => ServiceFactory::messages()->thread($quote),
+            'snt_messages' => array_map(fn (array $m): array => $m + [
+                'attachment_url' => $m['attachment']
+                    ? $this->context->link->getModuleLink('snt_quotes', 'quote', ['id_quote' => (int) $quote->id, 'attachment' => (int) $m['id_snt_quote_message']], true)
+                    : '',
+            ], ServiceFactory::messages()->thread($quote)),
             'snt_action_url' => $this->context->link->getModuleLink('snt_quotes', 'quote', ['id_quote' => (int) $quote->id], true),
             'snt_pdf_url' => $this->context->link->getModuleLink('snt_quotes', 'quote', ['id_quote' => (int) $quote->id, 'pdf' => 1], true),
             'snt_list_url' => $this->context->link->getModuleLink('snt_quotes', 'quotes', [], true),

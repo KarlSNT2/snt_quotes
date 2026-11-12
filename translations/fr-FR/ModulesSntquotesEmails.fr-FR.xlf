@@ -6,6 +6,10 @@
         <source>New message about your quote %reference% — %shop%</source>
         <target>Nouveau message sur votre devis %reference% — %shop%</target>
       </trans-unit>
+      <trans-unit id="4f5c52a7448397d30b08711fa26936d6">
+        <source>New quote request from the cart: complete the draft and send it to the customer.</source>
+        <target>Nouvelle demande de devis depuis le panier : complétez le brouillon puis envoyez-le au client.</target>
+      </trans-unit>
       <trans-unit id="b24bf3dc434c4bd83d57d2053b49defd">
         <source>Order created from quote %reference%</source>
         <target>Commande créée depuis le devis %reference%</target>

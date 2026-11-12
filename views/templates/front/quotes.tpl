@@ -9,7 +9,7 @@
 {block name='page_content'}
 <div class="snt-quotes-fo">
   {if !$snt_quotes}
-    <p class="snt-empty-fo">{l s='You have no quotes yet. Your sales representative will send them to you here.' d='Modules.Sntquotes.Shop'}</p>
+    <p class="snt-empty-fo">{l s='You have no quotes yet. Your sales representative will send them to you here. You can also request a quote from your cart.' d='Modules.Sntquotes.Shop'}</p>
   {else}
     {if $snt_awaiting}
       <section class="snt-awaiting" aria-labelledby="snt-awaiting-title">
@@ -42,13 +42,13 @@
       <tbody>
         {foreach $snt_quotes as $quote}
           <tr>
-            <th scope="row"><a href="{$quote.url}">{$quote.reference}</a></th>
+            <th scope="row">{if $quote.url}<a href="{$quote.url}">{$quote.reference}</a>{else}{$quote.reference}{/if}</th>
             <td>{$quote.project_name}</td>
             <td>{$quote.date}</td>
             <td class="text-right">{$quote.amount}</td>
             <td><span class="snt-badge{if $quote.status.strike} snt-badge--strike{/if}" style="background: {$quote.status.color};">{$quote.status.label}</span></td>
             <td{if $quote.expires_soon} class="snt-text-urgent"{/if}>{$quote.valid_until}</td>
-            <td class="text-right"><a href="{$quote.url}">{if $quote.awaiting}{l s='View and confirm' d='Modules.Sntquotes.Shop'}{else}{l s='View' d='Modules.Sntquotes.Shop'}{/if}</a></td>
+            <td class="text-right">{if $quote.url}<a href="{$quote.url}">{if $quote.awaiting}{l s='View and confirm' d='Modules.Sntquotes.Shop'}{else}{l s='View' d='Modules.Sntquotes.Shop'}{/if}</a>{else}<span class="text-muted">{l s='Being prepared' d='Modules.Sntquotes.Shop'}</span>{/if}</td>
           </tr>
         {/foreach}
       </tbody>
@@ -57,7 +57,7 @@
     <ul class="snt-quotes-fo__cards hidden-md-up d-md-none">
       {foreach $snt_quotes as $quote}
         <li class="snt-quote-card">
-          <a href="{$quote.url}" class="snt-quote-card__link">
+          {if $quote.url}<a href="{$quote.url}" class="snt-quote-card__link">{else}<div class="snt-quote-card__link">{/if}
             <span class="snt-quote-card__top">
               <strong>{$quote.reference}</strong>
               <span class="snt-badge{if $quote.status.strike} snt-badge--strike{/if}" style="background: {$quote.status.color};">{$quote.status.label}</span>
@@ -68,7 +68,7 @@
               <strong>{$quote.amount}</strong>
             </span>
             {if $quote.valid_until}<span class="snt-quote-card__validity{if $quote.expires_soon} snt-text-urgent{/if}">{l s='Valid until %date%' sprintf=['%date%' => $quote.valid_until] d='Modules.Sntquotes.Shop'}</span>{/if}
-          </a>
+          {if $quote.url}</a>{else}</div>{/if}
         </li>
       {/foreach}
     </ul>

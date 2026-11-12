@@ -26,11 +26,11 @@ class CustomerQuoteRepository
         $hidden = implode(',', array_map(static fn (QuoteStatus $s): string => '\'' . $s->value . '\'', self::hiddenStatuses()));
 
         return \Db::getInstance()->executeS(
-            'SELECT `id_snt_quote`, `reference`, `version`, `project_name`, `status`, `total_ti`, `total_te`, `id_currency`,
+            'SELECT `id_snt_quote`, `reference`, `version`, `project_name`, `status`, `source`, `total_ti`, `total_te`, `id_currency`,
                     `valid_until`, `sent_at`, `date_add`, `id_order`
              FROM `' . _DB_PREFIX_ . 'snt_quote`
              WHERE `id_customer` = ' . $idCustomer . ' AND `id_shop` = ' . $idShop . ' AND `deleted` = 0
-               AND `status` NOT IN (' . $hidden . ')
+               AND (`status` NOT IN (' . $hidden . ') OR (`status` = \'draft\' AND `source` = \'fo_cart\'))
              ORDER BY (`status` IN (\'sent\', \'viewed\')) DESC, COALESCE(`sent_at`, `date_add`) DESC
              LIMIT 200'
         ) ?: [];

@@ -68,7 +68,7 @@ class QuoteRepository
 
         $row = \Db::getInstance()->getRow(
             'SELECT
-                SUM(CASE WHEN `status` IN (' . $quote(QuoteStatus::toProcess()) . ') AND `id_order` IS NULL THEN 1 ELSE 0 END) AS todo,
+                SUM(CASE WHEN (`status` IN (' . $quote(QuoteStatus::toProcess()) . ') OR (`status` = \'draft\' AND `source` = \'fo_cart\')) AND `id_order` IS NULL THEN 1 ELSE 0 END) AS todo,
                 SUM(CASE WHEN `status` IN (' . $quote(QuoteStatus::waitingCustomer()) . ') THEN 1 ELSE 0 END) AS waiting,
                 COUNT(*) AS total
              FROM ' . $this->t('snt_quote') . '

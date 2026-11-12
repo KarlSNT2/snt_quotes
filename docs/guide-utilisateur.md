@@ -131,6 +131,19 @@ Il peut télécharger le PDF, **accepter et payer**, **demander une modification
 
 Les brouillons et les devis en attente de validation interne ne sont jamais visibles du client.
 
+### Demande de devis depuis le panier
+
+Sous le bouton « Commander », le panier affiche **« Demander un devis »** (désactivable par boutique dans la configuration :
+« Permettre aux clients de demander un devis depuis leur panier »). Le client connecté indique un nom de projet, un message, une pièce jointe
+(plan, cahier des charges… 10 Mo max.) et ses adresses. Son panier n'est **pas modifié**.
+
+- Un **brouillon** est créé avec les articles du panier au prix du client (source « panier »). Il apparaît dans l'onglet
+  **« À traiter »** et vous recevez un e-mail (au commercial du devis, sinon à l'adresse de la boutique).
+- Le message et la pièce jointe ouvrent le bloc « Échanges avec le client » de la fiche (pièce jointe téléchargeable).
+- Complétez le brouillon (port, remises, conditions) puis **envoyez-le** : le client le reçoit comme n'importe quel devis.
+- Côté client, la demande apparaît dans « Mes devis » avec le statut « Demande envoyée » (sans montant) jusqu'à l'envoi.
+- Une seule demande par panier tant que le panier n'a pas changé ; 10 demandes maximum par client et par 24 h.
+
 ## 8. Couleurs des statuts
 
 Brouillon (gris) · En attente de validation interne (orange foncé) · Envoyé (bleu) · Vu (bleu clair) · Modification demandée (orange) ·

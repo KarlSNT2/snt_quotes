@@ -87,6 +87,16 @@ admin_snt_quotes_message:
   requirements:
     quoteId: '\d+'
 
+admin_snt_quotes_attachment:
+  path: /sntquotes/{quoteId}/attachment/{messageId}
+  methods: [GET]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::attachmentAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+    messageId: '\d+'
+
 admin_snt_quotes_transition:
   path: /sntquotes/{quoteId}/status/{to}
   methods: [POST]

@@ -458,6 +458,31 @@ class QuoteController extends AbstractQuoteController
         });
     }
 
+    /**
+     * Téléchargement d'une pièce jointe du fil (ex. plan joint à une demande depuis le panier).
+     */
+    public function attachmentAction(int $quoteId, int $messageId): Response
+    {
+        $this->requireRight('read');
+        $quote = $this->loadQuote($quoteId);
+        $message = $this->messages->findAttachment($quote, $messageId);
+        if (!$message) {
+            $this->addFlash('error', $this->t('This file is no longer available.'));
+
+            return $this->redirectToRoute('admin_snt_quotes_view', ['quoteId' => $quoteId]);
+        }
+        $response = new \Symfony\Component\HttpFoundation\BinaryFileResponse(QuoteMessages::attachmentPath($message));
+        $response->setContentDisposition(
+            \Symfony\Component\HttpFoundation\ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            (string) $message->attachment_name,
+            'attachment'
+        );
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('X-Content-Type-Options', 'nosniff');
+
+        return $response;
+    }
+
     public function remindAction(Request $request, int $quoteId): RedirectResponse
     {
         return $this->postAndRedirect($request, 'edit', $quoteId, function (\SntQuote $quote): string {

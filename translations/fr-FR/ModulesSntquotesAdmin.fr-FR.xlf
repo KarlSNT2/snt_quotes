@@ -1478,9 +1478,17 @@
         <source>The e-mail could not be sent. Check the shop e-mail settings, then try again.</source>
         <target>L’e-mail n’a pas pu être envoyé. Vérifiez la configuration e-mail de la boutique, puis réessayez.</target>
       </trans-unit>
+      <trans-unit id="77efefc1f30b6ed87642049b56874b50">
+        <source>The file could not be uploaded. Please try again.</source>
+        <target>Le fichier n’a pas pu être envoyé. Réessayez.</target>
+      </trans-unit>
       <trans-unit id="2242fc296c7b7429ade372d3a8603ae1">
         <source>The file is larger than 2 MB.</source>
         <target>Le fichier dépasse 2 Mo.</target>
+      </trans-unit>
+      <trans-unit id="8a2939a8e9b277e16ef2bfcfa203e00b">
+        <source>The file is too large (10 MB maximum).</source>
+        <target>Le fichier est trop volumineux (10 Mo maximum).</target>
       </trans-unit>
       <trans-unit id="a084bfec0311eec4a5a2342eae1fb106">
         <source>The file was written but could not be read back. Check the key permissions.</source>
@@ -1661,6 +1669,14 @@
       <trans-unit id="e4b78f44705bffb96b2fbe0761b37890">
         <source>This e-mail is disabled in the settings: the quote will be marked as sent and the PDF archived, but no e-mail will leave.</source>
         <target>Cet e-mail est désactivé dans la configuration : le devis sera marqué comme envoyé et le PDF archivé, mais aucun e-mail ne partira.</target>
+      </trans-unit>
+      <trans-unit id="761a71f983cd21db23412287264b7657">
+        <source>This file is no longer available.</source>
+        <target>Ce fichier n’est plus disponible.</target>
+      </trans-unit>
+      <trans-unit id="c15294d472cf41eca1fb7b05fc36daa1">
+        <source>This file type is not accepted. Accepted: %types%.</source>
+        <target>Ce type de fichier n’est pas accepté. Formats acceptés : %types%.</target>
       </trans-unit>
       <trans-unit id="51c62132855800cd482f9a733c9494fc">
         <source>This quote belongs to another shop. Switch shop to open it.</source>
