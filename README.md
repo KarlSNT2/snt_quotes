@@ -20,8 +20,9 @@ ni par les règles transporteurs.
 ## Installation
 
 1. Copier le dossier `snt_quotes` dans `modules/` (ou importer le zip depuis le gestionnaire de modules).
-2. Dépendances : aucune bibliothèque tierce à l'exécution. `composer install --no-dev -o` génère un autoloader optimisé ;
-   sans `vendor/`, le module utilise son propre autoloader (PSR-4 + classes).
+2. Dépendances : aucune bibliothèque tierce à l'exécution ; le module charge ses classes lui-même et **ne lit jamais
+   `vendor/`**. Ne livrez pas `vendor/` (outils de développement, des milliers de fichiers), ni `.git`. Le script
+   `tools/build-zip.ps1` fabrique un zip propre (`build/snt_quotes-<version>.zip`, chemins compatibles Linux).
 3. Installer le module. Il crée :
    - les tables `snt_quote*` (devis, lignes, remises, historique, messages, liens, archives PDF, compteurs, paniers techniques) ;
    - l'onglet **Commandes > Devis** (`AdminSntQuotes`) ;

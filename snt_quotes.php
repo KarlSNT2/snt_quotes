@@ -12,13 +12,9 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-if (is_file(__DIR__ . '/vendor/autoload.php')) {
-    require_once __DIR__ . '/vendor/autoload.php';
-}
-
-// Toujours enregistré, après celui de Composer : sert de repli quand le module est déployé sans
-// « composer install », et quand un vendor/ resté d'une version précédente a un classmap périmé
-// (une classe ajoutée dans classes/ y est alors introuvable).
+// Chargeur de classes du module. Aucune dépendance Composer à l'exécution : vendor/ ne contient que les outils
+// de développement (PHPUnit, PHPStan, php-cs-fixer) et n'est JAMAIS chargé par la boutique, même s'il est présent
+// (ses bibliothèques Symfony entreraient en conflit avec celles de PrestaShop). Zip de livraison : tools/build-zip.ps1.
 spl_autoload_register(static function (string $class): void {
     if (str_starts_with($class, 'Snt\\Quotes\\')) {
         $file = __DIR__ . '/src/' . str_replace('\\', '/', substr($class, strlen('Snt\\Quotes\\'))) . '.php';
