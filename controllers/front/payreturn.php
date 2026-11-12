@@ -20,13 +20,16 @@ class Snt_QuotesPayreturnModuleFrontController extends ModuleFrontController
     /** @var bool */
     public $auth = false;
 
-    public function setMedia(): void
+    public function setMedia()
     {
-        parent::setMedia();
+        $media = parent::setMedia();
         $this->registerStylesheet('snt-quotes-front', 'modules/' . $this->module->name . '/views/css/front.css', ['media' => 'all', 'priority' => 200]);
+
+        return $media;
     }
 
-    public function initContent(): void
+    /** @return void */
+    public function initContent()
     {
         parent::initContent();
         $token = (string) Tools::getValue('t');
@@ -61,7 +64,7 @@ class Snt_QuotesPayreturnModuleFrontController extends ModuleFrontController
     /**
      * @return array<string, mixed>
      */
-    public function getTemplateVarPage(): array
+    public function getTemplateVarPage()
     {
         $page = parent::getTemplateVarPage();
         $page['meta']['robots'] = 'noindex';

@@ -30,9 +30,10 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
     private ?SntQuote $quote = null;
 
     /** @var string[] */
-    private array $success = [];
+    private array $sntSuccess = [];
 
-    public function init(): void
+    /** @return void */
+    public function init()
     {
         parent::init();
         if (!$this->context->customer->isLogged()) {
@@ -55,13 +56,16 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
         }
     }
 
-    public function setMedia(): void
+    public function setMedia()
     {
-        parent::setMedia();
+        $media = parent::setMedia();
         $this->registerStylesheet('snt-quotes-front', 'modules/' . $this->module->name . '/views/css/front.css', ['media' => 'all', 'priority' => 200]);
+
+        return $media;
     }
 
-    public function postProcess(): void
+    /** @return void */
+    public function postProcess()
     {
         if (!$this->quote) {
             return;
@@ -103,7 +107,7 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
                     ServiceFactory::messages()->add($quote, 'customer', $customerId, $text);
                     $machine->apply($quote, QuoteStatus::RevisionRequested, mb_substr($text, 0, 500), [], SntQuoteHistory::ACTOR_CUSTOMER, $customerId);
                     ServiceFactory::mailer()->notifyEmployeeCustomerAction($quote, 'revision', $text);
-                    $this->success[] = $this->trans('Your request has been sent. Your sales representative will send you an updated quote.', [], 'Modules.Sntquotes.Shop');
+                    $this->sntSuccess[] = $this->trans('Your request has been sent. Your sales representative will send you an updated quote.', [], 'Modules.Sntquotes.Shop');
                     break;
 
                 case 'decline':
@@ -116,13 +120,13 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
                     $machine->apply($quote, QuoteStatus::Declined, $text !== '' ? mb_substr($text, 0, 500) : null, [], SntQuoteHistory::ACTOR_CUSTOMER, $customerId);
                     ServiceFactory::paymentLinks()->revokeAll($quote);
                     ServiceFactory::mailer()->notifyEmployeeCustomerAction($quote, 'declined', $text);
-                    $this->success[] = $this->trans('Thank you for your answer. The quote is marked as declined.', [], 'Modules.Sntquotes.Shop');
+                    $this->sntSuccess[] = $this->trans('Thank you for your answer. The quote is marked as declined.', [], 'Modules.Sntquotes.Shop');
                     break;
 
                 case 'message':
                     ServiceFactory::messages()->add($quote, 'customer', $customerId, $text);
                     ServiceFactory::mailer()->notifyEmployeeCustomerAction($quote, 'message', $text);
-                    $this->success[] = $this->trans('Your message has been sent.', [], 'Modules.Sntquotes.Shop');
+                    $this->sntSuccess[] = $this->trans('Your message has been sent.', [], 'Modules.Sntquotes.Shop');
                     break;
             }
             $this->quote = new SntQuote((int) $quote->id);
@@ -134,7 +138,8 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
         }
     }
 
-    public function initContent(): void
+    /** @return void */
+    public function initContent()
     {
         parent::initContent();
         $quote = $this->quote;
@@ -168,13 +173,16 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
             'snt_pdf_url' => $this->context->link->getModuleLink('snt_quotes', 'quote', ['id_quote' => (int) $quote->id, 'pdf' => 1], true),
             'snt_list_url' => $this->context->link->getModuleLink('snt_quotes', 'quotes', [], true),
             'snt_token' => Tools::getToken(false),
-            'snt_success' => $this->success,
+            'snt_success' => $this->sntSuccess,
             'snt_errors' => $this->errors,
         ]);
         $this->setTemplate('module:snt_quotes/views/templates/front/quote.tpl');
     }
 
-    public function getBreadcrumbLinks(): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function getBreadcrumbLinks()
     {
         $breadcrumb = parent::getBreadcrumbLinks();
         $breadcrumb['links'][] = $this->addMyAccountToBreadcrumb();
@@ -192,7 +200,7 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
     /**
      * @return array<string, mixed>
      */
-    public function getTemplateVarPage(): array
+    public function getTemplateVarPage()
     {
         $page = parent::getTemplateVarPage();
         $page['meta']['robots'] = 'noindex';

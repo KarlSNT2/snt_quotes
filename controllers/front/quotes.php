@@ -25,13 +25,16 @@ class Snt_QuotesQuotesModuleFrontController extends ModuleFrontController
     /** @var string */
     public $authRedirection = 'my-account';
 
-    public function setMedia(): void
+    public function setMedia()
     {
-        parent::setMedia();
+        $media = parent::setMedia();
         $this->registerStylesheet('snt-quotes-front', 'modules/' . $this->module->name . '/views/css/front.css', ['media' => 'all', 'priority' => 200]);
+
+        return $media;
     }
 
-    public function initContent(): void
+    /** @return void */
+    public function initContent()
     {
         parent::initContent();
         $idCustomer = (int) $this->context->customer->id;
@@ -66,7 +69,10 @@ class Snt_QuotesQuotesModuleFrontController extends ModuleFrontController
         $this->setTemplate('module:snt_quotes/views/templates/front/quotes.tpl');
     }
 
-    public function getBreadcrumbLinks(): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function getBreadcrumbLinks()
     {
         $breadcrumb = parent::getBreadcrumbLinks();
         $breadcrumb['links'][] = $this->addMyAccountToBreadcrumb();
@@ -81,7 +87,7 @@ class Snt_QuotesQuotesModuleFrontController extends ModuleFrontController
     /**
      * @return array<string, mixed>
      */
-    public function getTemplateVarPage(): array
+    public function getTemplateVarPage()
     {
         $page = parent::getTemplateVarPage();
         $page['meta']['robots'] = 'noindex';

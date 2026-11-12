@@ -56,6 +56,8 @@ return [
             __DIR__ . '/snt_quotes.php',
             __DIR__ . '/classes',
             __DIR__ . '/src',
+            __DIR__ . '/controllers',
+            __DIR__ . '/upgrade',
         ],
         // Pas de config/autoload.php : l'index de classes du cœur dépend du cache de l'instance.
         // Les classes legacy sont découvertes via scanDirectories.

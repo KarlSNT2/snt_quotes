@@ -41,7 +41,8 @@ class Snt_QuotesPayModuleFrontController extends ModuleFrontController
     /** @var array<string, mixed> */
     private array $done = [];
 
-    public function init(): void
+    /** @return void */
+    public function init()
     {
         parent::init();
         $this->token = (string) Tools::getValue('t');
@@ -55,13 +56,16 @@ class Snt_QuotesPayModuleFrontController extends ModuleFrontController
         $this->state = $this->computeState();
     }
 
-    public function setMedia(): void
+    public function setMedia()
     {
-        parent::setMedia();
+        $media = parent::setMedia();
         $this->registerStylesheet('snt-quotes-front', 'modules/' . $this->module->name . '/views/css/front.css', ['media' => 'all', 'priority' => 200]);
+
+        return $media;
     }
 
-    public function postProcess(): void
+    /** @return void */
+    public function postProcess()
     {
         if (!Tools::isSubmit('snt_quote_pay') || $this->state !== 'pay' || !$this->quote) {
             return;
@@ -113,7 +117,8 @@ class Snt_QuotesPayModuleFrontController extends ModuleFrontController
         }
     }
 
-    public function initContent(): void
+    /** @return void */
+    public function initContent()
     {
         parent::initContent();
 
@@ -146,7 +151,10 @@ class Snt_QuotesPayModuleFrontController extends ModuleFrontController
         $this->setTemplate('module:snt_quotes/views/templates/front/pay.tpl');
     }
 
-    public function getBreadcrumbLinks(): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function getBreadcrumbLinks()
     {
         $breadcrumb = parent::getBreadcrumbLinks();
         $breadcrumb['links'][] = [
@@ -160,7 +168,7 @@ class Snt_QuotesPayModuleFrontController extends ModuleFrontController
     /**
      * @return array<string, mixed>
      */
-    public function getTemplateVarPage(): array
+    public function getTemplateVarPage()
     {
         $page = parent::getTemplateVarPage();
         $page['meta']['robots'] = 'noindex';
