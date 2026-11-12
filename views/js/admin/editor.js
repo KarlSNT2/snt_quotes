@@ -34,6 +34,11 @@
   };
   state.quote.lines = (state.quote.lines || []).map(prepareLine);
   state.quote.vouchers = state.quote.vouchers || [];
+  // Mode vide (demandes du panier enregistrées avant la 0.3.3) ou ancien « Retrait » → « Transporteur » :
+  // sans cela, le bloc « Point relais » ne s'ouvrait pas.
+  if (!state.quote.delivery_mode || state.quote.delivery_mode === 'pickup') {
+    state.quote.delivery_mode = 'carrier';
+  }
 
   function prepareLine(line) {
     line._key = 'l' + (++uid);

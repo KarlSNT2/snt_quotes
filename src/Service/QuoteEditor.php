@@ -253,7 +253,9 @@ class QuoteEditor
         }
 
         // --- Livraison
-        $deliveryMode = in_array($payload['delivery_mode'] ?? 'carrier', self::DELIVERY_MODES, true) ? (string) $payload['delivery_mode'] : 'carrier';
+        // Absent (ex. demande depuis le panier) ou inconnu → « Transporteur ».
+        $deliveryMode = (string) ($payload['delivery_mode'] ?? 'carrier');
+        $deliveryMode = in_array($deliveryMode, self::DELIVERY_MODES, true) ? $deliveryMode : 'carrier';
         $idCarrier = (int) ($payload['id_carrier'] ?? 0);
         $carrierLabel = null;
         $idCarrierReference = null;
