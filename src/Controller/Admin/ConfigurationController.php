@@ -39,7 +39,6 @@ class ConfigurationController extends AbstractQuoteController
         'response_delay_days' => ConfigKeys::RESPONSE_DELAY_DAYS,
         'stock_reservation' => ConfigKeys::STOCK_RESERVATION,
         'fo_request_enabled' => ConfigKeys::FO_REQUEST_ENABLED,
-        'fo_product_button' => ConfigKeys::FO_PRODUCT_BUTTON,
         'payment_gateway' => ConfigKeys::PAYMENT_GATEWAY,
         'methods_default' => ConfigKeys::METHODS_DEFAULT,
         'payment_terms' => ConfigKeys::PAYMENT_TERMS,
@@ -69,7 +68,7 @@ class ConfigurationController extends AbstractQuoteController
 
     /** Champs stockés sous forme de liste « a,b,c ». */
     private const LIST_FIELDS = ['methods_default', 'profiles_approve', 'profiles_convert', 'profiles_see_margin'];
-    private const BOOL_FIELDS = ['stock_reservation', 'fo_request_enabled', 'fo_product_button', 'mail_cc_employee'];
+    private const BOOL_FIELDS = ['stock_reservation', 'fo_request_enabled', 'mail_cc_employee'];
     /** Secrets : laissés vides = valeur actuelle conservée. */
     private const SECRET_FIELDS = ['s3_secret' => ConfigKeys::S3_SECRET];
 
@@ -182,7 +181,6 @@ class ConfigurationController extends AbstractQuoteController
             ] + $help('Payment page and « My quotes » space. « According to the customer group » follows Customers > Groups > Price display method (B2B groups usually show prices excl. tax).'))
             ->add('stock_reservation', CheckboxType::class, ['label' => $this->t('Reserve stock when a quote is accepted'), 'required' => false])
             ->add('fo_request_enabled', CheckboxType::class, ['label' => $this->t('Allow customers to request a quote from their cart'), 'required' => false])
-            ->add('fo_product_button', CheckboxType::class, ['label' => $this->t('Show « Request a quote » on product pages'), 'required' => false])
             // Paiement
             ->add('payment_gateway', ChoiceType::class, [
                 'label' => $this->t('Online payment module'),

@@ -558,6 +558,11 @@ relais Chronopost et Colissimo ; adresse du relais reprise en livraison après c
 - **Affichage TTC / HT réglable par boutique** : TTC d'abord (défaut), HT d'abord, ou selon le groupe du client.
 - Tests carte (lien HiPay, téléphone) et arrivée ERP d'une commande en relais : reportés à la recette de la V1 complète.
   Arrondi des remises (devis à 15 %) : validé. Affichage TTC : validé.
+- **Bouton « Demander un devis » sur la fiche produit : non prévu** (option retirée de la configuration). La demande se fait
+  depuis le panier (0.3.1).
+- **Reprise des devis Opart : facultative.** Transition par coexistence : les deux modules restent installés le temps que
+  les devis Opart en cours se terminent, puis Opart est désinstallé. Un script de reprise reste possible si besoin.
+- **Relais GLS (`nkmgls`)** : à faire, Karl fournit le module.
 
 ### Jalon 3 — partie « Mes devis » livrée le 2026-11-12 (v0.3.0), recette DEV à faire
 
