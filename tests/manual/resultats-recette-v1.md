@@ -126,12 +126,27 @@ SQL pour I1 (remplacer l'id) : `UPDATE ps_snt_quote SET valid_until = '2026-11-0
 | K-panier | ⚠️→✅ | Bouton « Demander un devis » présent sous « Commander » mais pleine largeur sur ZOne (380 px contre 160 px). **Corrigé** : même gabarit que « Commander » (centré, largeur automatique) |
 | Sécurité | ⚠️→✅ | La remise « SNTQ-… » d'un panier de devis restait utilisable sur une commande normale du client si le paiement par carte était abandonné. **Corrigé** : elle est limitée au transporteur technique |
 
+## Contre-recette 0.3.4 (12/11/2026)
+
+| Correction | Résultat | Détail |
+|---|---|---|
+| Hook fiche client | ✅ | Bloc « Devis » de nouveau affiché (client 22635) ; la fiche du client 8299 reste en **503** (hors module) |
+| Libellé autoliquidation | ✅ | Brouillon vide d'une société française : plus de « TVA non facturée » |
+| Bouton du panier | ✅ | Centré, 220 px (« Commander » : 160 px), sous « Commander » |
+| Ligne libre / stock | ✅ | Devis 00003 → commande **TWDGKVUQW 750,90 € = devis** ; ligne libre en stock (999 999), plus d'alerte de rupture sur elle. Le statut « En attente de réapprovisionnement » vient ici du compresseur réellement à 0 en stock (comportement normal de PrestaShop) |
+| Messages de commande | ✅ | « Commande issue du devis DEV-TOMAIR-2026-00003 — livraison : Chronopost Domicile 24h » + commentaire de conversion visibles dans Messages (2) |
+| D7 — Remplacé | ✅ | 00008 refusé → nouvelle version 00008 v2 envoyée → 00008 passe en « Remplacé » et disparaît de « Mes devis » (00007, envoyé avant la correction, reste « Refusé » : la correction n'est pas rétroactive) |
+| D7 bis — bouton | ✅ | « Nouvelle version » proposé sur 00006 (Modification demandée) |
+| Refus BO → lien | ✅ | Lien créé sur 00008 v2 (formulaire de paiement OK) → « Marquer comme refusé » → le lien affiche aussitôt « Ce lien de paiement n'est plus valable » |
+| Erreur unique | ✅ | `.exe` envoyé en message sur « Mes devis » : message d'erreur affiché **une seule fois** |
+| Saisie perdue | ❌→✅ | Après cette erreur, le texte du message était effacé. **Corrigé en 0.3.5** : le texte est conservé (message, demande de modification, refus ; le panneau reste ouvert) |
+
 ## À faire par Karl
 
-1. Installer la **0.3.4** et vider le cache (corrections ci-dessus ; le hook de la fiche client, décroché pour le diagnostic, est raccroché par la mise à jour).
+1. Installer la **0.3.5** et vider le cache (texte conservé après une erreur sur la page devis du client).
 2. Paiements par carte : G3, G4, G6 (HiPay MO/TO), G7 (PayPlug), puis H5 (ERP).
 3. B7 avec un vrai n° de TVA intracom ; J7 avec un employé non SuperAdmin ; I1 avec le SQL ci-dessus.
 4. Fiche client 8299 en 503 : regarder le journal d'erreurs PHP du serveur au moment de l'appel.
 5. Configuration à compléter : IBAN / BIC, CGV et mentions légales du PDF, stockage S3.
 
-Données de test laissées sur la DEV : devis 00002 à 00011, commandes CVVZMHCZC, BILVJDHIF, YFDBVHKLY (à annuler ou purger), 1 produit dans le panier du compte karl.d@snt2.fr.
+Données de test laissées sur la DEV : devis 00001 à 00011 (dont 00008 v2), commandes CVVZMHCZC, BILVJDHIF, YFDBVHKLY, TWDGKVUQW (à annuler ou purger), 2 produits dans le panier du compte karl.d@snt2.fr.

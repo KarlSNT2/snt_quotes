@@ -33,6 +33,9 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
     /** @var string[] */
     private array $sntSuccess = [];
 
+    /** Saisie conservée quand l'action échoue : ['action' => ..., 'text' => ...]. */
+    private array $sntKept = ['action' => '', 'text' => ''];
+
     /** @return void */
     public function init()
     {
@@ -156,9 +159,11 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
             $this->quote = new SntQuote((int) $quote->id);
         } catch (QuoteException $e) {
             $this->errors[] = $this->trans($e->getMessage(), $e->getParameters(), 'Modules.Sntquotes.Shop');
+            $this->sntKept = ['action' => $action, 'text' => mb_substr(trim((string) Tools::getValue('message')), 0, 3000)];
         } catch (Throwable $e) {
             PrestaShopLogger::addLog('[snt_quotes] customer quote action ' . $action . ': ' . $e->getMessage(), 3, null, 'SntQuote', (int) $quote->id);
             $this->errors[] = $this->trans('Your request could not be processed. Please try again or contact us.', [], 'Modules.Sntquotes.Shop');
+            $this->sntKept = ['action' => $action, 'text' => mb_substr(trim((string) Tools::getValue('message')), 0, 3000)];
         }
     }
 
@@ -191,6 +196,7 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
             'snt_quote' => $view,
             'snt_te_first' => ServiceFactory::priceDisplay()->taxExcludedFirst((int) $quote->id_shop, (int) $quote->id_customer),
             'snt_is_request' => $isRequest,
+            'snt_kept' => $this->sntKept,
             'snt_response_days' => max(1, (int) ServiceFactory::config()->get(Snt\Quotes\Config\ConfigKeys::RESPONSE_DELAY_DAYS, (int) $quote->id_shop)),
             'snt_accept' => '.' . implode(',.', Snt\Quotes\Service\QuoteMessages::ATTACHMENT_EXTENSIONS),
             'snt_max_mb' => (int) (Snt\Quotes\Service\QuoteMessages::MAX_ATTACHMENT_SIZE / 1048576),

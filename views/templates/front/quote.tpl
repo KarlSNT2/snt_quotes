@@ -77,18 +77,18 @@
       </div>
 
       {if $snt_can_revise}
-        <form method="post" action="{$snt_action_url}" id="snt-revision" class="snt-quote-fo__panel" hidden>
+        <form method="post" action="{$snt_action_url}" id="snt-revision" class="snt-quote-fo__panel"{if $snt_kept.action != 'revision'} hidden{/if}>
           <input type="hidden" name="token" value="{$snt_token}">
           <label for="snt-revision-text" class="form-control-label">{l s='What would you like to change?' d='Modules.Sntquotes.Shop'}</label>
-          <textarea id="snt-revision-text" name="message" class="form-control" rows="4" maxlength="3000" required></textarea>
+          <textarea id="snt-revision-text" name="message" class="form-control" rows="4" maxlength="3000" required>{if $snt_kept.action == 'revision'}{$snt_kept.text}{/if}</textarea>
           <button type="submit" name="snt_action" value="revision" class="btn btn-primary mt-2">{l s='Send my request' d='Modules.Sntquotes.Shop'}</button>
         </form>
       {/if}
       {if $snt_can_decline}
-        <form method="post" action="{$snt_action_url}" id="snt-decline" class="snt-quote-fo__panel" hidden>
+        <form method="post" action="{$snt_action_url}" id="snt-decline" class="snt-quote-fo__panel"{if $snt_kept.action != 'decline'} hidden{/if}>
           <input type="hidden" name="token" value="{$snt_token}">
           <label for="snt-decline-text" class="form-control-label">{l s='Reason (optional)' d='Modules.Sntquotes.Shop'}</label>
-          <textarea id="snt-decline-text" name="message" class="form-control" rows="3" maxlength="3000"></textarea>
+          <textarea id="snt-decline-text" name="message" class="form-control" rows="3" maxlength="3000">{if $snt_kept.action == 'decline'}{$snt_kept.text}{/if}</textarea>
           <button type="submit" name="snt_action" value="decline" class="btn btn-danger mt-2">{l s='Confirm: decline the quote' d='Modules.Sntquotes.Shop'}</button>
         </form>
       {/if}
@@ -129,7 +129,7 @@
       <form method="post" action="{$snt_action_url}" class="snt-thread__form" enctype="multipart/form-data">
         <input type="hidden" name="token" value="{$snt_token}">
         <label for="snt-message" class="form-control-label">{l s='Your message' d='Modules.Sntquotes.Shop'}</label>
-        <textarea id="snt-message" name="message" class="form-control" rows="3" maxlength="3000"></textarea>
+        <textarea id="snt-message" name="message" class="form-control" rows="3" maxlength="3000">{if $snt_kept.action == 'message'}{$snt_kept.text}{/if}</textarea>
         <label for="snt-message-file" class="form-control-label mt-2">{l s='Attachment' d='Modules.Sntquotes.Shop'} <span class="text-muted">({l s='optional' d='Modules.Sntquotes.Shop'})</span></label>
         <input type="file" id="snt-message-file" name="attachment" class="form-control-file" accept="{$snt_accept}">
         <small class="form-text text-muted">{l s='Plan, specifications, list… %size% MB maximum.' sprintf=['%size%' => $snt_max_mb] d='Modules.Sntquotes.Shop'}</small>
