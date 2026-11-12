@@ -83,3 +83,17 @@
 .snt-request__actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 0; }
 .snt-thread__attachment { display: inline-flex; align-items: center; gap: .25rem; margin-top: .35rem; font-size: .875rem; }
 .snt-thread__attachment .material-icons { font-size: 1.1rem; }
+
+/* Bulles à la taille du texte (éléments de grille : sinon étirées sur toute la largeur) */
+.snt-thread__item { justify-self: start; }
+.snt-thread__item--customer { justify-self: end; }
+/* Formulaires de message et de demande : un champ par ligne quel que soit le thème */
+.snt-thread__form label,
+.snt-thread__form .form-control-file,
+.snt-thread__form .form-text,
+.snt-request__form .form-control-file,
+.snt-request__form .form-text { display: block; }
+.snt-thread__form .form-text,
+.snt-request__form .form-text { margin-top: .25rem; }
+.snt-thread__form .btn,
+.snt-request__submit { display: inline-block; width: auto; margin-top: .75rem; }

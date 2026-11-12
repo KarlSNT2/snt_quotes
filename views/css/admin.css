@@ -175,3 +175,7 @@
 .snt-thread__meta { display: block; font-size: .75rem; color: var(--snt-muted); margin-bottom: 2px; }
 .snt-thread__text { display: block; white-space: normal; }
 .snt-thread__form .btn { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Bulles à la taille du texte (éléments de grille : sinon étirées sur toute la largeur) */
+.snt-thread__item { justify-self: start; }
+.snt-thread__item--employee { justify-self: end; }
