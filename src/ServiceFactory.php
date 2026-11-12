@@ -15,11 +15,16 @@ use Snt\Quotes\Mail\QuoteMailer;
 use Snt\Quotes\Payment\HiPayGateway;
 use Snt\Quotes\Payment\PaymentLinkService;
 use Snt\Quotes\Payment\PayPlugGateway;
+use Snt\Quotes\Pdf\QuotePdfGenerator;
+use Snt\Quotes\Presenter\PriceDisplay;
 use Snt\Quotes\Presenter\QuotePresenter;
 use Snt\Quotes\Presenter\StatusPresenter;
+use Snt\Quotes\Repository\CustomerQuoteRepository;
 use Snt\Quotes\Service\HistoryLogger;
 use Snt\Quotes\Service\QuoteEditor;
+use Snt\Quotes\Service\QuoteMessages;
 use Snt\Quotes\Service\QuoteStateMachine;
+use Snt\Quotes\Storage\S3Storage;
 
 /**
  * Services hors conteneur Symfony : hooks du module et contrôleurs front (en PS 8, le conteneur front ne charge pas
@@ -120,5 +125,25 @@ final class ServiceFactory
     public static function editor(): QuoteEditor
     {
         return self::shared(QuoteEditor::class, static fn (): QuoteEditor => new QuoteEditor(new TaxResolver(), new CatalogPriceProvider(), self::config(), self::history()));
+    }
+
+    public static function messages(): QuoteMessages
+    {
+        return self::shared(QuoteMessages::class, static fn (): QuoteMessages => new QuoteMessages(self::history()));
+    }
+
+    public static function customerQuotes(): CustomerQuoteRepository
+    {
+        return self::shared(CustomerQuoteRepository::class, static fn (): CustomerQuoteRepository => new CustomerQuoteRepository());
+    }
+
+    public static function priceDisplay(): PriceDisplay
+    {
+        return self::shared(PriceDisplay::class, static fn (): PriceDisplay => new PriceDisplay(self::config()));
+    }
+
+    public static function pdf(): QuotePdfGenerator
+    {
+        return self::shared(QuotePdfGenerator::class, static fn (): QuotePdfGenerator => new QuotePdfGenerator(new S3Storage(self::config()), self::history(), self::config()));
     }
 }

@@ -58,6 +58,9 @@ class Snt_Quotes extends PaymentModule
         'actionDispatcherBefore',
         // 0.2.1 — le port du devis prime sur les règles de orderfees_shipping (Advanced Shipping Cost)
         'actionCartGetPackageShippingCost',
+        // 0.3.0 — espace client « Mes devis »
+        'displayCustomerAccount',
+        'moduleRoutes',
     ];
 
     /** @var int|null renseigné par le cœur avant getOrderShippingCost*() (transporteur technique) */
@@ -67,7 +70,7 @@ class Snt_Quotes extends PaymentModule
     {
         $this->name = 'snt_quotes';
         $this->tab = 'billing_invoicing';
-        $this->version = '0.2.1';
+        $this->version = '0.3.0';
         $this->author = 'SNT2';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -362,5 +365,53 @@ class Snt_Quotes extends PaymentModule
         }
 
         return true;
+    }
+
+
+    /* ------------------------------------------------------------------ */
+    /* Espace client « Mes devis » (jalon 3)                                */
+    /* ------------------------------------------------------------------ */
+
+    /**
+     * Lien « Mes devis » dans « Mon compte », avec le nombre de devis qui attendent une réponse.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function hookDisplayCustomerAccount(array $params): string
+    {
+        if (!$this->context->customer->isLogged()) {
+            return '';
+        }
+        $this->context->smarty->assign([
+            'snt_quotes_url' => $this->context->link->getModuleLink($this->name, 'quotes', [], true),
+            'snt_quotes_awaiting' => ServiceFactory::customerQuotes()->countAwaitingAction((int) $this->context->customer->id, (int) $this->context->shop->id),
+        ]);
+
+        return $this->fetch('module:snt_quotes/views/templates/hook/customer_account_link.tpl');
+    }
+
+    /**
+     * URL lisibles : /mes-devis et /mes-devis/{id}.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function hookModuleRoutes(): array
+    {
+        return [
+            'module-snt_quotes-quotes' => [
+                'controller' => 'quotes',
+                'rule' => 'mes-devis',
+                'keywords' => [],
+                'params' => ['fc' => 'module', 'module' => $this->name],
+            ],
+            'module-snt_quotes-quote' => [
+                'controller' => 'quote',
+                'rule' => 'mes-devis/{id_quote}',
+                'keywords' => [
+                    'id_quote' => ['regexp' => '[0-9]+', 'param' => 'id_quote'],
+                ],
+                'params' => ['fc' => 'module', 'module' => $this->name],
+            ],
+        ];
     }
 }

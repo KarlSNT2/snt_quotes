@@ -112,5 +112,41 @@ Cocher `[x]`, noter l'écart sinon.
 - [ ] E-mail « Commande créée depuis le devis » reçu par le commercial
 - [ ] HiPay Payments v4 (PS 8.2) **et** v5 (PS 9.2)
 
-## Jalon 3 — Front office *(à compléter)*
-- [ ] Multiboutique, mobile, accessibilité clavier
+## Jalon 3 — Espace client « Mes devis » (v0.3.0)
+
+### Mise à jour 0.2.1 → 0.3.0
+- [ ] Mise à jour sans erreur ; onglet « Webhooks n8n » disparu de la configuration ; réglage « Prix affichés aux clients » présent
+- [ ] Vider le cache, puis vérifier que `/mes-devis` répond (URL simplifiées actives)
+
+### Liste et accès
+- [ ] « Mon compte » : lien « Mes devis » avec le nombre de devis en attente de réponse
+- [ ] Non connecté → redirection vers la connexion, puis retour
+- [ ] Liste : devis envoyés, vus, acceptés, refusés, expirés, commandés ; **jamais** brouillons, en validation interne, remplacés
+- [ ] Devis en attente de réponse en tête (« Consulter et valider ») ; validité en rouge à moins de 7 jours
+- [ ] Mobile : cartes ; ordinateur : tableau
+- [ ] Un client ne peut pas ouvrir le devis d'un autre (changer l'id dans l'URL → retour à la liste)
+- [ ] Ancienne version (remplacée) → redirection vers la version en cours
+
+### Détail et actions
+- [ ] Ouverture d'un devis « Envoyé » → « Vu » dans le BO
+- [ ] Récapitulatif identique au PDF ; PDF téléchargé = celui envoyé
+- [ ] **Accepter et payer** → page de paiement (CGV, moyens cochés) ; l'ancien lien envoyé par l'équipe est désactivé
+- [ ] **Demander une modification** → « Modification demandée », e-mail au commercial, message dans le fil
+- [ ] **Refuser** (avec et sans motif) → « Refusé », e-mail au commercial, lien de paiement désactivé
+- [ ] **Message** → e-mail au commercial ; réponse depuis la fiche BO → e-mail au client avec lien, message visible côté client
+- [ ] Devis commandé → bouton « Voir ma commande » ; devis expiré → message, pas de paiement
+- [ ] Texte avec balises HTML dans un message → affiché tel quel, jamais interprété
+
+### Affichage des prix
+- [ ] « TTC d'abord » (défaut) : page de paiement et espace client inchangés par rapport à la 0.2.1
+- [ ] « HT d'abord » : prix HT en gras, TTC en rappel, total HT mis en avant
+- [ ] « Selon le groupe du client » : client d'un groupe « Prix HT » → HT d'abord ; client particulier → TTC d'abord
+
+### E-mails
+- [ ] Envoi et relance d'un devis : bouton « Voir mon devis en ligne » → page du devis (après connexion)
+- [ ] Nouveaux e-mails activables / désactivables dans la configuration (demande client, réponse de l'équipe)
+
+### Reste du jalon 3 *(à venir)*
+- [ ] Panier → demande de devis
+- [ ] Tâche planifiée : relances avant expiration, passage en « Expiré », liens expirés révoqués
+- [ ] Multiboutique, accessibilité clavier

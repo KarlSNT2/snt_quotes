@@ -2,6 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="snt_quotes" source-language="en-US" target-language="fr-FR" datatype="plaintext">
     <body>
+      <trans-unit id="ae9c5d869e67ec92fafeac439adc5528">
+        <source>New message about your quote %reference% — %shop%</source>
+        <target>Nouveau message sur votre devis %reference% — %shop%</target>
+      </trans-unit>
       <trans-unit id="b24bf3dc434c4bd83d57d2053b49defd">
         <source>Order created from quote %reference%</source>
         <target>Commande créée depuis le devis %reference%</target>
@@ -10,9 +14,25 @@
         <source>Pay your quote %reference% online — %shop%</source>
         <target>Réglez votre devis %reference% en ligne — %shop%</target>
       </trans-unit>
+      <trans-unit id="fa7122ecab5e1b1b2ddce72ed29560f0">
+        <source>Quote %reference%: %action%</source>
+        <target>Devis %reference% : %action%</target>
+      </trans-unit>
       <trans-unit id="368e0856867ed9445c374e39c0d690aa">
         <source>Reminder: your quote %reference% expires soon</source>
         <target>Rappel : votre devis %reference% arrive à échéance</target>
+      </trans-unit>
+      <trans-unit id="98bcb9667497293a0d3556cdf4c46577">
+        <source>The customer asks for changes to the quote.</source>
+        <target>Le client demande des modifications sur le devis.</target>
+      </trans-unit>
+      <trans-unit id="c3c4d2dcc592c029d4c44af52256b031">
+        <source>The customer has declined the quote.</source>
+        <target>Le client a refusé le devis.</target>
+      </trans-unit>
+      <trans-unit id="78d7698130c227f514bb0c3bc761927e">
+        <source>The customer sent a message about the quote.</source>
+        <target>Le client a envoyé un message à propos du devis.</target>
       </trans-unit>
       <trans-unit id="bbe4923e710ce8918bfaed48e9c1c36d">
         <source>Updated quote %reference% — %shop%</source>
@@ -21,6 +41,10 @@
       <trans-unit id="4ac6eeb9cd6f24fa89001b20c174a1a9">
         <source>View and pay my quote</source>
         <target>Consulter et régler mon devis</target>
+      </trans-unit>
+      <trans-unit id="ee192dfea56589882791f1a420457ab3">
+        <source>View my quote online</source>
+        <target>Voir mon devis en ligne</target>
       </trans-unit>
       <trans-unit id="857fc2ae5b4f9c1ef6ec81c5d75f6ac0">
         <source>Your quote %reference% — %shop%</source>

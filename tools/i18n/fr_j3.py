@@ -1,0 +1,82 @@
+"""Catalogue français — chaînes ajoutées au jalon 3 (espace « Mes devis », échanges, affichage des prix)."""
+
+FR_ADMIN_J3 = {
+ "A change can no longer be requested for this quote.": "Une modification ne peut plus être demandée pour ce devis.",
+ "According to the customer group setting": "Selon le réglage du groupe du client",
+ "Customer request or message (to the sales rep)": "Demande ou message du client (au commercial)",
+ "Messages with the customer": "Échanges avec le client",
+ "No messages yet. The customer can write to you from the « My quotes » space.": "Aucun message pour l’instant. Le client peut vous écrire depuis son espace « Mes devis ».",
+ "Payment page and « My quotes » space. « According to the customer group » follows Customers > Groups > Price display method (B2B groups usually show prices excl. tax).": "Page de paiement et espace « Mes devis ». « Selon le groupe du client » suit Clients > Groupes > Affichage des prix (les groupes B2B affichent en général les prix HT).",
+ "Prices shown to customers": "Prix affichés aux clients",
+ "Reply from the team (to the customer)": "Réponse de l’équipe (au client)",
+ "Reply to the customer": "Répondre au client",
+ "Send the reply": "Envoyer la réponse",
+ "Tax excluded first (incl. tax as a reminder)": "HT d’abord (TTC en rappel)",
+ "Tax included first (excl. tax as a reminder)": "TTC d’abord (HT en rappel)",
+ "Tell us what you would like to change.": "Indiquez ce que vous souhaitez modifier.",
+ "The customer receives your reply by e-mail, with a link to the quote.": "Le client reçoit votre réponse par e-mail, avec un lien vers le devis.",
+ "This quote can no longer be accepted online.": "Ce devis ne peut plus être accepté en ligne.",
+ "This quote can no longer be declined.": "Ce devis ne peut plus être refusé.",
+ "Write your message before sending it.": "Écrivez votre message avant de l’envoyer.",
+ "Your reply has been sent to the customer.": "Votre réponse a été envoyée au client.",
+}
+
+FR_EMAILS_J3 = {
+ "New message about your quote %reference% — %shop%": "Nouveau message sur votre devis %reference% — %shop%",
+ "View my quote online": "Voir mon devis en ligne",
+ "The customer asks for changes to the quote.": "Le client demande des modifications sur le devis.",
+ "The customer has declined the quote.": "Le client a refusé le devis.",
+ "The customer sent a message about the quote.": "Le client a envoyé un message à propos du devis.",
+ "Quote %reference%: %action%": "Devis %reference% : %action%",
+}
+
+# Chaînes des exceptions affichées côté client (traduites dans le domaine Shop par le contrôleur).
+FR_SHOP_EXCEPTIONS = {
+ "A change can no longer be requested for this quote.": "Une modification ne peut plus être demandée pour ce devis.",
+ "Tell us what you would like to change.": "Indiquez ce que vous souhaitez modifier.",
+ "This quote can no longer be accepted online.": "Ce devis ne peut plus être accepté en ligne.",
+ "This quote can no longer be declined.": "Ce devis ne peut plus être refusé.",
+ "Write your message before sending it.": "Écrivez votre message avant de l’envoyer.",
+}
+
+FR_SHOP_J3 = {
+ "Actions": "Actions",
+ "Back to my quotes": "Retour à mes devis",
+ "Confirm: decline the quote": "Confirmer : refuser le devis",
+ "Date": "Date",
+ "Decline the quote": "Refuser le devis",
+ "Download the PDF": "Télécharger le PDF",
+ "Message from your sales representative": "Message de votre commercial",
+ "Messages": "Messages",
+ "My quotes": "Mes devis",
+ "No messages yet. Ask your sales representative a question below.": "Aucun message pour l’instant. Posez votre question à votre commercial ci-dessous.",
+ "Pay my quote": "Régler mon devis",
+ "Project": "Projet",
+ "Reason (optional)": "Motif (facultatif)",
+ "Reference": "Référence",
+ "Request a change": "Demander une modification",
+ "Send": "Envoyer",
+ "Send my request": "Envoyer ma demande",
+ "Status": "Statut",
+ "Thank you for your answer. The quote is marked as declined.": "Merci pour votre réponse. Le devis est indiqué comme refusé.",
+ "The PDF is temporarily unavailable. Please try again later.": "Le PDF est momentanément indisponible. Réessayez plus tard.",
+ "This quote has been ordered.": "Ce devis a été commandé.",
+ "This quote has expired. Ask your sales representative for an updated quote.": "Ce devis a expiré. Demandez un devis à jour à votre commercial.",
+ "Valid until": "Valable jusqu’au",
+ "View": "Voir",
+ "View and confirm": "Consulter et valider",
+ "View my order": "Voir ma commande",
+ "Waiting for your answer": "En attente de votre réponse",
+ "What would you like to change?": "Que souhaitez-vous modifier ?",
+ "What would you like to do?": "Que souhaitez-vous faire ?",
+ "You": "Vous",
+ "You declined this quote. Contact your sales representative if you change your mind.": "Vous avez refusé ce devis. Contactez votre commercial si vous changez d’avis.",
+ "You have no quotes yet. Your sales representative will send them to you here.": "Vous n’avez pas encore de devis. Votre commercial vous les enverra ici.",
+ "You will confirm the terms and conditions of sale and choose your payment method on the next page.": "Vous confirmerez les conditions générales de vente et choisirez votre moyen de paiement à l’étape suivante.",
+ "Your change request has been sent. Your sales representative will send you an updated quote.": "Votre demande de modification a été envoyée. Votre commercial vous enverra un devis mis à jour.",
+ "Your message": "Votre message",
+ "Your message has been sent.": "Votre message a été envoyé.",
+ "Your request could not be processed. Please try again or contact us.": "Votre demande n’a pas pu être traitée. Réessayez ou contactez-nous.",
+ "Your request has been sent. Your sales representative will send you an updated quote.": "Votre demande a été envoyée. Votre commercial vous enverra un devis mis à jour.",
+}
+FR_SHOP_J3.update(FR_SHOP_EXCEPTIONS)

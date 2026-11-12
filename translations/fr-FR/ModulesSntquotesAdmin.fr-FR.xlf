@@ -22,6 +22,10 @@
         <source>0 = no automatic reminder. Requires the cron URL to be called by n8n.</source>
         <target>0 = pas de relance automatique. Nécessite que n8n appelle l’URL cron.</target>
       </trans-unit>
+      <trans-unit id="292c50204a8416b76eacd43582ad25d9">
+        <source>A change can no longer be requested for this quote.</source>
+        <target>Une modification ne peut plus être demandée pour ce devis.</target>
+      </trans-unit>
       <trans-unit id="e9905b226d029644ed7437fc80a9fe85">
         <source>A customer already uses this e-mail address: search for it instead.</source>
         <target>Un client utilise déjà cette adresse e-mail : recherchez-le plutôt.</target>
@@ -49,6 +53,10 @@
       <trans-unit id="47b84fd1609df93c987377c912e3baf1">
         <source>Access key</source>
         <target>Clé d’accès</target>
+      </trans-unit>
+      <trans-unit id="822cefdec8fdf083a7e88c9be38ed9c8">
+        <source>According to the customer group setting</source>
+        <target>Selon le réglage du groupe du client</target>
       </trans-unit>
       <trans-unit id="06df33001c1d7187fdd81ea1f5b277aa">
         <source>Actions</source>
@@ -414,6 +422,10 @@
         <source>Customer created.</source>
         <target>Client créé.</target>
       </trans-unit>
+      <trans-unit id="fd1d4c5d910227bcf79465389c96f68b">
+        <source>Customer request or message (to the sales rep)</source>
+        <target>Demande ou message du client (au commercial)</target>
+      </trans-unit>
       <trans-unit id="44749712dbec183e983dcd78a7736c41">
         <source>Date</source>
         <target>Date</target>
@@ -554,14 +566,6 @@
         <source>Enter a postcode to search for pickup points.</source>
         <target>Saisissez un code postal pour chercher des points relais.</target>
       </trans-unit>
-      <trans-unit id="f5b4d2b4d51058d9145075f464588e24">
-        <source>Enter the city as well to search for the pickup points of this carrier.</source>
-        <target>Saisissez aussi la ville pour chercher les points relais de ce transporteur.</target>
-      </trans-unit>
-      <trans-unit id="4c7c26ff2abc5904dcd3d83e4dcd054d">
-        <source>The pickup point search is unavailable for this carrier. Try again in a few minutes.</source>
-        <target>La recherche de points relais est indisponible pour ce transporteur. Réessayez dans quelques minutes.</target>
-      </trans-unit>
       <trans-unit id="2b3e9729e125a5173fe20e1dc37d4271">
         <source>Enter a valid e-mail address.</source>
         <target>Saisissez une adresse e-mail valide.</target>
@@ -574,6 +578,10 @@
         <source>Enter the amount or percentage of the dedicated voucher.</source>
         <target>Saisissez le montant ou le pourcentage du bon dédié.</target>
       </trans-unit>
+      <trans-unit id="f5b4d2b4d51058d9145075f464588e24">
+        <source>Enter the city as well to search for the pickup points of this carrier.</source>
+        <target>Saisissez aussi la ville pour chercher les points relais de ce transporteur.</target>
+      </trans-unit>
       <trans-unit id="92b5e9afe697ebbfc06ae4ec77c8da42">
         <source>Enter the first and last name (letters only).</source>
         <target>Saisissez le prénom et le nom (lettres uniquement).</target>
@@ -581,10 +589,6 @@
       <trans-unit id="623b30b37a00a9d6e68ea696fe2afe20">
         <source>Enter the value of the voucher.</source>
         <target>Saisissez la valeur du bon.</target>
-      </trans-unit>
-      <trans-unit id="3a9bd7c183dc42e1b9ad96f34a3bf64e">
-        <source>Events sent: quote.sent, quote.accepted, quote.declined, quote.ordered, quote.paid, quote.expired — signed with the X-Snt-Signature header (HMAC SHA-256). Active from milestone 3.</source>
-        <target>Événements envoyés : quote.sent, quote.accepted, quote.declined, quote.ordered, quote.paid, quote.expired — signés avec l’en-tête X-Snt-Signature (HMAC SHA-256). Actif à partir du jalon 3.</target>
       </trans-unit>
       <trans-unit id="4a4998a3b2da0d8aa25b4067aba9d501">
         <source>Expire</source>
@@ -690,10 +694,6 @@
         <source>Leave empty to keep the current key.</source>
         <target>Laisser vide pour conserver la clé actuelle.</target>
       </trans-unit>
-      <trans-unit id="2b3bc222946d6f742d021d4486d591e2">
-        <source>Leave empty to keep the current secret.</source>
-        <target>Laisser vide pour conserver le secret actuel.</target>
-      </trans-unit>
       <trans-unit id="823d0a9f26da1709909f89ebe82340b3">
         <source>Legal notices (PDF footer)</source>
         <target>Mentions légales (pied de page du PDF)</target>
@@ -794,6 +794,10 @@
         <source>Message to the customer</source>
         <target>Message au client</target>
       </trans-unit>
+      <trans-unit id="b328dce03387073a190966db5ec6ca7b">
+        <source>Messages with the customer</source>
+        <target>Échanges avec le client</target>
+      </trans-unit>
       <trans-unit id="9f6e99bdd4184b83dc478d0ab1b4cbf7">
         <source>Minimum amount</source>
         <target>Montant minimum</target>
@@ -865,6 +869,10 @@
       <trans-unit id="6150841a3351688ef14d33fdf7c85850">
         <source>No lines yet: search for a product above, or add a free line.</source>
         <target>Aucune ligne pour l’instant : recherchez un produit ci-dessus ou ajoutez une ligne libre.</target>
+      </trans-unit>
+      <trans-unit id="ddd0a2684fd8054029e6f23db3f40c43">
+        <source>No messages yet. The customer can write to you from the « My quotes » space.</source>
+        <target>Aucun message pour l’instant. Le client peut vous écrire depuis son espace « Mes devis ».</target>
       </trans-unit>
       <trans-unit id="e0b791150f5baf2b703c3be4ce5db37e">
         <source>No payment link yet.</source>
@@ -1022,6 +1030,10 @@
         <source>Payment methods proposed by default</source>
         <target>Moyens de paiement proposés par défaut</target>
       </trans-unit>
+      <trans-unit id="426509a84b7b395d12be14a15acbf34a">
+        <source>Payment page and « My quotes » space. « According to the customer group » follows Customers &gt; Groups &gt; Price display method (B2B groups usually show prices excl. tax).</source>
+        <target>Page de paiement et espace « Mes devis ». « Selon le groupe du client » suit Clients &gt; Groupes &gt; Affichage des prix (les groupes B2B affichent en général les prix HT).</target>
+      </trans-unit>
       <trans-unit id="ccbe2525fc2910d02d485b08347f0243">
         <source>Payment terms (printed on the PDF)</source>
         <target>Conditions de règlement (imprimées sur le PDF)</target>
@@ -1053,6 +1065,10 @@
       <trans-unit id="d7b54aa3b8b07af82eae36a7055799aa">
         <source>Preview the PDF</source>
         <target>Aperçu du PDF</target>
+      </trans-unit>
+      <trans-unit id="01dd8bfd85dd9e4f21951347f8445e79">
+        <source>Prices shown to customers</source>
+        <target>Prix affichés aux clients</target>
       </trans-unit>
       <trans-unit id="7694b06488062cea74eae5f1922c53bc">
         <source>Printed on the PDF and shown to the customer.</source>
@@ -1170,6 +1186,14 @@
         <source>Replaced</source>
         <target>Remplacé</target>
       </trans-unit>
+      <trans-unit id="8bc6307d3988c008ec8df82815f28c1d">
+        <source>Reply from the team (to the customer)</source>
+        <target>Réponse de l’équipe (au client)</target>
+      </trans-unit>
+      <trans-unit id="68a623219286d81776de382d89ca109d">
+        <source>Reply to the customer</source>
+        <target>Répondre au client</target>
+      </trans-unit>
       <trans-unit id="4fd8160e586976d268e9f39718b13971">
         <source>Reserve stock when a quote is accepted</source>
         <target>Réserver le stock à l’acceptation d’un devis</target>
@@ -1262,6 +1286,10 @@
         <source>Send the quote to the customer before creating a payment link.</source>
         <target>Envoyez le devis au client avant de créer un lien de paiement.</target>
       </trans-unit>
+      <trans-unit id="7ed005d6522146a533499dbcd463ea32">
+        <source>Send the reply</source>
+        <target>Envoyer la réponse</target>
+      </trans-unit>
       <trans-unit id="704ffe0b00405daa5c669f4963a5224b">
         <source>Send to customer</source>
         <target>Envoyer au client</target>
@@ -1310,10 +1338,6 @@
         <source>Show « Request a quote » on product pages</source>
         <target>Afficher « Demander un devis » sur les fiches produit</target>
       </trans-unit>
-      <trans-unit id="2e7329e8e4878bfad8ec5ed7fac08659">
-        <source>Signing secret (HMAC)</source>
-        <target>Secret de signature (HMAC)</target>
-      </trans-unit>
       <trans-unit id="1a47947c7f4efe361fe3b52cd542e1cd">
         <source>Site code</source>
         <target>Code site</target>
@@ -1353,6 +1377,18 @@
       <trans-unit id="a45da96d0bf6575970f2d27af22be28a">
         <source>System</source>
         <target>Système</target>
+      </trans-unit>
+      <trans-unit id="e9dd755f5031d9e7f805bf7282612395">
+        <source>Tax excluded first (incl. tax as a reminder)</source>
+        <target>HT d’abord (TTC en rappel)</target>
+      </trans-unit>
+      <trans-unit id="9d2974afcdc48dff094940e1ad97cdaa">
+        <source>Tax included first (excl. tax as a reminder)</source>
+        <target>TTC d’abord (HT en rappel)</target>
+      </trans-unit>
+      <trans-unit id="e6abe407e1cb0c539d7db0b85cd103af">
+        <source>Tell us what you would like to change.</source>
+        <target>Indiquez ce que vous souhaitez modifier.</target>
       </trans-unit>
       <trans-unit id="6f1bf85c9ebb3c7fa26251e1e335e032">
         <source>Terms</source>
@@ -1413,6 +1449,10 @@
       <trans-unit id="6392a8fc4382d7133072bf3dc9b75d7b">
         <source>The customer opens the quote, accepts the terms and pays, without logging in. The order is created automatically.</source>
         <target>Le client ouvre le devis, accepte les conditions et paie, sans se connecter. La commande est créée automatiquement.</target>
+      </trans-unit>
+      <trans-unit id="38053c0ace0f9e9f6529ce37e49fb211">
+        <source>The customer receives your reply by e-mail, with a link to the quote.</source>
+        <target>Le client reçoit votre réponse par e-mail, avec un lien vers le devis.</target>
       </trans-unit>
       <trans-unit id="1b5a453f26ff78a9bd1a3cad8f0675dd">
         <source>The customer will no longer be able to accept this quote. Continue?</source>
@@ -1485,6 +1525,10 @@
       <trans-unit id="e710e01deee8dbf1a1e71bf484ace27e">
         <source>The payment page could not be opened. Try again in a few minutes or contact us.</source>
         <target>La page de paiement n’a pas pu s’ouvrir. Réessayez dans quelques minutes ou contactez-nous.</target>
+      </trans-unit>
+      <trans-unit id="4c7c26ff2abc5904dcd3d83e4dcd054d">
+        <source>The pickup point search is unavailable for this carrier. Try again in a few minutes.</source>
+        <target>La recherche de points relais est indisponible pour ce transporteur. Réessayez dans quelques minutes.</target>
       </trans-unit>
       <trans-unit id="cb69948afd53cdeb8b9648812cb0a79b">
         <source>The postcode is not valid for this country.</source>
@@ -1622,6 +1666,14 @@
         <source>This quote belongs to another shop. Switch shop to open it.</source>
         <target>Ce devis appartient à une autre boutique. Changez de boutique pour l’ouvrir.</target>
       </trans-unit>
+      <trans-unit id="2d6c258f4ec7b848b1b58f3d73137aeb">
+        <source>This quote can no longer be accepted online.</source>
+        <target>Ce devis ne peut plus être accepté en ligne.</target>
+      </trans-unit>
+      <trans-unit id="aefa3253319cc76cc0995d522682e63a">
+        <source>This quote can no longer be declined.</source>
+        <target>Ce devis ne peut plus être refusé.</target>
+      </trans-unit>
       <trans-unit id="290ecf26508e293e269a80b06a7544fe">
         <source>This quote can no longer be modified. Create a new version to change it.</source>
         <target>Ce devis ne peut plus être modifié. Créez une nouvelle version pour le changer.</target>
@@ -1746,6 +1798,10 @@
         <source>Voucher code or name</source>
         <target>Code ou nom du bon</target>
       </trans-unit>
+      <trans-unit id="3a90d737684a7dc9fe47e6ee4c345a7b">
+        <source>Write your message before sending it.</source>
+        <target>Écrivez votre message avant de l’envoyer.</target>
+      </trans-unit>
       <trans-unit id="bd3e1d42adc1eae5147cad0ad855ac07">
         <source>You do not have permission to perform this action. Ask an administrator.</source>
         <target>Vous n’avez pas le droit d’effectuer cette action. Demandez à un administrateur.</target>
@@ -1753,6 +1809,10 @@
       <trans-unit id="7098122bf77b069f4a0e39d0b839e4ce">
         <source>You have unsaved changes. Leave the page anyway?</source>
         <target>Vous avez des modifications non enregistrées. Quitter la page quand même ?</target>
+      </trans-unit>
+      <trans-unit id="dbc6c1b3ad76a603fdb1e598fdf178e0">
+        <source>Your reply has been sent to the customer.</source>
+        <target>Votre réponse a été envoyée au client.</target>
       </trans-unit>
       <trans-unit id="7e285b7c3a264c7ba48eda458fb9b0dd">
         <source>Your session has expired. Reload the page and try again.</source>
@@ -1786,13 +1846,9 @@
         <source>from %ref%</source>
         <target>depuis %ref%</target>
       </trans-unit>
-      <trans-unit id="956da2d69676fd3d471f940d44cd94db">
-        <source>n8n webhook URL</source>
-        <target>URL du webhook n8n</target>
-      </trans-unit>
-      <trans-unit id="4f52f9a6a8936bbd5595eb76221838d2">
-        <source>n8n webhooks</source>
-        <target>Webhooks n8n</target>
+      <trans-unit id="d81452f69428210b408148ad9853c7a7">
+        <source>incl. tax</source>
+        <target>TTC</target>
       </trans-unit>
       <trans-unit id="f43425d5efcee6dfd94080fc26b5627c">
         <source>not ticked on the quote</source>
@@ -1813,10 +1869,6 @@
       <trans-unit id="7af5d1daea567140ed6fcf4a65602d4b">
         <source>— the quote’s shipping cost will be applied as is.</source>
         <target>— le port du devis sera appliqué tel quel.</target>
-      </trans-unit>
-      <trans-unit id="d81452f69428210b408148ad9853c7a7">
-        <source>incl. tax</source>
-        <target>TTC</target>
       </trans-unit>
     </body>
   </file>

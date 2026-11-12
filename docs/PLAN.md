@@ -549,3 +549,22 @@ relais Chronopost et Colissimo ; adresse du relais reprise en livraison après c
 6. **Reste du jalon 2** : points relais GLS (`nkmgls`, même modèle que `src/Relay/` ; attention, GLS identifie ses transporteurs
    par `id_carrier` et non par référence) ; compléter `PROCEDURE.md` et `tests/manual/checklist-recette.md`.
 7. Mettre à jour `upgrade/` (nouveaux hooks FO), les traductions (`tools/i18n`), le README et le guide utilisateur.
+
+### Décisions du 2026-11-12 (Karl)
+
+- **Webhooks n8n abandonnés** : l'ERP lit les commandes, rien d'autre n'est nécessaire. Onglet, clés de configuration et table
+  `snt_quote_webhook_log` supprimés en 0.3.0. Le hook interne `actionSntQuoteStatusUpdate` reste disponible.
+- **Jalon 3 commencé par l'espace « Mes devis »**.
+- **Affichage TTC / HT réglable par boutique** : TTC d'abord (défaut), HT d'abord, ou selon le groupe du client.
+- Tests carte (lien HiPay, téléphone) et arrivée ERP d'une commande en relais : reportés à la recette de la V1 complète.
+  Arrondi des remises (devis à 15 %) : validé. Affichage TTC : validé.
+
+### Jalon 3 — partie « Mes devis » livrée le 2026-11-12 (v0.3.0), recette DEV à faire
+
+Fait : lien « Mes devis » dans « Mon compte » (`displayCustomerAccount`), URL `/mes-devis` et `/mes-devis/{id}` (`moduleRoutes`),
+liste (devis en attente de réponse en tête, cartes sur mobile), détail (récapitulatif partagé avec la page de paiement :
+`_quote-summary.tpl`), PDF envoyé, **Accepter et payer** (nouveau lien de paiement puis page `pay`), **Demander une
+modification**, **Refuser**, fil d'échanges client ↔ équipe (`QuoteMessages`, bloc dans la fiche BO, e-mails
+`snt_quote_customer_action` et `snt_quote_reply`), bouton « Voir mon devis en ligne » dans les e-mails d'envoi et de relance.
+
+Reste du jalon 3 : panier → demande de devis (FO-01), tâche planifiée (relances, expirations, liens expirés), points relais GLS.

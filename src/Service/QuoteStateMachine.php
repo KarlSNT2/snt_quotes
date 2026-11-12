@@ -10,8 +10,8 @@ use Snt\Quotes\Domain\QuoteStatus;
 /**
  * Point d'entrée unique des changements de statut : contrôle, horodatage, historique, événement.
  *
- * L'événement est publié via le hook « actionSntQuoteStatusUpdate » : les webhooks n8n (jalon 3)
- * et les e-mails automatiques s'y abonnent, sans que ce service les connaisse.
+ * L'événement est publié via le hook « actionSntQuoteStatusUpdate » : d'autres modules peuvent s'y abonner
+ * sans que ce service les connaisse.
  */
 class QuoteStateMachine
 {

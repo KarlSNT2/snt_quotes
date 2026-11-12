@@ -164,6 +164,34 @@
         </div>
       </div>
 
+      {# --- Échanges avec le client ---------------------------------------- #}
+      <section class="card" aria-labelledby="snt-messages-title">
+        <h3 class="card-header" id="snt-messages-title">{{ 'Messages with the customer'|trans }}{% if messages|length %} <span class="badge badge-secondary">{{ messages|length }}</span>{% endif %}</h3>
+        <div class="card-body">
+          {% if messages %}
+            <ol class="snt-thread">
+              {% for message in messages %}
+                <li class="snt-thread__item snt-thread__item--{{ message.author_type }}">
+                  <span class="snt-thread__meta">{{ message.author_type == 'customer' ? 'Customer'|trans : message.author_name }} · {{ message.date_display }}</span>
+                  <span class="snt-thread__text">{{ message.message|nl2br }}</span>
+                </li>
+              {% endfor %}
+            </ol>
+          {% else %}
+            <p class="text-muted">{{ 'No messages yet. The customer can write to you from the « My quotes » space.'|trans }}</p>
+          {% endif %}
+          {% if permissions.edit %}
+            <form method="post" action="{{ path('admin_snt_quotes_message', {quoteId: quoteId}) }}" class="snt-thread__form">
+              <input type="hidden" name="_csrf" value="{{ csrf }}">
+              <label for="snt-reply" class="form-control-label">{{ 'Reply to the customer'|trans }}</label>
+              <textarea id="snt-reply" name="message" class="form-control" rows="3" maxlength="3000" required></textarea>
+              <p class="snt-help">{{ 'The customer receives your reply by e-mail, with a link to the quote.'|trans }}</p>
+              <button type="submit" class="btn btn-outline-primary"><i class="material-icons" aria-hidden="true">reply</i> {{ 'Send the reply'|trans }}</button>
+            </form>
+          {% endif %}
+        </div>
+      </section>
+
       {# --- Historique ----------------------------------------------------- #}
       <section class="card">
         <h3 class="card-header">{{ 'History'|trans }}</h3>

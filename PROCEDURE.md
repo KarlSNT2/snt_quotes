@@ -63,6 +63,17 @@ Fiche devis > **Convertir en commande**, puis choisir le mode :
 - La commande affiche un encart **« Issue du devis … »**, et le devis un lien vers la commande.
 - Le commercial reçoit un e-mail quand le client crée la commande par le lien.
 
+## Côté client : « Mes devis »
+
+Le client retrouve ses devis dans **Mon compte > Mes devis**. Il peut :
+
+| Action du client | Ce qui se passe | Ce que je fais |
+|---|---|---|
+| Accepter et payer | Un nouveau lien de paiement est créé (l'ancien est désactivé) et le client paie | Rien : la commande se crée seule |
+| Demander une modification | Devis en « Modification demandée », e-mail reçu | Nouvelle version, puis envoi |
+| Refuser | Devis en « Refusé », e-mail reçu avec le motif | Relancer le client si besoin |
+| Écrire un message | E-mail reçu | Répondre depuis le bloc « Échanges avec le client » de la fiche devis |
+
 ## Points de vigilance
 
 - **Devis « Accepté » sans commande** : souvent un paiement carte abandonné. Le devis passe en Accepté dès que le client valide la page, avant de payer. Relancer le client ou renvoyer un lien.

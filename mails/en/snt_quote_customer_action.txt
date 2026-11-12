@@ -1,0 +1,9 @@
+Hello {employee_name},
+
+{action_label}
+
+Quote {quote_reference} — {customer_name} — {quote_total_ti}
+
+{customer_message_txt}
+
+Reply from the quote page (Orders > Quotes): the customer will receive your answer by e-mail.

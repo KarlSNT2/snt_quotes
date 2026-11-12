@@ -78,6 +78,15 @@ admin_snt_quotes_remind:
   requirements:
     quoteId: '\d+'
 
+admin_snt_quotes_message:
+  path: /sntquotes/{quoteId}/message
+  methods: [POST]
+  defaults:
+    _controller: 'Snt\Quotes\Controller\Admin\QuoteController::messageAction'
+    _legacy_controller: AdminSntQuotes
+  requirements:
+    quoteId: '\d+'
+
 admin_snt_quotes_transition:
   path: /sntquotes/{quoteId}/status/{to}
   methods: [POST]

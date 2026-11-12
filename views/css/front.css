@@ -35,3 +35,34 @@
   .snt-pay__totals { max-width: none; }
   .snt-pay .btn-lg { width: 100%; }
 }
+
+/* ---- Espace « Mes devis » (jalon 3) ------------------------------------------ */
+.snt-text-urgent { color: #b42318; font-weight: 600; }
+.snt-empty-fo { padding: 1rem; border: 1px dashed #d6dbe1; border-radius: 6px; color: #4b5563; }
+.snt-awaiting { margin-bottom: 1.25rem; padding: 1rem; border: 1px solid #b6d4ef; border-radius: 6px; background: #f3f8fd; }
+.snt-awaiting h2 { margin-top: 0; }
+.snt-awaiting__item { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: .75rem 0; border-top: 1px solid #d9e7f5; }
+.snt-awaiting__item:first-of-type { border-top: 0; }
+.snt-awaiting__amount { font-weight: 700; }
+.snt-quotes-fo__table td, .snt-quotes-fo__table th { vertical-align: middle; }
+.snt-quotes-fo__cards { list-style: none; margin: 0; padding: 0; }
+.snt-quote-card { margin-bottom: .75rem; }
+.snt-quote-card__link { display: block; padding: .875rem 1rem; border: 1px solid #d6dbe1; border-radius: 6px; background: #fff; color: inherit; }
+.snt-quote-card__link:hover, .snt-quote-card__link:focus { border-color: #1f6fb2; text-decoration: none; }
+.snt-quote-card__top, .snt-quote-card__bottom { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+.snt-quote-card__project { display: block; color: #4b5563; margin: .25rem 0; }
+.snt-quote-card__validity { display: block; font-size: .875rem; margin-top: .25rem; }
+.snt-quote-fo__main { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.snt-quote-fo__hint { color: #4b5563; font-size: .875rem; flex: 1 1 260px; }
+.snt-quote-fo__secondary { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.snt-quote-fo__secondary .material-icons { font-size: 18px; vertical-align: -4px; }
+.snt-quote-fo__panel { margin-top: 1rem; }
+.snt-thread__list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: .5rem; }
+.snt-thread__item { max-width: 85%; padding: .625rem .875rem; border-radius: 8px; background: #f3f4f6; }
+.snt-thread__item--customer { margin-left: auto; background: #e8f1fb; }
+.snt-thread__meta { display: block; font-size: .8125rem; color: #4b5563; margin-bottom: .25rem; }
+.snt-thread__text { display: block; }
+@media (max-width: 575px) {
+  .snt-thread__item { max-width: 100%; }
+  .snt-quote-fo__main .btn { width: 100%; }
+}

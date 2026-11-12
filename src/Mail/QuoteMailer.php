@@ -21,9 +21,14 @@ class QuoteMailer
     public const TPL_REMINDER = 'snt_quote_reminder';
     public const TPL_PAYMENT_LINK = 'snt_quote_payment_link';
     public const TPL_ORDERED_EMPLOYEE = 'snt_quote_ordered_employee';
+    public const TPL_CUSTOMER_ACTION = 'snt_quote_customer_action';
+    public const TPL_REPLY = 'snt_quote_reply';
 
     /** Modèles activables / désactivables dans la configuration. */
-    public const TEMPLATES = [self::TPL_SENT, self::TPL_NEW_VERSION, self::TPL_REMINDER, self::TPL_PAYMENT_LINK, self::TPL_ORDERED_EMPLOYEE];
+    public const TEMPLATES = [
+        self::TPL_SENT, self::TPL_NEW_VERSION, self::TPL_REMINDER, self::TPL_PAYMENT_LINK,
+        self::TPL_ORDERED_EMPLOYEE, self::TPL_CUSTOMER_ACTION, self::TPL_REPLY,
+    ];
 
     private const DOMAIN = 'Modules.Sntquotes.Emails';
 
@@ -53,6 +58,7 @@ class QuoteMailer
             self::TPL_REMINDER => $this->trans('Reminder: your quote %reference% expires soon', $params, $quote),
             self::TPL_PAYMENT_LINK => $this->trans('Pay your quote %reference% online — %shop%', $params, $quote),
             self::TPL_ORDERED_EMPLOYEE => $this->trans('Order created from quote %reference%', $params, $quote),
+            self::TPL_REPLY => $this->trans('New message about your quote %reference% — %shop%', $params, $quote),
             default => $this->trans('Your quote %reference% — %shop%', $params, $quote),
         };
     }
@@ -238,10 +244,121 @@ class QuoteMailer
             '{employee_name}' => $e($employee['name'] ?? ''),
             '{employee_email}' => $e($employee['email'] ?? ''),
             '{employee_phone}' => $e($employee['phone'] ?? ''),
-            // Lien vers le devis en ligne et lien de paiement : alimentés à partir du jalon 3 (FO).
-            '{quote_link_html}' => '',
-            '{quote_link_txt}' => '',
+            // Lien vers le devis dans l'espace client (remplacé par le lien de paiement dans l'e-mail dédié).
+            '{quote_link_html}' => $this->button($this->quoteUrl($quote), $this->trans('View my quote online', [], $quote)),
+            '{quote_link_txt}' => $this->quoteUrl($quote),
+            '{quote_url}' => $e($this->quoteUrl($quote)),
         ];
+    }
+
+    /**
+     * Page du devis dans l'espace « Mes devis » du client (connexion requise).
+     */
+    public function quoteUrl(\SntQuote $quote): string
+    {
+        return \Context::getContext()->link->getModuleLink('snt_quotes', 'quote', ['id_quote' => (int) $quote->id], true, (int) $quote->id_lang, (int) $quote->id_shop);
+    }
+
+    private function button(string $url, string $label): string
+    {
+        $e = static fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+
+        return '<p style="margin:16px 0;text-align:center;"><a href="' . $e($url) . '" style="display:inline-block;padding:12px 24px;background:#1F6FB2;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:bold;">' . $e($label) . '</a></p>';
+    }
+
+    /**
+     * Action du client dans son espace (demande de modification, refus, message) → e-mail au commercial.
+     *
+     * @param string $action revision|declined|message
+     */
+    public function notifyEmployeeCustomerAction(\SntQuote $quote, string $action, ?string $message): void
+    {
+        if (!$this->isEnabled(self::TPL_CUSTOMER_ACTION, (int) $quote->id_shop)) {
+            return;
+        }
+        [$email, $name, $idLang] = $this->employeeRecipient($quote);
+        if ($email === '') {
+            return;
+        }
+        $language = new \Language($idLang);
+        $translator = \Context::getContext()->getTranslator();
+        $label = match ($action) {
+            'revision' => $translator->trans('The customer asks for changes to the quote.', [], self::DOMAIN, $language->locale ?: null),
+            'declined' => $translator->trans('The customer has declined the quote.', [], self::DOMAIN, $language->locale ?: null),
+            default => $translator->trans('The customer sent a message about the quote.', [], self::DOMAIN, $language->locale ?: null),
+        };
+        $e = static fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+        $message = trim((string) $message);
+        $vars = [
+            '{action_label}' => $e($label),
+            '{customer_message_html}' => $message !== '' ? nl2br($e($message)) : '—',
+            '{customer_message_txt}' => $message !== '' ? $message : '—',
+        ] + $this->templateVars($quote, null);
+        \Mail::send(
+            $idLang,
+            self::TPL_CUSTOMER_ACTION,
+            $translator->trans('Quote %reference%: %action%', ['%reference%' => $quote->getFullReference(), '%action%' => $label], self::DOMAIN, $language->locale ?: null),
+            $vars,
+            $email,
+            $name,
+            null,
+            null,
+            null,
+            null,
+            _PS_MODULE_DIR_ . 'snt_quotes/mails/',
+            false,
+            (int) $quote->id_shop,
+            null,
+            (string) (new \Customer((int) $quote->id_customer))->email
+        );
+    }
+
+    /**
+     * Réponse de l'équipe dans le fil d'échanges → e-mail au client, avec le lien vers son devis.
+     */
+    public function notifyCustomerReply(\SntQuote $quote, string $message): void
+    {
+        $customer = new \Customer((int) $quote->id_customer);
+        if (!$this->isEnabled(self::TPL_REPLY, (int) $quote->id_shop) || !\Validate::isEmail((string) $customer->email)) {
+            return;
+        }
+        $e = static fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+        [$fromName, $replyTo, $replyToName] = $this->sender($quote);
+        \Mail::send(
+            (int) $quote->id_lang,
+            self::TPL_REPLY,
+            $this->defaultSubject($quote, self::TPL_REPLY),
+            ['{reply_html}' => nl2br($e(trim($message))), '{reply_txt}' => trim($message)] + $this->templateVars($quote, null),
+            (string) $customer->email,
+            $this->recipientName($quote),
+            null,
+            $fromName,
+            null,
+            null,
+            _PS_MODULE_DIR_ . 'snt_quotes/mails/',
+            false,
+            (int) $quote->id_shop,
+            null,
+            $replyTo,
+            $replyToName
+        );
+    }
+
+    /**
+     * Commercial du devis, ou adresse de la boutique à défaut.
+     *
+     * @return array{0: string, 1: string, 2: int} e-mail, nom, langue
+     */
+    private function employeeRecipient(\SntQuote $quote): array
+    {
+        if ($quote->id_employee) {
+            $employee = new \Employee((int) $quote->id_employee);
+            if (\Validate::isLoadedObject($employee) && $employee->email) {
+                return [(string) $employee->email, trim($employee->firstname . ' ' . $employee->lastname), (int) ($employee->id_lang ?: $quote->id_lang)];
+            }
+        }
+
+        return [(string) \Configuration::get('PS_SHOP_EMAIL', null, null, (int) $quote->id_shop), (string) \Configuration::get('PS_SHOP_NAME', null, null, (int) $quote->id_shop), (int) $quote->id_lang];
     }
 
     /**

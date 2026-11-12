@@ -6,7 +6,7 @@ import sys
 from xml.sax.saxutils import escape
 
 sys.path.insert(0, os.path.dirname(__file__))
-from fr import FR, FR_EMAILS, FR_PDF, FR_SHOP  # noqa: E402
+from fr import FR, FR_EMAILS, FR_PDF, FR_SHOP, FR_SHOP_EXCEPTIONS  # noqa: E402
 
 root, strings_file = sys.argv[1], sys.argv[2]
 strings = json.load(open(strings_file, encoding='utf-8'))
@@ -22,9 +22,13 @@ extra_admin = [
 domains = {
     'Modules.Sntquotes.Admin': (sorted(set(strings.get('Modules.Sntquotes.Admin', [])) | set(extra_admin)), FR),
     'Modules.Sntquotes.Pdf': (sorted(set(strings.get('Modules.Sntquotes.Pdf', []))), FR_PDF),
-    'Modules.Sntquotes.Emails': (sorted(set(strings.get('Modules.Sntquotes.Emails', []) + ['View and pay my quote'])), FR_EMAILS),
+    'Modules.Sntquotes.Emails': (sorted(set(strings.get('Modules.Sntquotes.Emails', []) + [
+        # Domaine passé par constante (self::DOMAIN) : non détecté par l'extracteur.
+        'View and pay my quote', 'View my quote online', 'The customer asks for changes to the quote.',
+        'The customer has declined the quote.', 'The customer sent a message about the quote.', 'Quote %reference%: %action%',
+    ])), FR_EMAILS),
     # La phrase CGV contient une variable Smarty dans sprintf : non détectée par l'extracteur.
-    'Modules.Sntquotes.Shop': (sorted(set(strings.get('Modules.Sntquotes.Shop', []) + ['I have read and accept the [1]terms and conditions of sale[/1] and this quote.'])), FR_SHOP),
+    'Modules.Sntquotes.Shop': (sorted(set(strings.get('Modules.Sntquotes.Shop', []) + ['I have read and accept the [1]terms and conditions of sale[/1] and this quote.'] + list(FR_SHOP_EXCEPTIONS))), FR_SHOP),
 }
 ignore = {'cart', 'cart_product', 'orders', 'snt_quote'}
 missing = []

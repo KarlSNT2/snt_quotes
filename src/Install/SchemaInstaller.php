@@ -203,23 +203,6 @@ final class SchemaInstaller
                 `last_number` INT UNSIGNED NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id_shop`, `year`)
             ) $engine",
-
-            'snt_quote_webhook_log' => "(
-                `id_snt_quote_webhook_log` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                `id_shop` INT UNSIGNED NOT NULL,
-                `id_snt_quote` INT UNSIGNED NULL,
-                `event` VARCHAR(32) NOT NULL,
-                `payload` MEDIUMTEXT NOT NULL,
-                `attempts` TINYINT UNSIGNED NOT NULL DEFAULT 0,
-                `http_code` SMALLINT NULL,
-                `response` TEXT NULL,
-                `status` VARCHAR(8) NOT NULL DEFAULT 'pending',
-                `next_retry_at` DATETIME NULL,
-                `date_add` DATETIME NOT NULL,
-                `date_upd` DATETIME NOT NULL,
-                PRIMARY KEY (`id_snt_quote_webhook_log`),
-                KEY `k_status` (`status`, `next_retry_at`)
-            ) $engine",
         ];
     }
 

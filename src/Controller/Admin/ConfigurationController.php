@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Configuration du module, par boutique : Général, Paiement, PDF et e-mails, Stockage, Droits, Webhooks.
+ * Configuration du module, par boutique : Général, Paiement, PDF et e-mails, Stockage, Droits.
  */
 class ConfigurationController extends AbstractQuoteController
 {
@@ -64,14 +64,14 @@ class ConfigurationController extends AbstractQuoteController
         'profiles_approve' => ConfigKeys::PROFILES_APPROVE,
         'profiles_convert' => ConfigKeys::PROFILES_CONVERT,
         'profiles_see_margin' => ConfigKeys::PROFILES_SEE_MARGIN,
-        'webhook_url' => ConfigKeys::WEBHOOK_URL,
+        'price_display' => ConfigKeys::PRICE_DISPLAY,
     ];
 
     /** Champs stockés sous forme de liste « a,b,c ». */
     private const LIST_FIELDS = ['methods_default', 'profiles_approve', 'profiles_convert', 'profiles_see_margin'];
     private const BOOL_FIELDS = ['stock_reservation', 'fo_request_enabled', 'fo_product_button', 'mail_cc_employee'];
     /** Secrets : laissés vides = valeur actuelle conservée. */
-    private const SECRET_FIELDS = ['s3_secret' => ConfigKeys::S3_SECRET, 'webhook_secret' => ConfigKeys::WEBHOOK_SECRET];
+    private const SECRET_FIELDS = ['s3_secret' => ConfigKeys::S3_SECRET];
 
     public function __construct(
         TranslatorInterface $translator,
@@ -172,6 +172,14 @@ class ConfigurationController extends AbstractQuoteController
             ->add('shop_code', TextType::class, ['label' => $this->t('Site code'), 'constraints' => [new Assert\Regex(['pattern' => '/^[A-Za-z0-9]{1,10}$/'])]] + $help('Used in references (DEV-{SHOP}-…) and in the PDF storage folder. Letters and digits only.'))
             ->add('ref_pattern', TextType::class, ['label' => $this->t('Reference pattern')] + $help('Tokens: {SHOP}, {YEAR}, {YY}, {NUM} (5 digits, restarts every year).'))
             ->add('response_delay_days', IntegerType::class, ['label' => $this->t('Announced response time (working days)'), 'required' => false])
+            ->add('price_display', ChoiceType::class, [
+                'label' => $this->t('Prices shown to customers'),
+                'choices' => [
+                    $this->t('Tax included first (excl. tax as a reminder)') => 'ti',
+                    $this->t('Tax excluded first (incl. tax as a reminder)') => 'te',
+                    $this->t('According to the customer group setting') => 'group',
+                ],
+            ] + $help('Payment page and « My quotes » space. « According to the customer group » follows Customers > Groups > Price display method (B2B groups usually show prices excl. tax).'))
             ->add('stock_reservation', CheckboxType::class, ['label' => $this->t('Reserve stock when a quote is accepted'), 'required' => false])
             ->add('fo_request_enabled', CheckboxType::class, ['label' => $this->t('Allow customers to request a quote from their cart'), 'required' => false])
             ->add('fo_product_button', CheckboxType::class, ['label' => $this->t('Show « Request a quote » on product pages'), 'required' => false])
@@ -222,6 +230,8 @@ class ConfigurationController extends AbstractQuoteController
                     $this->t('Reminder before expiry') => QuoteMailer::TPL_REMINDER,
                     $this->t('Payment link') => QuoteMailer::TPL_PAYMENT_LINK,
                     $this->t('Order created (to the sales rep)') => QuoteMailer::TPL_ORDERED_EMPLOYEE,
+                    $this->t('Customer request or message (to the sales rep)') => QuoteMailer::TPL_CUSTOMER_ACTION,
+                    $this->t('Reply from the team (to the customer)') => QuoteMailer::TPL_REPLY,
                 ],
             ])
             // Stockage
@@ -235,9 +245,6 @@ class ConfigurationController extends AbstractQuoteController
             ->add('profiles_approve', ChoiceType::class, ['label' => $this->t('Profiles allowed to approve large discounts'), 'multiple' => true, 'expanded' => true, 'choices' => $profiles])
             ->add('profiles_convert', ChoiceType::class, ['label' => $this->t('Profiles allowed to convert a quote into an order'), 'multiple' => true, 'expanded' => true, 'choices' => $profiles])
             ->add('profiles_see_margin', ChoiceType::class, ['label' => $this->t('Profiles allowed to see purchase prices and margins'), 'multiple' => true, 'expanded' => true, 'choices' => $profiles])
-            // Webhooks
-            ->add('webhook_url', UrlType::class, ['label' => $this->t('n8n webhook URL'), 'required' => false])
-            ->add('webhook_secret', PasswordType::class, ['label' => $this->t('Signing secret (HMAC)'), 'required' => false, 'always_empty' => true] + $help('Leave empty to keep the current secret.'))
             ->getForm();
     }
 

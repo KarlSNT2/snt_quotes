@@ -130,6 +130,7 @@ class Snt_QuotesPayModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign([
             'snt_state' => $this->state,
             'snt_quote' => $view,
+            'snt_te_first' => $this->quote ? ServiceFactory::priceDisplay()->taxExcludedFirst((int) $this->quote->id_shop, (int) $this->quote->id_customer) : false,
             'snt_methods' => $this->state === 'pay' ? $this->methods() : [],
             'snt_form_action' => $this->context->link->getModuleLink('snt_quotes', 'pay', ['t' => $this->token], true),
             'snt_form_key' => $this->state === 'pay' ? $this->formKey() : '',

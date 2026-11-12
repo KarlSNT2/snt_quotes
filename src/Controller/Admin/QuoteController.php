@@ -24,6 +24,7 @@ use Snt\Quotes\Service\HistoryLogger;
 use Snt\Quotes\Service\Permission\QuotePermissions;
 use Snt\Quotes\Service\QuoteEditor;
 use Snt\Quotes\Service\QuoteFactory;
+use Snt\Quotes\Service\QuoteMessages;
 use Snt\Quotes\Service\QuoteSender;
 use Snt\Quotes\Service\QuoteStateMachine;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,6 +60,7 @@ class QuoteController extends AbstractQuoteController
         private readonly QuoteSender $sender,
         private readonly QuoteMailer $mailer,
         private readonly PaymentLinkService $paymentLinks,
+        private readonly QuoteMessages $messages,
     ) {
         parent::__construct($translator, $permissions);
     }
@@ -244,6 +246,7 @@ class QuoteController extends AbstractQuoteController
             'customerUrl' => \Context::getContext()->link->getAdminLink('AdminCustomers', true, ['route' => 'admin_customers_view', 'customerId' => (int) $quote->id_customer]),
             'orderUrl' => $quote->id_order ? \Context::getContext()->link->getAdminLink('AdminOrders', true, ['route' => 'admin_orders_view', 'orderId' => (int) $quote->id_order]) : null,
             'paymentLink' => $this->paymentLinks->latest($quote),
+            'messages' => $this->messagesThread($quote),
             'conversionUrls' => [
                 'preview' => $this->generateUrl('admin_snt_quotes_convert_preview', ['quoteId' => (int) $quote->id]),
                 'convert' => $this->generateUrl('admin_snt_quotes_convert', ['quoteId' => (int) $quote->id]),
@@ -425,6 +428,33 @@ class QuoteController extends AbstractQuoteController
                     : $this->t('The discount exceeds the authorised threshold: the quote is awaiting approval by a manager before it can be sent.'),
                 'redirect' => $this->generateUrl('admin_snt_quotes_view', ['quoteId' => $quoteId]),
             ];
+        });
+    }
+
+    /**
+     * Fil d'échanges (les messages du client sont marqués lus à l'ouverture de la fiche).
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function messagesThread(\SntQuote $quote): array
+    {
+        $thread = $this->messages->thread($quote);
+        $this->messages->markRead($quote, 'employee');
+
+        return $thread;
+    }
+
+    /**
+     * Réponse de l'équipe au client : enregistrée dans le fil et envoyée par e-mail.
+     */
+    public function messageAction(Request $request, int $quoteId): RedirectResponse
+    {
+        return $this->postAndRedirect($request, 'edit', $quoteId, function (\SntQuote $quote) use ($request): string {
+            $employee = \Context::getContext()->employee;
+            $message = $this->messages->add($quote, 'employee', (int) ($employee->id ?? 0), (string) $request->request->get('message', ''));
+            $this->mailer->notifyCustomerReply($quote, (string) $message->message);
+
+            return $this->t('Your reply has been sent to the customer.');
         });
     }
 

@@ -201,7 +201,13 @@ services:
       $sender: '@Snt\Quotes\Service\QuoteSender'
       $mailer: '@Snt\Quotes\Mail\QuoteMailer'
       $paymentLinks: '@Snt\Quotes\Payment\PaymentLinkService'
+      $messages: '@Snt\Quotes\Service\QuoteMessages'
     tags: ['controller.service_arguments']
+
+  Snt\Quotes\Service\QuoteMessages:
+    class: Snt\Quotes\Service\QuoteMessages
+    arguments:
+      - '@Snt\Quotes\Service\HistoryLogger'
 
   Snt\Quotes\Controller\Admin\ConversionController:
     class: Snt\Quotes\Controller\Admin\ConversionController

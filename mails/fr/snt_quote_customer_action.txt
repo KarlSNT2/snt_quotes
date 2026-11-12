@@ -1,0 +1,9 @@
+Bonjour {employee_name},
+
+{action_label}
+
+Devis {quote_reference} — {customer_name} — {quote_total_ti}
+
+{customer_message_txt}
+
+Répondez depuis la fiche du devis (Commandes > Devis) : le client recevra votre réponse par e-mail.

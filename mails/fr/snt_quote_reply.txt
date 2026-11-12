@@ -1,0 +1,10 @@
+Bonjour {firstname} {lastname},
+
+{employee_name} a répondu à propos de votre devis {quote_reference} :
+
+{reply_txt}
+
+Consulter votre devis : {quote_link_txt}
+
+Cordialement,
+L’équipe {shop_name}

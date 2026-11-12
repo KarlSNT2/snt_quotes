@@ -1,0 +1,10 @@
+Hello {firstname} {lastname},
+
+{employee_name} replied about your quote {quote_reference}:
+
+{reply_txt}
+
+View your quote: {quote_link_txt}
+
+Kind regards,
+The {shop_name} team

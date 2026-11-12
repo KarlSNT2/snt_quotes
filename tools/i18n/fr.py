@@ -443,3 +443,10 @@ from fr_j2 import FR_ADMIN_J2, FR_EMAILS_J2, FR_SHOP  # noqa: E402,F401
 
 FR.update(FR_ADMIN_J2)
 FR_EMAILS.update(FR_EMAILS_J2)
+
+# Jalon 3
+from fr_j3 import FR_ADMIN_J3, FR_EMAILS_J3, FR_SHOP_EXCEPTIONS, FR_SHOP_J3  # noqa: E402,F401
+
+FR.update(FR_ADMIN_J3)
+FR_EMAILS.update(FR_EMAILS_J3)
+FR_SHOP.update(FR_SHOP_J3)

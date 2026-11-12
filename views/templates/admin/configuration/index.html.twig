@@ -20,12 +20,11 @@
   {% endif %}
 
   {% set tabs = {
-    'general': {label: 'General'|trans, fields: ['validity_days', 'reminder_days', 'shop_code', 'ref_pattern', 'response_delay_days', 'stock_reservation', 'fo_request_enabled', 'fo_product_button']},
+    'general': {label: 'General'|trans, fields: ['validity_days', 'reminder_days', 'shop_code', 'ref_pattern', 'response_delay_days', 'price_display', 'stock_reservation', 'fo_request_enabled', 'fo_product_button']},
     'payment': {label: 'Payment'|trans, fields: ['payment_gateway', 'methods_default', 'os_transfer', 'os_deferred', 'os_pending', 'payment_terms', 'iban', 'bic', 'paylink_ttl_days']},
     'documents': {label: 'PDF and e-mails'|trans, fields: ['pdf_color', 'pdf_legal', 'pdf_cgv_source', 'pdf_cgv_text', 'pdf_cgv_id_cms', 'mail_from', 'mail_cc_employee', 'mail_enabled']},
     'storage': {label: 'PDF storage'|trans, fields: ['s3_endpoint', 's3_region', 's3_bucket', 's3_key', 's3_secret']},
-    'rights': {label: 'Rights'|trans, fields: ['discount_threshold', 'profiles_approve', 'profiles_convert', 'profiles_see_margin']},
-    'webhooks': {label: 'n8n webhooks'|trans, fields: ['webhook_url', 'webhook_secret']}
+    'rights': {label: 'Rights'|trans, fields: ['discount_threshold', 'profiles_approve', 'profiles_convert', 'profiles_see_margin']}
   } %}
 
   {{ form_start(form, {attr: {class: 'snt-config__form', novalidate: 'novalidate'}}) }}
@@ -54,9 +53,6 @@
             <p class="snt-help">{{ 'PDFs are archived in « bucket/site-code/Devis-REF-vN.pdf ». Without a bucket, they are kept in the shop’s var/modules folder (development only).'|trans }}</p>
             <button type="button" class="btn btn-outline-secondary" data-s3-test="{{ s3TestUrl }}"><i class="material-icons" aria-hidden="true">cloud_done</i> {{ 'Test the connection'|trans }}</button>
             <span class="ml-2" data-s3-result role="status"></span>
-          {% endif %}
-          {% if key == 'webhooks' %}
-            <p class="snt-help">{{ 'Events sent: quote.sent, quote.accepted, quote.declined, quote.ordered, quote.paid, quote.expired — signed with the X-Snt-Signature header (HMAC SHA-256). Active from milestone 3.'|trans }}</p>
           {% endif %}
         </div>
       {% endfor %}

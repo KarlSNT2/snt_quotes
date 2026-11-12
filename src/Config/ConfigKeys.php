@@ -50,10 +50,14 @@ final class ConfigKeys
     public const PROFILES_CONVERT = 'SNT_QUOTES_PROFILES_CONVERT';
     public const PROFILES_SEE_MARGIN = 'SNT_QUOTES_PROFILES_SEE_MARGIN';
 
-    // Webhooks / cron
-    public const WEBHOOK_URL = 'SNT_QUOTES_WEBHOOK_URL';
-    public const WEBHOOK_SECRET = 'SNT_QUOTES_WEBHOOK_SECRET';
+    // Tâche planifiée (relances, expirations)
     public const CRON_TOKEN = 'SNT_QUOTES_CRON_TOKEN';
+
+    /** Affichage des prix côté client : 'ti' (TTC d'abord), 'te' (HT d'abord), 'group' (selon le groupe du client). */
+    public const PRICE_DISPLAY = 'SNT_QUOTES_PRICE_DISPLAY';
+
+    /** Clés retirées (webhooks n8n abandonnés en 0.3.0) : supprimées à la mise à jour. */
+    public const OBSOLETE = ['SNT_QUOTES_WEBHOOK_URL', 'SNT_QUOTES_WEBHOOK_SECRET'];
 
     // Statuts de commande (globaux, modifiables dans l'onglet Paiement)
     public const OS_PENDING = 'SNT_QUOTES_OS_PENDING';
@@ -104,8 +108,7 @@ final class ConfigKeys
             self::PROFILES_APPROVE => '1',
             self::PROFILES_CONVERT => '1',
             self::PROFILES_SEE_MARGIN => '1',
-            self::WEBHOOK_URL => '',
-            self::WEBHOOK_SECRET => '',
+            self::PRICE_DISPLAY => 'ti',
         ];
     }
 
@@ -116,7 +119,7 @@ final class ConfigKeys
      */
     public static function all(): array
     {
-        return array_merge(array_keys(self::defaults()), [
+        return array_merge(array_keys(self::defaults()), self::OBSOLETE, [
             self::CRON_TOKEN,
             self::CARRIER_ID_REFERENCE,
             self::FREE_LINE_PRODUCTS,

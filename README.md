@@ -14,7 +14,7 @@ ni par les règles transporteurs.
 |---|---|---|
 | 1 — BO interne | Installation, tables, configuration, droits, liste, éditeur, fiche, PDF, envoi e-mail | ✅ livré (v0.1.0) |
 | 2 — Conversion et paiement | Conversion sans tunnel, transporteur technique, paiement intégré, liens de paiement HiPay Payments / PayPlug, page de paiement client | ✅ livré (v0.2.0, correctifs v0.2.1), recette DEV en cours |
-| 3 — Front office et cycle de vie | Panier → devis, Mes devis, acceptation, page de paiement, cron, webhooks n8n | à faire |
+| 3 — Front office et cycle de vie | Espace « Mes devis » (consultation, PDF, accepter et payer, demande de modification, refus, échanges), affichage TTC/HT par boutique | 🟡 « Mes devis » livré (v0.3.0) ; reste : panier → demande de devis, tâche planifiée (relances, expirations). Webhooks n8n abandonnés |
 | 4 — Options | Versions avancées, statistiques, bouton fiche produit, reprise Opart | à faire |
 
 ## Installation
@@ -23,7 +23,7 @@ ni par les règles transporteurs.
 2. Dépendances : aucune bibliothèque tierce à l'exécution. `composer install --no-dev -o` génère un autoloader optimisé ;
    sans `vendor/`, le module utilise son propre autoloader (PSR-4 + classes).
 3. Installer le module. Il crée :
-   - les tables `snt_quote*` (devis, lignes, remises, historique, messages, liens, archives PDF, compteurs, journal des webhooks) ;
+   - les tables `snt_quote*` (devis, lignes, remises, historique, messages, liens, archives PDF, compteurs, paniers techniques) ;
    - l'onglet **Commandes > Devis** (`AdminSntQuotes`) ;
    - la configuration par défaut **pour chaque boutique** (validité 30 j, seuil de remise 15 %, CB + virement…) ;
    - le hook `actionSntQuoteStatusUpdate`, émis à chaque changement de statut.
@@ -41,12 +41,11 @@ La configuration est **par boutique** : en multiboutique, choisir la boutique da
 
 | Onglet | Points clés |
 |---|---|
-| Général | Validité par défaut, **code site** (utilisé dans `DEV-{SHOP}-{AAAA}-{n°}` et le dossier S3), format de référence |
+| Général | Validité par défaut, **code site** (utilisé dans `DEV-{SHOP}-{AAAA}-{n°}` et le dossier S3), format de référence, **prix affichés aux clients** (TTC d'abord, HT d'abord, ou selon le groupe du client) |
 | Paiement | Module de paiement en ligne (HiPay Payments / PayPlug), moyens proposés par défaut, conditions de règlement, IBAN/BIC |
 | PDF et e-mails | Couleur, mentions légales, CGV (texte ou page CMS), expéditeur (boutique ou commercial), e-mails actifs |
 | Stockage des PDF | Object Storage Scaleway : endpoint `https://s3.fr-par.scw.cloud`, région `fr-par`, bucket, clés. Bouton **Tester la connexion** |
 | Droits | Seuil de remise soumis à validation, profils autorisés à valider / convertir / voir les marges |
-| Webhooks n8n | URL + secret HMAC (envois actifs à partir du jalon 3) |
 
 Les droits lire / créer / modifier / supprimer se règlent comme d'habitude dans **Paramètres avancés > Équipe > Permissions**,
 sur l'onglet « Devis ».
@@ -95,6 +94,18 @@ onglet Paiement, « Module de paiement en ligne »).
 - **HiPay Payments** (`hipaypayments` v4 sur PS 8, v5 sur PS 9) : page hébergée sur le panier technique ; la notification
   arrive au module HiPay, qui crée la commande.
 - **PayPlug** (defense-privee) : commande au nom de PayPlug avec son statut « lien de paiement par e-mail » ; PayPlug envoie le lien.
+
+### Espace client « Mes devis » (jalon 3)
+
+- Lien **« Mes devis »** dans « Mon compte » (avec le nombre de devis qui attendent une réponse), URL `/mes-devis` et
+  `/mes-devis/{id}`. Connexion requise ; un client ne voit que ses devis de la boutique, jamais les brouillons, les devis en
+  validation interne ni les versions remplacées (il est redirigé vers la version en cours).
+- Détail : récapitulatif identique au PDF, téléchargement du PDF envoyé, **Accepter et payer** (crée un lien de paiement et
+  ouvre la page de paiement : CGV, moyen de paiement), **Demander une modification**, **Refuser** (motif facultatif),
+  **messages** avec l'équipe.
+- Fiche devis BO : bloc **« Échanges avec le client »** ; la réponse part par e-mail avec un lien vers le devis.
+- Les e-mails d'envoi et de relance contiennent un bouton **« Voir mon devis en ligne »**.
+- Gabarits surchargeables : `themes/<thème>/modules/snt_quotes/views/templates/front/{quotes,quote,_quote-summary,pay}.tpl`.
 
 ### Points d'attention
 

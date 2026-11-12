@@ -1,7 +1,7 @@
 # Guide utilisateur — Devis (équipes commerciales et ADV)
 
 > Version jalon 2 : création, envoi, suivi, conversion en commande et paiement par lien.
-> L'espace « Mes devis » du client arrive au jalon 3.
+> Jalon 3 (en cours) : espace client « Mes devis » et échanges avec le client.
 > *[Captures à compléter]* marque l'emplacement des captures d'écran.
 
 ## 1. Retrouver ses devis
@@ -118,7 +118,20 @@ connecter**. La commande est créée automatiquement et vous recevez un e-mail �
 - Par sécurité, le lien n'est affiché **qu'une fois**. Si vous le perdez, créez-en un nouveau : l'ancien est désactivé.
 - Le bloc « Lien de paiement » de la fiche indique son état : actif, utilisé, désactivé ou expiré.
 
-## 7. Couleurs des statuts
+## 7. Ce que voit le client et les échanges
+
+Le client retrouve ses devis dans **Mon compte > Mes devis** (le bouton « Voir mon devis en ligne » des e-mails y mène).
+Il peut télécharger le PDF, **accepter et payer**, **demander une modification**, **refuser**, ou vous **écrire**.
+
+- **Demande de modification** : vous recevez un e-mail, le devis passe en « Modification demandée » (onglet « À traiter »).
+  Créez une nouvelle version, puis envoyez-la.
+- **Refus** : vous recevez un e-mail avec le motif éventuel ; le lien de paiement est désactivé.
+- **Message** : vous recevez un e-mail. Répondez depuis le bloc **« Échanges avec le client »** de la fiche devis : le client
+  reçoit votre réponse par e-mail. Répondre directement à l'e-mail reçu écrit aussi au client, mais n'apparaît pas dans le fil.
+
+Les brouillons et les devis en attente de validation interne ne sont jamais visibles du client.
+
+## 8. Couleurs des statuts
 
 Brouillon (gris) · En attente de validation interne (orange foncé) · Envoyé (bleu) · Vu (bleu clair) · Modification demandée (orange) ·
 Accepté (vert) · Refusé (rouge) · Expiré (gris barré) · Commandé (violet) · Payé (vert foncé) · Remplacé (gris clair barré).
