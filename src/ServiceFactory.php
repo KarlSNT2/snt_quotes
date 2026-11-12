@@ -21,7 +21,10 @@ use Snt\Quotes\Presenter\QuotePresenter;
 use Snt\Quotes\Presenter\StatusPresenter;
 use Snt\Quotes\Repository\CustomerQuoteRepository;
 use Snt\Quotes\Service\HistoryLogger;
+use Snt\Quotes\Service\CronRunner;
+use Snt\Quotes\Service\Permission\QuotePermissions;
 use Snt\Quotes\Service\QuoteEditor;
+use Snt\Quotes\Service\QuoteSender;
 use Snt\Quotes\Service\QuoteFactory;
 use Snt\Quotes\Service\QuoteMessages;
 use Snt\Quotes\Service\ReferenceGenerator;
@@ -127,6 +130,24 @@ final class ServiceFactory
     public static function editor(): QuoteEditor
     {
         return self::shared(QuoteEditor::class, static fn (): QuoteEditor => new QuoteEditor(new TaxResolver(), new CatalogPriceProvider(), self::config(), self::history()));
+    }
+
+    public static function sender(): QuoteSender
+    {
+        return self::shared(QuoteSender::class, static fn (): QuoteSender => new QuoteSender(
+            self::editor(),
+            self::stateMachine(),
+            self::pdf(),
+            self::mailer(),
+            new QuotePermissions(self::config()),
+            self::presenter(),
+            self::config()
+        ));
+    }
+
+    public static function cronRunner(): CronRunner
+    {
+        return new CronRunner(self::config(), self::sender(), self::stateMachine(), self::paymentLinks());
     }
 
     public static function factory(): QuoteFactory

@@ -18,9 +18,9 @@
         <source>0 = no approval. Beyond this threshold, the quote waits for a manager before it can be sent.</source>
         <target>0 = pas de validation. Au-delà de ce seuil, le devis attend la validation d’un responsable avant de pouvoir être envoyé.</target>
       </trans-unit>
-      <trans-unit id="b2494a9ab54db94f29fad818606bad5e">
-        <source>0 = no automatic reminder. Requires the cron URL to be called by n8n.</source>
-        <target>0 = pas de relance automatique. Nécessite que n8n appelle l’URL cron.</target>
+      <trans-unit id="86bf70e5a29d6a92f8e922345e4ad7e5">
+        <source>0 = no automatic reminder. Requires the scheduled task (cron URL below).</source>
+        <target>0 = pas de relance automatique. Nécessite la tâche planifiée (URL ci-dessous).</target>
       </trans-unit>
       <trans-unit id="292c50204a8416b76eacd43582ad25d9">
         <source>A change can no longer be requested for this quote.</source>
@@ -406,10 +406,6 @@
         <source>Credit card by phone (HiPay MO/TO)</source>
         <target>Carte bancaire par téléphone (HiPay MO/TO)</target>
       </trans-unit>
-      <trans-unit id="99abdda34cff5f50ea0040d1af7ac1e8">
-        <source>Cron URL (to call from n8n)</source>
-        <target>URL cron (à appeler depuis n8n)</target>
-      </trans-unit>
       <trans-unit id="ce26601dac0dea138b7295f02b7620a7">
         <source>Customer</source>
         <target>Client</target>
@@ -598,6 +594,10 @@
         <source>Expired</source>
         <target>Expiré</target>
       </trans-unit>
+      <trans-unit id="cd37146c2c37e760db546a08a9a78412">
+        <source>Expires quotes past their validity date, sends the automatic reminder and disables the payment links of closed quotes. Call it every hour from the server crontab (one URL per shop).</source>
+        <target>Passe en « Expiré » les devis dont la validité est dépassée, envoie la relance automatique et désactive les liens de paiement des devis clos. À appeler toutes les heures depuis la crontab du serveur (une URL par boutique).</target>
+      </trans-unit>
       <trans-unit id="0350696c758848b4574f9cadb0f4c0f4">
         <source>Fill in the bucket, access key and secret key, save, then test again.</source>
         <target>Renseignez le bucket, la clé d’accès et la clé secrète, enregistrez, puis testez à nouveau.</target>
@@ -689,6 +689,10 @@
       <trans-unit id="8d3f5eff9c40ee315d452392bed5309b">
         <source>Last name</source>
         <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="c2a084ed2d62a04c667ba4c5fe2b0595">
+        <source>Last run: %date%</source>
+        <target>Dernier passage : %date%</target>
       </trans-unit>
       <trans-unit id="8b70f63dd1febae1cbf09dca83429b74">
         <source>Leave empty to keep the current key.</source>
@@ -1238,6 +1242,10 @@
         <source>Saving…</source>
         <target>Enregistrement…</target>
       </trans-unit>
+      <trans-unit id="46d69f135679c7ed7c9455530481ed69">
+        <source>Scheduled task URL (cron)</source>
+        <target>URL de la tâche planifiée (cron)</target>
+      </trans-unit>
       <trans-unit id="13348442cc6a27032d2b4aa28b75a5d3">
         <source>Search</source>
         <target>Rechercher</target>
@@ -1294,10 +1302,6 @@
         <source>Send to customer</source>
         <target>Envoyer au client</target>
       </trans-unit>
-      <trans-unit id="a57ef5abaa2102119e62317c3e066c23">
-        <source>Sends reminders and expires quotes past their validity date. Call it once a day.</source>
-        <target>Envoie les relances et expire les devis dont la validité est dépassée. À appeler une fois par jour.</target>
-      </trans-unit>
       <trans-unit id="7f8c0283f16925caed8e632086b81b9c">
         <source>Sent</source>
         <target>Envoyé</target>
@@ -1333,10 +1337,6 @@
       <trans-unit id="968427932a8ac5b07731f1532162143b">
         <source>Shipping excl. tax</source>
         <target>Port HT</target>
-      </trans-unit>
-      <trans-unit id="0c235fe409ee478ac892a3e5ba368625">
-        <source>Show « Request a quote » on product pages</source>
-        <target>Afficher « Demander un devis » sur les fiches produit</target>
       </trans-unit>
       <trans-unit id="1a47947c7f4efe361fe3b52cd542e1cd">
         <source>Site code</source>
@@ -1565,6 +1565,10 @@
       <trans-unit id="f87e42e165687ac8a5dc35f991ffb16d">
         <source>The quote is now « %status% ».</source>
         <target>Le devis est maintenant « %status% ».</target>
+      </trans-unit>
+      <trans-unit id="db027073641780bce5b39b5b4bf36066">
+        <source>The scheduled task has never run on this shop.</source>
+        <target>La tâche planifiée n’a encore jamais tourné sur cette boutique.</target>
       </trans-unit>
       <trans-unit id="610608a19fa17d12e6380a3554e0fc92">
         <source>The selected address does not belong to this customer.</source>

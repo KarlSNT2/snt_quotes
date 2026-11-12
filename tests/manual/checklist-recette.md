@@ -163,5 +163,22 @@ Cocher `[x]`, noter l'écart sinon.
 
 ### Reste du jalon 3 *(à venir)*
 - [x] Panier → demande de devis (livré en 0.3.1, voir section 0.3.1)
-- [ ] Tâche planifiée : relances avant expiration, passage en « Expiré », liens expirés révoqués
+- [x] Tâche planifiée : livrée en 0.3.2, voir section 0.3.2
+
+## 0.3.2 — Tâche planifiée et relais GLS
+
+### Tâche planifiée
+- [ ] Configuration > Général : URL de la tâche planifiée ; « jamais tourné » avant le premier appel
+- [ ] Mauvais jeton → 403 ; bon jeton → JSON `ok: true` ; date du dernier passage affichée
+- [ ] Devis envoyé avec validité passée (modifier `valid_until` en base) → « Expiré » (historique : système), lien de paiement désactivé
+- [ ] Devis qui expire dans N jours (N = relance automatique) → e-mail de relance avec PDF, une seule fois ; renvoyé au client → nouvelle relance possible
+- [ ] Relance automatique à 0 → aucune relance
+- [ ] Devis refusé avec lien encore actif → lien désactivé au passage suivant
+- [ ] Brouillons, demandes du panier, devis commandés : jamais touchés
+
+### Relais GLS (`nkmgls`)
+- [ ] Éditeur : transporteur « En Relais GLS » → bloc « Point relais », recherche par code postal, choix d'un relais
+- [ ] Transporteurs GLS non relais (domicile, entreprise, express) : pas de bloc relais
+- [ ] Conversion : adresse de livraison de la commande = relais GLS au nom du client (n° du relais dans « Autre »)
+- [ ] Fiche commande BO : bloc GLS affiche le relais ; commande reçue par l'ERP avec l'adresse du relais
 - [ ] Multiboutique, accessibilité clavier

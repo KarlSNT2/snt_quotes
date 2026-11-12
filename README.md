@@ -14,8 +14,8 @@ ni par les règles transporteurs.
 |---|---|---|
 | 1 — BO interne | Installation, tables, configuration, droits, liste, éditeur, fiche, PDF, envoi e-mail | ✅ livré (v0.1.0) |
 | 2 — Conversion et paiement | Conversion sans tunnel, transporteur technique, paiement intégré, liens de paiement HiPay Payments / PayPlug, page de paiement client | ✅ livré (v0.2.0, correctifs v0.2.1), recette DEV en cours |
-| 3 — Front office et cycle de vie | Espace « Mes devis » (consultation, PDF, accepter et payer, demande de modification, refus, échanges), affichage TTC/HT par boutique | 🟡 « Mes devis » (v0.3.0), demande de devis depuis le panier (v0.3.1) ; reste : tâche planifiée (relances, expirations). Webhooks n8n abandonnés |
-| 4 — Options | Statistiques, relais GLS ; reprise Opart facultative (coexistence prévue) ; pas de bouton fiche produit | à faire |
+| 3 — Front office et cycle de vie | Espace « Mes devis » (consultation, PDF, accepter et payer, demande de modification, refus, échanges), affichage TTC/HT par boutique | ✅ codé : « Mes devis » (v0.3.0), demande depuis le panier (v0.3.1), tâche planifiée (v0.3.2). Recette DEV en cours. Webhooks n8n abandonnés |
+| 4 — Options | Relais GLS (v0.3.2) ; statistiques ; reprise Opart facultative (coexistence prévue) ; pas de bouton fiche produit | 🟡 GLS codé, reste les statistiques |
 
 ## Installation
 
@@ -69,7 +69,7 @@ La conversion ne passe jamais par le tunnel :
    le message indique les montants en cause ;
 3. la commande est validée par le module de paiement choisi ;
 4. avant l'écriture du premier statut, le module remet le **transporteur réel** sur la commande, nomme les lignes libres,
-   transmet le point relais au module du transporteur (Chronopost et Colissimo officiels : adresse de
+   transmet le point relais au module du transporteur (Chronopost et Colissimo officiels, GLS `nkmgls` : adresse de
    livraison de la commande remplacée par celle du relais ; `snt_carriers` sinon), décompte les bons d'origine et lie le devis à la commande.
 
 Objets créés à l'installation / mise à jour 0.2.0 : le transporteur « Livraison selon devis » (masqué du tunnel), des produits
@@ -107,6 +107,20 @@ onglet Paiement, « Module de paiement en ligne »).
 - Fiche devis BO : bloc **« Échanges avec le client »** ; la réponse part par e-mail avec un lien vers le devis.
 - Les e-mails d'envoi et de relance contiennent un bouton **« Voir mon devis en ligne »**.
 - Gabarits surchargeables : `themes/<thème>/modules/snt_quotes/views/templates/front/{quotes,quote,_quote-summary,pay}.tpl`.
+
+### Tâche planifiée (v0.3.2)
+
+URL dans Configuration > Général (« URL de la tâche planifiée »), **une par boutique** (jeton propre). À appeler toutes les
+heures depuis la crontab du serveur, par exemple :
+
+```
+0 * * * * curl -fsS "https://boutique.example/module/snt_quotes/cron?token=…" > /dev/null
+```
+
+À chaque passage : devis envoyés / vus dont la validité est dépassée → « Expiré » et liens de paiement désactivés ;
+relance automatique (une par envoi) N jours avant l'expiration (réglage « Relance automatique », 0 = aucune) ;
+liens encore actifs des devis refusés, expirés ou remplacés désactivés. 100 devis maximum par étape et par passage ;
+la date du dernier passage s'affiche dans la configuration. Réponse JSON (`expired`, `reminded`, `links_revoked`, `errors`).
 
 ### Points d'attention
 

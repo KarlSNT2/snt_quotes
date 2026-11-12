@@ -52,6 +52,8 @@ final class ConfigKeys
 
     // Tâche planifiée (relances, expirations)
     public const CRON_TOKEN = 'SNT_QUOTES_CRON_TOKEN';
+    /** Date du dernier passage réussi (affichée dans la configuration). */
+    public const CRON_LAST_RUN = 'SNT_QUOTES_CRON_LAST_RUN';
 
     /** Affichage des prix côté client : 'ti' (TTC d'abord), 'te' (HT d'abord), 'group' (selon le groupe du client). */
     public const PRICE_DISPLAY = 'SNT_QUOTES_PRICE_DISPLAY';
@@ -121,6 +123,7 @@ final class ConfigKeys
     {
         return array_merge(array_keys(self::defaults()), self::OBSOLETE, [
             self::CRON_TOKEN,
+            self::CRON_LAST_RUN,
             self::CARRIER_ID_REFERENCE,
             self::FREE_LINE_PRODUCTS,
             self::OS_PENDING,

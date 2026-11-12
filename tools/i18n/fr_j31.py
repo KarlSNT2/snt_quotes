@@ -73,3 +73,12 @@ FR_SHOP_J31 = {
 }
 FR_SHOP_J31.update(FR_SHOP_EXCEPTIONS_J31)
 FR_SHOP_J31.update(FR_SHOP_J31_REQUEST_PAGE)
+
+# 0.3.2 — tâche planifiée
+FR_ADMIN_J31.update({
+ "0 = no automatic reminder. Requires the scheduled task (cron URL below).": "0 = pas de relance automatique. Nécessite la tâche planifiée (URL ci-dessous).",
+ "Expires quotes past their validity date, sends the automatic reminder and disables the payment links of closed quotes. Call it every hour from the server crontab (one URL per shop).": "Passe en « Expiré » les devis dont la validité est dépassée, envoie la relance automatique et désactive les liens de paiement des devis clos. À appeler toutes les heures depuis la crontab du serveur (une URL par boutique).",
+ "Last run: %date%": "Dernier passage : %date%",
+ "Scheduled task URL (cron)": "URL de la tâche planifiée (cron)",
+ "The scheduled task has never run on this shop.": "La tâche planifiée n’a encore jamais tourné sur cette boutique.",
+})

@@ -44,9 +44,10 @@
           {% endfor %}
           {% if key == 'general' %}
             <div class="form-group">
-              <label class="form-control-label" for="snt-cron-url">{{ 'Cron URL (to call from n8n)'|trans }}</label>
+              <label class="form-control-label" for="snt-cron-url">{{ 'Scheduled task URL (cron)'|trans }}</label>
               <input type="text" id="snt-cron-url" class="form-control" value="{{ cronUrl }}" readonly onclick="this.select()">
-              <p class="snt-help">{{ 'Sends reminders and expires quotes past their validity date. Call it once a day.'|trans }}</p>
+              <p class="snt-help">{{ 'Expires quotes past their validity date, sends the automatic reminder and disables the payment links of closed quotes. Call it every hour from the server crontab (one URL per shop).'|trans }}</p>
+              <p class="snt-help">{% if cronLastRun %}{{ 'Last run: %date%'|trans({'%date%': cronLastRun}) }}{% else %}<strong>{{ 'The scheduled task has never run on this shop.'|trans }}</strong>{% endif %}</p>
             </div>
           {% endif %}
           {% if key == 'storage' %}

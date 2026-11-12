@@ -105,6 +105,7 @@ class ConfigurationController extends AbstractQuoteController
             'shopName' => (string) \Context::getContext()->shop->name,
             'isAllShopsContext' => \Shop::isFeatureActive() && \Shop::getContext() !== \Shop::CONTEXT_SHOP,
             'cronUrl' => \Context::getContext()->link->getModuleLink('snt_quotes', 'cron', ['token' => $this->config->get(ConfigKeys::CRON_TOKEN)], true),
+            'cronLastRun' => ($last = $this->config->get(ConfigKeys::CRON_LAST_RUN)) !== '' ? \Tools::displayDate($last, true) : '',
             's3Configured' => $this->storage->isConfigured($this->shopId()),
             's3TestUrl' => $this->generateUrl('admin_snt_quotes_configuration_s3_test'),
             'csrf' => (string) $this->container->get('security.csrf.token_manager')->getToken(self::CSRF_ID)->getValue(),
@@ -167,7 +168,7 @@ class ConfigurationController extends AbstractQuoteController
         return $this->createFormBuilder($data, ['translation_domain' => false])
             // Général
             ->add('validity_days', IntegerType::class, ['label' => $this->t('Default validity (days)'), 'constraints' => [new Assert\Range(['min' => 1, 'max' => 365])]] + $help('Validity date proposed for each new quote.'))
-            ->add('reminder_days', IntegerType::class, ['label' => $this->t('Automatic reminder (days before expiry)'), 'constraints' => [new Assert\Range(['min' => 0, 'max' => 60])]] + $help('0 = no automatic reminder. Requires the cron URL to be called by n8n.'))
+            ->add('reminder_days', IntegerType::class, ['label' => $this->t('Automatic reminder (days before expiry)'), 'constraints' => [new Assert\Range(['min' => 0, 'max' => 60])]] + $help('0 = no automatic reminder. Requires the scheduled task (cron URL below).'))
             ->add('shop_code', TextType::class, ['label' => $this->t('Site code'), 'constraints' => [new Assert\Regex(['pattern' => '/^[A-Za-z0-9]{1,10}$/'])]] + $help('Used in references (DEV-{SHOP}-…) and in the PDF storage folder. Letters and digits only.'))
             ->add('ref_pattern', TextType::class, ['label' => $this->t('Reference pattern')] + $help('Tokens: {SHOP}, {YEAR}, {YY}, {NUM} (5 digits, restarts every year).'))
             ->add('response_delay_days', IntegerType::class, ['label' => $this->t('Announced response time (working days)'), 'required' => false])

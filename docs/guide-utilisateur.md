@@ -43,7 +43,7 @@ Si votre profil le permet, vous voyez aussi le prix d'achat et la marge. Une lig
 
 ### Étape 3 — Livraison
 - **Tous** les transporteurs sont proposés. Un bandeau orange signale un transporteur qui ne livre pas normalement cette zone ou ce poids : vous pouvez quand même le choisir, et le port du devis sera appliqué tel quel.
-- Transporteur en point relais (Chronopost, Colissimo) : un bloc « Point relais » s'ouvre sous la liste. Saisissez le code postal, cherchez, puis choisissez le point relais. À la conversion, la commande est livrée à l'adresse du relais au nom du client ; les étiquettes restent générées par l'ERP.
+- Transporteur en point relais (Chronopost, Colissimo, GLS Relais) : un bloc « Point relais » s'ouvre sous la liste. Saisissez le code postal, cherchez, puis choisissez le point relais. À la conversion, la commande est livrée à l'adresse du relais au nom du client ; les étiquettes restent générées par l'ERP.
 - **Frais de port HT** : saisissez le montant, ou cliquez sur **Proposer le tarif calculé** pour reprendre le tarif habituel de la boutique.
 - **Port offert** ou **remise sur le port** au besoin.
 - **Retrait en magasin** : choisissez le transporteur correspondant dans la liste (il n'y a pas de mode « Retrait » séparé).
@@ -145,6 +145,14 @@ Sous le bouton « Commander », le panier affiche **« Demander un devis »** (d
   les articles demandés (sans prix) et les échanges : le client peut vous écrire et joindre un fichier, vos réponses
   depuis la fiche y mènent. Une fois le brouillon envoyé, la même page devient le devis complet.
 - Une seule demande par panier tant que le panier n'a pas changé ; 10 demandes maximum par client et par 24 h.
+
+### Relances et expiration automatiques
+
+Si la tâche planifiée est en place (voir le README) :
+- **N jours avant la fin de validité** (Configuration > « Relance automatique »), le client reçoit une relance par e-mail
+  avec le PDF, une seule fois par envoi ;
+- **le lendemain de la date de validité**, un devis encore « Envoyé » ou « Vu » passe en **« Expiré »** et son lien de paiement
+  est désactivé. Pour le relancer : « Rouvrir en brouillon » ou « Nouvelle version », ajustez la validité, renvoyez.
 
 ## 8. Couleurs des statuts
 

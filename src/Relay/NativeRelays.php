@@ -6,12 +6,12 @@ namespace Snt\Quotes\Relay;
 
 /**
  * Modules transporteurs officiels dont le devis sait gérer les points relais.
- * Pour en ajouter un (GLS…) : une classe avec isRelayCarrier(), search() et applyToOrder(), déclarée ici.
+ * Pour en ajouter un : une classe avec isRelayCarrier(), search() et applyToOrder(), déclarée ici.
  */
 final class NativeRelays
 {
     /**
-     * @return array<string, ChronopostRelay|ColissimoRelay> fournisseur => gestionnaire
+     * @return array<string, ChronopostRelay|ColissimoRelay|GlsRelay> fournisseur => gestionnaire
      */
     public static function all(): array
     {
@@ -20,6 +20,7 @@ final class NativeRelays
         return $providers ??= [
             ChronopostRelay::PROVIDER => new ChronopostRelay(),
             ColissimoRelay::PROVIDER => new ColissimoRelay(),
+            GlsRelay::PROVIDER => new GlsRelay(),
         ];
     }
 
@@ -37,7 +38,7 @@ final class NativeRelays
         return null;
     }
 
-    public static function get(string $provider): ChronopostRelay|ColissimoRelay|null
+    public static function get(string $provider): ChronopostRelay|ColissimoRelay|GlsRelay|null
     {
         return self::all()[$provider] ?? null;
     }
