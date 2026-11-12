@@ -80,3 +80,19 @@ FR_SHOP_J3 = {
  "Your request has been sent. Your sales representative will send you an updated quote.": "Votre demande a été envoyée. Votre commercial vous enverra un devis mis à jour.",
 }
 FR_SHOP_J3.update(FR_SHOP_EXCEPTIONS)
+
+# Libellés des statuts (QuoteStatus::label()) affichés côté client : traduits dynamiquement, non détectés par l'extracteur.
+FR_SHOP_STATUSES = {
+ "Draft": "Brouillon",
+ "Awaiting internal approval": "En préparation",
+ "Sent": "Envoyé",
+ "Viewed": "Consulté",
+ "Change requested": "Modification demandée",
+ "Accepted": "Accepté",
+ "Declined": "Refusé",
+ "Expired": "Expiré",
+ "Ordered": "Commandé",
+ "Paid": "Payé",
+ "Replaced": "Remplacé",
+}
+FR_SHOP_J3.update(FR_SHOP_STATUSES)

@@ -30,9 +30,17 @@
         <source>Accept — payment on invoice</source>
         <target>Accepter — règlement à réception de facture</target>
       </trans-unit>
+      <trans-unit id="382ab522931673c11e398ead1b7b1678">
+        <source>Accepted</source>
+        <target>Accepté</target>
+      </trans-unit>
       <trans-unit id="06df33001c1d7187fdd81ea1f5b277aa">
         <source>Actions</source>
         <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="5467754439034da57a68b900d625df6b">
+        <source>Awaiting internal approval</source>
+        <target>En préparation</target>
       </trans-unit>
       <trans-unit id="d485aee26e404c028cc1ffae410cd5a5">
         <source>Back to my quote</source>
@@ -41,6 +49,10 @@
       <trans-unit id="3689b161a029a2bc01dcb4b03c4d2099">
         <source>Back to my quotes</source>
         <target>Retour à mes devis</target>
+      </trans-unit>
+      <trans-unit id="425822de5ae50ccbbcb92fcd7cc4088a">
+        <source>Change requested</source>
+        <target>Modification demandée</target>
       </trans-unit>
       <trans-unit id="f104f31147330f9d009ae0d80f10248f">
         <source>Check that you copied the whole link from the e-mail, or contact us.</source>
@@ -70,6 +82,10 @@
         <source>Decline the quote</source>
         <target>Refuser le devis</target>
       </trans-unit>
+      <trans-unit id="616b5940be86c327aaa5090f50c061f5">
+        <source>Declined</source>
+        <target>Refusé</target>
+      </trans-unit>
       <trans-unit id="b5a7adde1af5c87d7fd797b6245c2a39">
         <source>Description</source>
         <target>Désignation</target>
@@ -81,6 +97,14 @@
       <trans-unit id="5048d1a506fc2d8002dc7ba347e0ad4d">
         <source>Download the PDF</source>
         <target>Télécharger le PDF</target>
+      </trans-unit>
+      <trans-unit id="f03ab16cd58372c77ba45a3d9a5a1cb9">
+        <source>Draft</source>
+        <target>Brouillon</target>
+      </trans-unit>
+      <trans-unit id="24fe48030f7d3097d5882535b04c3fa8">
+        <source>Expired</source>
+        <target>Expiré</target>
       </trans-unit>
       <trans-unit id="b24ce0cd392a5b0b8dedc66c25213594">
         <source>Free</source>
@@ -125,6 +149,14 @@
       <trans-unit id="2c1977e00a7a7d3479dcae1a234fb16e">
         <source>Order reference: %ref%</source>
         <target>Référence de commande : %ref%</target>
+      </trans-unit>
+      <trans-unit id="26e09a1ee1517389c7b07f42df65561a">
+        <source>Ordered</source>
+        <target>Commandé</target>
+      </trans-unit>
+      <trans-unit id="e0010a0a1a3259ab5c06a19bad532851">
+        <source>Paid</source>
+        <target>Payé</target>
       </trans-unit>
       <trans-unit id="cc21116ce900f38c0691823ab193b9a3">
         <source>Pay by card</source>
@@ -194,6 +226,10 @@
         <source>Reference</source>
         <target>Référence</target>
       </trans-unit>
+      <trans-unit id="b3f23170be598de0771ac94684114f94">
+        <source>Replaced</source>
+        <target>Remplacé</target>
+      </trans-unit>
       <trans-unit id="dfc780ef9381e96c3b0bbe310cd57115">
         <source>Request a change</source>
         <target>Demander une modification</target>
@@ -213,6 +249,10 @@
       <trans-unit id="e3d706f24fe8c6dd9b0de2d40ba05b15">
         <source>Send my request</source>
         <target>Envoyer ma demande</target>
+      </trans-unit>
+      <trans-unit id="7f8c0283f16925caed8e632086b81b9c">
+        <source>Sent</source>
+        <target>Envoyé</target>
       </trans-unit>
       <trans-unit id="ea9cf7e47ff33b2be14e6dd07cbcefc6">
         <source>Shipping</source>
@@ -333,6 +373,10 @@
       <trans-unit id="f0d1e86ef00ea0cae0b5a1d3adc8b0c1">
         <source>View my order</source>
         <target>Voir ma commande</target>
+      </trans-unit>
+      <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe">
+        <source>Viewed</source>
+        <target>Consulté</target>
       </trans-unit>
       <trans-unit id="9fb3dd8ddd1ae524d1c05ae5ba333663">
         <source>Waiting for your answer</source>
