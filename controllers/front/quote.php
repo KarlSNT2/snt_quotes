@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Snt\Quotes\Domain\Exception\QuoteException;
 use Snt\Quotes\Domain\QuoteStatus;
 use Snt\Quotes\Presenter\StatusPresenter;
+use Snt\Quotes\Repository\CustomerQuoteRepository;
 use Snt\Quotes\ServiceFactory;
 
 if (!defined('_PS_VERSION_')) {
@@ -70,7 +71,8 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
         if (!$this->quote) {
             return;
         }
-        if (Tools::getValue('pdf')) {
+        $isRequest = CustomerQuoteRepository::isPendingRequest($this->quote);
+        if (Tools::getValue('pdf') && !$isRequest) {
             $this->downloadPdf();
         }
         if ($idMessage = (int) Tools::getValue('attachment')) {
@@ -95,6 +97,9 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
         $quote = $this->quote;
 
         try {
+            if ($isRequest && $action !== 'message') {
+                throw new QuoteException('Your request is being prepared. You can send a message to your sales representative.');
+            }
             switch ($action) {
                 case 'pay':
                     if (!$this->canPay()) {
@@ -131,7 +136,19 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
                     break;
 
                 case 'message':
-                    ServiceFactory::messages()->add($quote, 'customer', $customerId, $text);
+                    $messages = ServiceFactory::messages();
+                    $attachment = $messages->storeUpload($_FILES['attachment'] ?? null);
+                    if ($text === '' && $attachment) {
+                        $text = $this->trans('File sent: %name%', ['%name%' => $attachment[1]], 'Modules.Sntquotes.Shop');
+                    }
+                    try {
+                        $messages->add($quote, 'customer', $customerId, $text, $attachment);
+                    } catch (Throwable $e) {
+                        if ($attachment) {
+                            @unlink(Snt\Quotes\Service\QuoteMessages::attachmentDir() . $attachment[0]);
+                        }
+                        throw $e;
+                    }
                     ServiceFactory::mailer()->notifyEmployeeCustomerAction($quote, 'message', $text);
                     $this->sntSuccess[] = $this->trans('Your message has been sent.', [], 'Modules.Sntquotes.Shop');
                     break;
@@ -158,8 +175,12 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
         }
         ServiceFactory::messages()->markRead($quote, 'customer');
 
+        $isRequest = CustomerQuoteRepository::isPendingRequest($quote);
         $view = ServiceFactory::presenter()->present($quote, true);
         $view['status'] = (new StatusPresenter())->present($quote->getStatus(), StatusPresenter::DOMAIN_SHOP);
+        if ($isRequest) {
+            $view['status'] = ['value' => 'request', 'label' => $this->trans('Request sent', [], 'Modules.Sntquotes.Shop'), 'color' => '#6c757d', 'strike' => false];
+        }
         $status = $quote->getStatus();
         $orderUrl = '';
         if ($quote->id_order) {
@@ -169,9 +190,13 @@ class Snt_QuotesQuoteModuleFrontController extends ModuleFrontController
         $this->context->smarty->assign([
             'snt_quote' => $view,
             'snt_te_first' => ServiceFactory::priceDisplay()->taxExcludedFirst((int) $quote->id_shop, (int) $quote->id_customer),
-            'snt_can_pay' => $this->canPay(),
-            'snt_can_revise' => $status->canTransitionTo(QuoteStatus::RevisionRequested),
-            'snt_can_decline' => $status->canTransitionTo(QuoteStatus::Declined),
+            'snt_is_request' => $isRequest,
+            'snt_response_days' => max(1, (int) ServiceFactory::config()->get(Snt\Quotes\Config\ConfigKeys::RESPONSE_DELAY_DAYS, (int) $quote->id_shop)),
+            'snt_accept' => '.' . implode(',.', Snt\Quotes\Service\QuoteMessages::ATTACHMENT_EXTENSIONS),
+            'snt_max_mb' => (int) (Snt\Quotes\Service\QuoteMessages::MAX_ATTACHMENT_SIZE / 1048576),
+            'snt_can_pay' => !$isRequest && $this->canPay(),
+            'snt_can_revise' => !$isRequest && $status->canTransitionTo(QuoteStatus::RevisionRequested),
+            'snt_can_decline' => !$isRequest && $status->canTransitionTo(QuoteStatus::Declined),
             'snt_is_accepted' => $status === QuoteStatus::Accepted,
             'snt_is_expired' => $status === QuoteStatus::Expired || ($status->isOpen() && $quote->isExpiredByDate()),
             'snt_order_url' => $orderUrl,

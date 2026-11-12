@@ -46,12 +46,21 @@ class CustomerQuoteRepository
             || $quote->deleted
             || (int) $quote->id_customer !== $idCustomer
             || (int) $quote->id_shop !== $idShop
-            || in_array($quote->getStatus(), self::hiddenStatuses(), true) && $quote->getStatus() !== QuoteStatus::Cancelled
+            || in_array($quote->getStatus(), self::hiddenStatuses(), true) && $quote->getStatus() !== QuoteStatus::Cancelled && !self::isPendingRequest($quote)
         ) {
             return null;
         }
 
         return $quote;
+    }
+
+    /**
+     * Demande envoyée depuis le panier, pas encore transformée en devis par l'équipe (brouillon « fo_cart ») :
+     * le client voit les articles demandés et les échanges, jamais les prix en cours de préparation.
+     */
+    public static function isPendingRequest(\SntQuote $quote): bool
+    {
+        return $quote->getStatus() === QuoteStatus::Draft && (string) $quote->source === 'fo_cart';
     }
 
     /**

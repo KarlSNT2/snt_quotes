@@ -47,7 +47,7 @@ class Snt_QuotesQuotesModuleFrontController extends ModuleFrontController
         foreach (ServiceFactory::customerQuotes()->listForCustomer($idCustomer, $idShop) as $row) {
             $status = QuoteStatus::tryFrom((string) $row['status']) ?? QuoteStatus::Sent;
             if ($status === QuoteStatus::Draft) {
-                // Demande envoyée depuis le panier, pas encore traitée par le commercial : ni montant ni lien.
+                // Demande envoyée depuis le panier, en préparation : pas de montant, page « demande » (articles + échanges).
                 $quotes[] = [
                     'id' => (int) $row['id_snt_quote'],
                     'reference' => (string) $row['reference'],
@@ -58,7 +58,8 @@ class Snt_QuotesQuotesModuleFrontController extends ModuleFrontController
                     'amount' => '—',
                     'status' => ['label' => $this->trans('Request sent', [], 'Modules.Sntquotes.Shop'), 'color' => '#6c757d', 'strike' => false],
                     'awaiting' => false,
-                    'url' => '',
+                    'is_request' => true,
+                    'url' => $this->context->link->getModuleLink('snt_quotes', 'quote', ['id_quote' => (int) $row['id_snt_quote']], true),
                 ];
                 continue;
             }

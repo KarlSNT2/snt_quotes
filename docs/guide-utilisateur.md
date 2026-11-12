@@ -141,7 +141,9 @@ Sous le bouton « Commander », le panier affiche **« Demander un devis »** (d
   **« À traiter »** et vous recevez un e-mail (au commercial du devis, sinon à l'adresse de la boutique).
 - Le message et la pièce jointe ouvrent le bloc « Échanges avec le client » de la fiche (pièce jointe téléchargeable).
 - Complétez le brouillon (port, remises, conditions) puis **envoyez-le** : le client le reçoit comme n'importe quel devis.
-- Côté client, la demande apparaît dans « Mes devis » avec le statut « Demande envoyée » (sans montant) jusqu'à l'envoi.
+- Côté client, la demande apparaît dans « Mes devis » avec le statut « Demande envoyée » (sans montant). Sa page montre
+  les articles demandés (sans prix) et les échanges : le client peut vous écrire et joindre un fichier, vos réponses
+  depuis la fiche y mènent. Une fois le brouillon envoyé, la même page devient le devis complet.
 - Une seule demande par panier tant que le panier n'a pas changé ; 10 demandes maximum par client et par 24 h.
 
 ## 8. Couleurs des statuts

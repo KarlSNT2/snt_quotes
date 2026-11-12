@@ -1830,6 +1830,10 @@
         <source>Your reply has been sent to the customer.</source>
         <target>Votre réponse a été envoyée au client.</target>
       </trans-unit>
+      <trans-unit id="7e63b6545ab4738cee228ce8e3a3d2bd">
+        <source>Your request is being prepared. You can send a message to your sales representative.</source>
+        <target>Votre demande est en cours de préparation. Vous pouvez écrire à votre commercial.</target>
+      </trans-unit>
       <trans-unit id="7e285b7c3a264c7ba48eda458fb9b0dd">
         <source>Your session has expired. Reload the page and try again.</source>
         <target>Votre session a expiré. Rechargez la page et réessayez.</target>

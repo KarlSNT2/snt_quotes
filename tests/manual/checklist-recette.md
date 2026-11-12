@@ -123,7 +123,9 @@ Cocher `[x]`, noter l'écart sinon.
 - [ ] Panier inchangé après la demande ; 2ᵉ envoi sur le même panier → « déjà demandé »
 - [ ] BO : brouillon dans « À traiter », source panier, prix = prix du client ; message + pièce jointe dans les échanges (téléchargement OK)
 - [ ] E-mail au commercial (ou à la boutique) avec le message
-- [ ] « Mes devis » : ligne « Demande envoyée », sans montant ni lien ; après envoi par l'équipe → devis normal
+- [ ] « Mes devis » : ligne « Demande envoyée », sans montant, « Voir ma demande » → articles sans prix + échanges
+- [ ] Réponse de l'équipe sur le brouillon → e-mail au client, le lien ouvre la demande ; le client répond (avec pièce jointe)
+- [ ] Après envoi du devis par l'équipe → même page = devis complet (payer, PDF…)
 
 ## Jalon 3 — Espace client « Mes devis » (v0.3.0)
 

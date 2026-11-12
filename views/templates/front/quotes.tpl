@@ -48,7 +48,7 @@
             <td class="text-right">{$quote.amount}</td>
             <td><span class="snt-badge{if $quote.status.strike} snt-badge--strike{/if}" style="background: {$quote.status.color};">{$quote.status.label}</span></td>
             <td{if $quote.expires_soon} class="snt-text-urgent"{/if}>{$quote.valid_until}</td>
-            <td class="text-right">{if $quote.url}<a href="{$quote.url}">{if $quote.awaiting}{l s='View and confirm' d='Modules.Sntquotes.Shop'}{else}{l s='View' d='Modules.Sntquotes.Shop'}{/if}</a>{else}<span class="text-muted">{l s='Being prepared' d='Modules.Sntquotes.Shop'}</span>{/if}</td>
+            <td class="text-right">{if $quote.url}<a href="{$quote.url}">{if $quote.awaiting}{l s='View and confirm' d='Modules.Sntquotes.Shop'}{elseif !empty($quote.is_request)}{l s='View my request' d='Modules.Sntquotes.Shop'}{else}{l s='View' d='Modules.Sntquotes.Shop'}{/if}</a>{else}<span class="text-muted">{l s='Being prepared' d='Modules.Sntquotes.Shop'}</span>{/if}</td>
           </tr>
         {/foreach}
       </tbody>

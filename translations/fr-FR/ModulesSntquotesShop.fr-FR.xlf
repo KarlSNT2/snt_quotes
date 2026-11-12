@@ -142,6 +142,10 @@
         <source>Expired</source>
         <target>Expiré</target>
       </trans-unit>
+      <trans-unit id="5c826eb76fd4cfaa232a66826b20f37b">
+        <source>File sent: %name%</source>
+        <target>Fichier envoyé : %name%</target>
+      </trans-unit>
       <trans-unit id="b24ce0cd392a5b0b8dedc66c25213594">
         <source>Free</source>
         <target>Offert</target>
@@ -254,6 +258,10 @@
         <source>Please make the bank transfer, quoting your order reference.</source>
         <target>Merci d’effectuer le virement en indiquant la référence de votre commande.</target>
       </trans-unit>
+      <trans-unit id="51a58d15f64cb97f9371d16c3632d08c">
+        <source>Prices, delivery and conditions will be in the quote.</source>
+        <target>Les prix, la livraison et les conditions figureront dans le devis.</target>
+      </trans-unit>
       <trans-unit id="2091eecdb8d7db4e0d42e23386ccf9f4">
         <source>Products excl. tax</source>
         <target>Produits HT</target>
@@ -285,6 +293,10 @@
       <trans-unit id="e00b0e616d7ec5664bfe65f94c6d1061">
         <source>Quote payment</source>
         <target>Paiement du devis</target>
+      </trans-unit>
+      <trans-unit id="ac92fc78dccbc393ca9f6b3cca533ab3">
+        <source>Quote request %ref%</source>
+        <target>Demande de devis %ref%</target>
       </trans-unit>
       <trans-unit id="db4aa9c99704917bb6898fbd1435e8ab">
         <source>Quote request sent from my cart.</source>
@@ -494,6 +506,10 @@
         <source>View my order</source>
         <target>Voir ma commande</target>
       </trans-unit>
+      <trans-unit id="15901ca4b2227baf71307bc110a63d26">
+        <source>View my request</source>
+        <target>Voir ma demande</target>
+      </trans-unit>
       <trans-unit id="5e729042e30967c9d6f65c6eab73e2fe">
         <source>Viewed</source>
         <target>Consulté</target>
@@ -517,6 +533,10 @@
       <trans-unit id="cae8d14edd025e72c59dbab6f378c95a">
         <source>You</source>
         <target>Vous</target>
+      </trans-unit>
+      <trans-unit id="502afa3da299d302780b772c7d2f13ef">
+        <source>You can exchange with them below.</source>
+        <target>Vous pouvez échanger avec lui ci-dessous.</target>
       </trans-unit>
       <trans-unit id="af22d2f4d22ce3808df31049a2c896ff">
         <source>You declined this quote. Contact your sales representative if you change your mind.</source>
@@ -602,9 +622,21 @@
         <source>Your request has been sent. Your sales representative will send you an updated quote.</source>
         <target>Votre demande a été envoyée. Votre commercial vous enverra un devis mis à jour.</target>
       </trans-unit>
+      <trans-unit id="7e63b6545ab4738cee228ce8e3a3d2bd">
+        <source>Your request is being prepared. You can send a message to your sales representative.</source>
+        <target>Votre demande est en cours de préparation. Vous pouvez écrire à votre commercial.</target>
+      </trans-unit>
       <trans-unit id="db920375e2bf446eb14ac9098d4c2215">
         <source>Your sales representative can send you a new link or an updated quote.</source>
         <target>Votre commercial peut vous envoyer un nouveau lien ou un devis mis à jour.</target>
+      </trans-unit>
+      <trans-unit id="8acc0d63f7d97236a75d26be35ddeddc">
+        <source>Your sales representative is preparing your quote and will send it to you within %days% working days.</source>
+        <target>Votre commercial prépare votre devis et vous l’enverra sous %days% jours ouvrés.</target>
+      </trans-unit>
+      <trans-unit id="72099c6d5e8c795d345e90b61151b3c0">
+        <source>Your sales representative is preparing your quote and will send it to you within 1 working day.</source>
+        <target>Votre commercial prépare votre devis et vous l’enverra sous 1 jour ouvré.</target>
       </trans-unit>
       <trans-unit id="7e285b7c3a264c7ba48eda458fb9b0dd">
         <source>Your session has expired. Reload the page and try again.</source>

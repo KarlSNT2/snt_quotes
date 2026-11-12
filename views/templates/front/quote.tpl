@@ -4,7 +4,7 @@
  *}
 {extends file='customer/page.tpl'}
 
-{block name='page_title'}{l s='Quote %ref%' sprintf=['%ref%' => $snt_quote.full_reference] d='Modules.Sntquotes.Shop'}{/block}
+{block name='page_title'}{if $snt_is_request}{l s='Quote request %ref%' sprintf=['%ref%' => $snt_quote.full_reference] d='Modules.Sntquotes.Shop'}{else}{l s='Quote %ref%' sprintf=['%ref%' => $snt_quote.full_reference] d='Modules.Sntquotes.Shop'}{/if}{/block}
 
 {block name='page_content'}
 <div class="snt-pay snt-quote-fo">
@@ -15,6 +15,38 @@
     <div class="alert alert-danger" role="alert">{foreach $snt_errors as $error}<p class="mb-0">{$error}</p>{/foreach}</div>
   {/if}
 
+  {if $snt_is_request}
+  {* --- Demande depuis le panier, en préparation par l'équipe ------------- *}
+  <section class="snt-quote-fo__actions card">
+    <div class="card-block card-body">
+      <p class="mb-2"><span class="snt-badge" style="background: {$snt_quote.status.color};">{$snt_quote.status.label}</span></p>
+      <p class="mb-0">
+        {if $snt_response_days > 1}
+          {l s='Your sales representative is preparing your quote and will send it to you within %days% working days.' sprintf=['%days%' => $snt_response_days] d='Modules.Sntquotes.Shop'}
+        {else}
+          {l s='Your sales representative is preparing your quote and will send it to you within 1 working day.' d='Modules.Sntquotes.Shop'}
+        {/if}
+        {l s='You can exchange with them below.' d='Modules.Sntquotes.Shop'}
+      </p>
+    </div>
+  </section>
+
+  <section class="card"><div class="card-block card-body">
+    <h2 class="h5">{l s='Items in your request' d='Modules.Sntquotes.Shop'}</h2>
+    {if $snt_quote.project_name}<p class="text-muted">{l s='Project' d='Modules.Sntquotes.Shop'} : {$snt_quote.project_name}</p>{/if}
+    <ul class="snt-request__items">
+      {foreach $snt_quote.lines as $line}
+        {if $line.type != 'section' && $line.type != 'comment'}
+          <li>
+            <span class="snt-request__qty">{$line.qty} ×</span>
+            <span>{$line.label}{if $line.reference}<br><small class="text-muted">{l s='Ref.' d='Modules.Sntquotes.Shop'} {$line.reference}</small>{/if}</span>
+          </li>
+        {/if}
+      {/foreach}
+    </ul>
+    <p class="snt-request__help mb-0">{l s='Prices, delivery and conditions will be in the quote.' d='Modules.Sntquotes.Shop'}</p>
+  </div></section>
+  {else}
   {* --- Action principale selon le statut --------------------------------- *}
   <section class="snt-quote-fo__actions card" aria-label="{l s='What would you like to do?' d='Modules.Sntquotes.Shop'}">
     <div class="card-block card-body">
@@ -67,6 +99,7 @@
   </section>
 
   {include file='module:snt_quotes/views/templates/front/_quote-summary.tpl'}
+  {/if}
 
   {if $snt_quote.customer_message}
     <section class="card"><div class="card-block card-body">
@@ -96,10 +129,13 @@
       {else}
         <p class="text-muted">{l s='No messages yet. Ask your sales representative a question below.' d='Modules.Sntquotes.Shop'}</p>
       {/if}
-      <form method="post" action="{$snt_action_url}" class="snt-thread__form">
+      <form method="post" action="{$snt_action_url}" class="snt-thread__form" enctype="multipart/form-data">
         <input type="hidden" name="token" value="{$snt_token}">
         <label for="snt-message" class="form-control-label">{l s='Your message' d='Modules.Sntquotes.Shop'}</label>
-        <textarea id="snt-message" name="message" class="form-control" rows="3" maxlength="3000" required></textarea>
+        <textarea id="snt-message" name="message" class="form-control" rows="3" maxlength="3000"></textarea>
+        <label for="snt-message-file" class="form-control-label mt-2">{l s='Attachment' d='Modules.Sntquotes.Shop'} <span class="text-muted">({l s='optional' d='Modules.Sntquotes.Shop'})</span></label>
+        <input type="file" id="snt-message-file" name="attachment" class="form-control-file" accept="{$snt_accept}">
+        <small class="form-text text-muted">{l s='Plan, specifications, list… %size% MB maximum.' sprintf=['%size%' => $snt_max_mb] d='Modules.Sntquotes.Shop'}</small>
         <button type="submit" name="snt_action" value="message" class="btn btn-secondary mt-2">{l s='Send' d='Modules.Sntquotes.Shop'}</button>
       </form>
     </div>

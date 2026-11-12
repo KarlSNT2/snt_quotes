@@ -19,6 +19,21 @@ FR_SHOP_EXCEPTIONS_J31 = {
  "This cart is empty.": "Ce panier est vide.",
  "This cart has already been ordered.": "Ce panier a déjà été commandé.",
  "This cart does not belong to the selected customer.": "Ce panier ne vous appartient pas.",
+ "Your request is being prepared. You can send a message to your sales representative.": "Votre demande est en cours de préparation. Vous pouvez écrire à votre commercial.",
+ "File sent: %name%": "Fichier envoyé : %name%",
+}
+
+FR_ADMIN_J31.update({
+ "Your request is being prepared. You can send a message to your sales representative.": "Votre demande est en cours de préparation. Vous pouvez écrire à votre commercial.",
+})
+
+FR_SHOP_J31_REQUEST_PAGE = {
+ "Prices, delivery and conditions will be in the quote.": "Les prix, la livraison et les conditions figureront dans le devis.",
+ "Quote request %ref%": "Demande de devis %ref%",
+ "View my request": "Voir ma demande",
+ "You can exchange with them below.": "Vous pouvez échanger avec lui ci-dessous.",
+ "Your sales representative is preparing your quote and will send it to you within %days% working days.": "Votre commercial prépare votre devis et vous l’enverra sous %days% jours ouvrés.",
+ "Your sales representative is preparing your quote and will send it to you within 1 working day.": "Votre commercial prépare votre devis et vous l’enverra sous 1 jour ouvré.",
 }
 
 FR_SHOP_J31 = {
@@ -57,3 +72,4 @@ FR_SHOP_J31 = {
  "optional": "facultatif",
 }
 FR_SHOP_J31.update(FR_SHOP_EXCEPTIONS_J31)
+FR_SHOP_J31.update(FR_SHOP_J31_REQUEST_PAGE)
