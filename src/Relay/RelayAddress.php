@@ -36,9 +36,8 @@ final class RelayAddress
         $address->phone = $current->phone;
         $address->phone_mobile = $current->phone_mobile;
         $address->other = (string) ($relay['relay_id'] ?? '');
-        $address->active = false;
-        $address->deleted = true;
-        $address->id_customer = $idCustomer; // @phpstan-ignore-line (null accepté par le cœur)
+        $address->deleted = true; // invisible du carnet d'adresses du client
+        $address->id_customer = $idCustomer;
         if (!$address->save()) {
             throw new \RuntimeException('Unable to save the pickup point address.');
         }

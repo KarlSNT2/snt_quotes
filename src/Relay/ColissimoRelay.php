@@ -84,7 +84,8 @@ class ColissimoRelay
                 'origin' => 'API',
             ];
             $client = new \ColissimoClient();
-            $client->setRequest(new \ColissimoPointRetraitRequest($credentials, $payload, false));
+            // Classe de Colissimo ≥ 2.2.6, vérifiée par isAvailable() ; absente des versions analysées plus anciennes.
+            $client->setRequest(new \ColissimoPointRetraitRequest($credentials, $payload, false)); // @phpstan-ignore-line
             $response = $client->request();
             if ((int) $response->errorCode !== 0) {
                 throw new \RuntimeException('error ' . (int) $response->errorCode . ' ' . (string) $response->errorMessage);

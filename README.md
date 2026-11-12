@@ -103,6 +103,8 @@ onglet Paiement, « Module de paiement en ligne »).
   ajoutent des frais ne s'appliquent pas à « Livraison selon devis ». Ce hook doit passer **après** celui de
   orderfees_shipping ; le module le replace en dernière position à chaque conversion. Si la conversion affiche
   « transporteur non disponible », le journal (`[snt_quotes] Technical carrier …`) détaille la cause.
+  Ce hook n'existe pas dans le cœur : il est déclenché par la surcharge `Cart` d'orderfees_shipping. Sans ce module, le
+  transporteur technique fournit le port lui-même (`getOrderShippingCost`).
 - **Seuils de port gratuit** (`PS_SHIPPING_FREE_PRICE`, `PS_SHIPPING_FREE_WEIGHT`) : le cœur ne taxerait pas le port du devis ;
   ils sont neutralisés en mémoire, uniquement pendant le traitement d'un panier de devis (conversion, page de paiement,
   notification HiPay). Rien n'est modifié en base.

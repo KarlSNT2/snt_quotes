@@ -48,6 +48,9 @@ return [
             $psRoot . '/classes',
             $psRoot . '/controllers',
             getenv('HIPAY_DIR') ?: (is_dir($psRoot . '/modules/hipaypayments') ? $psRoot . '/modules/hipaypayments' : null),
+            // Points relais : modules officiels Chronopost et Colissimo (CHRONOPOST_DIR / COLISSIMO_DIR pour une autre version).
+            getenv('CHRONOPOST_DIR') ?: (is_dir($psRoot . '/modules/chronopost') ? $psRoot . '/modules/chronopost' : null),
+            getenv('COLISSIMO_DIR') ?: (is_dir($psRoot . '/modules/colissimo') ? $psRoot . '/modules/colissimo' : null),
         ])),
         'paths' => [
             __DIR__ . '/snt_quotes.php',

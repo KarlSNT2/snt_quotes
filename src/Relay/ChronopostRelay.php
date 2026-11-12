@@ -82,7 +82,8 @@ class ChronopostRelay
                 $params->countryCode = \Chronopost::maybeCountryMapping($countryIso);
                 $result = $ws->recherchePointChronopost($params)->return;
             } else {
-                $result = $ws->recherchePointChronopostInter($params)->return;
+                // Même appel que le module Chronopost (async/getPointRelais2.php) : le service accepte cet objet.
+                $result = $ws->recherchePointChronopostInter($params)->return; // @phpstan-ignore-line
             }
         } catch (\Throwable $e) {
             \PrestaShopLogger::addLog('[snt_quotes] Chronopost relay search: ' . get_class($e) . ': ' . $e->getMessage(), 3);
